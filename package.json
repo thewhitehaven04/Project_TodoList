@@ -1,0 +1,32 @@
+{
+  "name": "project_todolist",
+  "version": "1.0.0",
+  "description": "A generic TodoList app to practice OOP skills for The Odin Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewhitehaven04/Project_TodoList.git"
+  },
+  "keywords": [
+    "todolist",
+    "js",
+    "css",
+    "html5",
+    "vanilla",
+    "webpack",
+    "npm"
+  ],
+  "author": "German Bulavkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thewhitehaven04/Project_TodoList/issues"
+  },
+  "homepage": "https://github.com/thewhitehaven04/Project_TodoList#readme",
+  "devDependencies": {
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.2"
+  }
+}
