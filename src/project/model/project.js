@@ -4,15 +4,11 @@ export class Project {
   /** Project title */
   #title;
 
-  constructor(title, todos) {
+  constructor(title, ...todos) {
     this.#title = title;
-    this.#todos = todos;
+    [this.#todos] = todos;
   }
-
-  updateTitle(newTitle) {
-    this.#title = newTitle;
-  }
-
+  
   addTodo(todo) {
     this.#todos.push(todo);
   }
@@ -21,8 +17,17 @@ export class Project {
     this.#todos = this.#todos.filter((arrayTodo) => arrayTodo.isEqualTo(todo));
   }
 
+  /** Returns todos that satisfy the supplied filter functions  */
+  getTodos(...filterFns) {
+    return filterFns ? filterFns.reduce((filterFn) => previousMap.map(filterFn), this.#todos) : this.#todos; 
+  }
+
   getTitle() {
     return this.#title;
+  }
+
+  updateTitle(newTitle) {
+    this.#title = newTitle;
   }
 }
 
