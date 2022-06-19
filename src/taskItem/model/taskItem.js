@@ -2,12 +2,10 @@ import { progressModel } from './progress';
 import Task from '../../task/task';
 
 class TaskItem extends Task {
-  #uuid;
   #progress;
 
   constructor(name, description, priority, dueDate, { imageUrl, tag } = {}) {
     super();
-    this.#uuid = uuidv4();
     this.name = name;
     this.description = description;
     this.priority = priority;

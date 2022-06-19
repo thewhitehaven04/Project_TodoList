@@ -6,7 +6,7 @@ class ProjectStorage {
   }
 
   #containsTitle(title) {
-    return !!this.#projects.keys.find(projectTitle => projectTitle === title);
+    return Object.keys(this.#projects).includes(title);
   }
 
   /** Adds a new Projet class instance to the project storage. 
@@ -14,13 +14,26 @@ class ProjectStorage {
   */
   addProject(project) {
     const title = project.getTitle();
-    if (this.#containsTitle(title)) {
+    if (!this.#containsTitle(title)) {
       this.#projects[title] = project;
+    }
+    else {
+      throw new ReferenceError(`Project ${project.title} already exists`)
     }
   }
 
   getProject(title) {
     return this.#projects[title];
+  }
+
+  removeProject(project) {
+    const title = project.getTitle();
+    if (this.#containsTitle(title)) {
+      delete this.#projects[title];
+    }
+    else {
+      throw new ReferenceError(`Project ${project.title} does not exist.`)
+    }
   }
 }
 
