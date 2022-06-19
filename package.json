@@ -4,7 +4,9 @@
   "description": "A generic TodoList app to practice OOP skills for The Odin Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack serve --server-type https"
   },
   "repository": {
     "type": "git",
@@ -26,7 +28,11 @@
   },
   "homepage": "https://github.com/thewhitehaven04/Project_TodoList#readme",
   "devDependencies": {
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.9.2"
+    "webpack-dev-server": "^4.9.2",
+    "webpack-favicons": "^1.3.8"
   }
 }
