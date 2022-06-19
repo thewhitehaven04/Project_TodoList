@@ -6,16 +6,15 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    server: 'https',
     static: {
       directory: path.join(__dirname, "./dist")
     },
     open: true
   },
   
-  entry: 'index.js',
+  entry: './src/index.js',
   output: {
-    path: path.resolve(path(__dirname, "./dist")),
+    path: path.resolve(__dirname, "./dist"),
     filename: '[name].bundle.js',
     assetModuleFilename: 'assets/[hash]',
     clean: true,
