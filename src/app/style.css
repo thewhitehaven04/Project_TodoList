@@ -1,0 +1,21 @@
+:root {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+html {
+  height: 100vh;
+}
+
+body {
+  display: grid;
+  grid-template-columns:  [navbar-start] minmax(min-content, 300px) [navbar-end] 
+                          [main-section-start] 1fr [main-section-end];
+
+  grid-template-areas: "navbar main";
+}

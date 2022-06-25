@@ -3,8 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 class Task {
   #uuid;
 
-  constructor() {
+  constructor(dueDate) {
     this.#uuid = uuidv4();
+    this.dueDate = dueDate;
   }
 
   getId() {

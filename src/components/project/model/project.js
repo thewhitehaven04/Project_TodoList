@@ -19,7 +19,11 @@ export class Project {
 
   /** Returns todos that satisfy the supplied filter functions  */
   getTodos(...filterFns) {
-    return filterFns ? filterFns.reduce((filterFn) => previousMap.map(filterFn), this.#todos) : this.#todos; 
+    let arr = this.#todos;
+    for (let filterFn of filterFns) {
+      arr = arr.map(filterFn);
+    }
+    return arr;
   }
 
   getTitle() {
