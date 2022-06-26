@@ -1,5 +1,6 @@
 /** This module initializes app state for the first run  */
-import { initializeStorage } from './../components/project/model/projectStorage';
+import { initializeStorage } from './../components/project/init';
+import { initalizeNavBar } from '../components/navbar/init';
 import { DEFAULT_TASK } from './../components/taskItem/init';
 import { prioritiesModel } from './../components/taskItem/model/priority';
 import { TaskItem } from './../components/taskItem/model/taskItem';
@@ -12,7 +13,10 @@ const task2 = new TaskItem(
   new Date(2022, 5, 9),
 );
 
-/** Initializes application state. */
+/**
+ * Initializes app state.
+ */
 export function initAppState() {
-  return initializeStorage(DEFAULT_TASK, task1, task2);
+  const storage = initializeStorage(DEFAULT_TASK, task1, task2);
+  initalizeNavBar(storage.getAllProjects());
 }

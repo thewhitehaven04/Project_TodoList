@@ -7,18 +7,18 @@ export class AppView {
   #appRoot;
 
   constructor(appRoot, main, navBar) {
+    this.#appRoot = appRoot;
     this.#mainView = main;
     this.#navBarView = navBar;
-    this.#appRoot = appRoot;
   }
 
-  _positionChildInAppGrid(child, gridArea) {
-    child.render().style.gridArea = gridArea;      
+  #positionChildInAppGrid(child, gridArea) {
+    child.render().style.gridArea = gridArea;
   }
 
   render() {
-    this._positionChildInAppGrid(this.#mainView, 'main');
-    this._positionChildInAppGrid(this.#navBarView, 'navbar');
+    this.#positionChildInAppGrid(this.#mainView, 'main');
+    this.#positionChildInAppGrid(this.#navBarView, 'navbar');
 
     this.#appRoot.appendChild(this.#mainView.render());
     this.#appRoot.appendChild(this.#navBarView.render());

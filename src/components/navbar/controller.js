@@ -1,18 +1,39 @@
-import { NavBarView } from './view/view';
+import { PubSub } from './../../generic/observer';
 import { NavBarModel } from './model/model';
+import { NavBarView } from './view/view';
 
-export class NavBarController {
-  constructor() {
-    this.view = NavBarView;
-    this.model = NavBarModel;
+class NavBarController {
+  /**
+   * @param {NavBarView} view
+   * @param {NavBarModel} model
+   */
+  constructor(view, model) {
+    this.pubSub = new PubSub();
+    this.view = new view();
+    this.model = new model(this.pubSub.pub.bind(this.pubSub));
+
+    this.pubSub.subscribe(this.view.update);
   }
 
-  getNavBar(projects) {
+  /**
+   * @param {Project[]} projects
+   */
+  addProjects(projects) {
+    projects.forEach((project) => this.addProject(project));
+  }
 
-    const view = new this.view(projects);
-    const model = new this.model(projects);
+  /** Adds a project to the navbar */
+  addProject(project) {
+    this.model.addProject(project);
+  }
 
-    return {render: view.render()}
+  removeProject(project) {
+    this.model.removeProject(project);
+  }
 
+  render() {
+    return this.view.render();
   }
 }
+
+export const navBar = new NavBarController(NavBarView, NavBarModel);

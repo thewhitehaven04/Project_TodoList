@@ -27,6 +27,16 @@ class TaskItem extends Task {
   onUpdate({ name, description, priority, progress, tag }) {
     this.publish({ name, description, priority, progress, tag });
   }
+
+  get() {
+    return {
+      name: this.name,
+      description: this.description,
+      priority: this.priority,
+      progress: this.progress,
+      tag: this.tag,
+    };
+  }
 }
 
 export { TaskItem };

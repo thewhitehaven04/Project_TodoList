@@ -8,9 +8,18 @@ export class TaskItemController {
     this.model = Model;
   }
 
+  /** Return an instance of taskItem
+   *
+   * @param {String} name
+   * @param {String} description
+   * @param {String} priority
+   * @param {String} dueDate
+   * @param {String} tag
+   * @returns 
+   */
   getTaskItem(name, description, priority, dueDate, tag) {
     const model = new this.model(name, description, priority, dueDate, tag);
-    const view = new this.view(name, description, priority, progress, dueDate, tag);
+    const view = new this.view(model.get());
 
     const pubSub = new PubSub();
     pubSub.subscribe(view.update);

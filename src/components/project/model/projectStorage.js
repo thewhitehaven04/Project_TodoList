@@ -1,4 +1,4 @@
-class ProjectStorage {
+export class ProjectStorage {
   #projects;
 
   constructor() {
@@ -25,6 +25,13 @@ class ProjectStorage {
     return this.#projects[title];
   }
 
+  /** Returns an array of all projects
+   * @returns {Array} array that conains all proejcts
+   */
+  getAllProjects() {
+    return Object.values(this.#projects);
+  }
+
   removeProject(project) {
     const title = project.getTitle();
     if (this.#containsTitle(title)) {
@@ -34,5 +41,3 @@ class ProjectStorage {
     }
   }
 }
-
-export { ProjectStorage };

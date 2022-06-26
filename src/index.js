@@ -1,14 +1,15 @@
-import { init } from "./app/init";
-import { AppView } from "./app/renderApp";
-import { Main } from "./components/main/main";
-import {}
+import { initAppState } from './app/init';
+import { AppView } from './app/renderApp';
+import { Main } from './components/main/main';
+import { navBar } from './components/navbar/controller';
 
 const appRoot = document.querySelector('#todo-list-app');
 
 const runApp = function () {
-  initAppState();
-  
-  new AppView()
-}
+  const appState = initAppState();
+  const appView = new AppView(appRoot, new Main(), navBar);
+
+  appView.render();
+};
 
 runApp();

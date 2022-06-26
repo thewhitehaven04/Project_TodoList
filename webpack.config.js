@@ -28,4 +28,12 @@ module.exports = {
     }),
     new NodePolyfillPlugin(),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
 };
