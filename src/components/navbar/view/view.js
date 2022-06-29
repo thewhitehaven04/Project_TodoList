@@ -9,22 +9,22 @@ export class NavBarView {
     this.#projects = [];
   }
 
-  #renderProjectMenuItem(project) {
-    const liProjectItem = document.createElement('li');
-    liProjectItem.textContent = project.getName();
-    return liProjectItem;
-  }
-
   #renderProjectList() {
     const ulProjectItems = document.createElement('ul');
 
-    ulProjectItems.appendChild(
-      this.#projects.forEach((project) => this.#renderProjectMenuItem(project)),
+    ulProjectItems.append(
+      this.#projects.forEach((project) => {
+        const liProjectItem = document.createElement('li');
+        liProjectItem.textContent = project;
+        return liProjectItem;
+      }),
     );
     return ulProjectItems;
   }
 
-  /** Updates view depending on the event being received */
+  /** Updates view depending on the event being received
+   * @param {*} updateEvent
+   */
   update = (updateEvent) => {
     if (updateEvent.type === 'projectAdded') {
       this.#projects.push(updateEvent.args.getTitle());
@@ -37,6 +37,6 @@ export class NavBarView {
 
   render() {
     this.navRoot.replaceChildren(this.#renderProjectList());
-    return navRoot;
+    return this.navRoot;
   }
 }

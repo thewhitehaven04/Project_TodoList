@@ -1,4 +1,4 @@
-class ChecklistEntry{
+class ChecklistEntry {
   #description;
 
   constructor(description) {

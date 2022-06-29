@@ -1,20 +1,16 @@
 import { Project } from '../../project/model/project';
-import { PubSub } from '../../../generic/observer';
 
 export class NavBarModel {
-  #publisher;
-
   /**
    * @param {Project[]} projects
-   * @param {Function} publisher
    */
-  constructor(publisher) {
+  constructor(publisherCallback) {
     this.projects = [];
-    this.#publisher = publisher;
+    this.publisherCallback = publisherCallback;
   }
 
   #publishAddProjectEvent(project) {
-    this.#publisher({
+    this.publisherCallback({
       type: 'projectAdded',
       args: project,
     });
@@ -29,7 +25,7 @@ export class NavBarModel {
   }
 
   #publishRemoveProjectEvent(project) {
-    this.#publisher({
+    this.publisherCallback({
       type: 'projectRemoved',
       args: project,
     });

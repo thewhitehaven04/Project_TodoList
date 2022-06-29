@@ -1,4 +1,5 @@
-import { PubSub } from './../../generic/observer';
+import { PubSub } from '../../generic/pubSub';
+import { Project } from '../project/model/project';
 import { NavBarModel } from './model/model';
 import { NavBarView } from './view/view';
 
@@ -6,13 +7,13 @@ class NavBarController {
   /**
    * @param {NavBarView} view
    * @param {NavBarModel} model
+   * @param {PubSub} ps publisher/subscriber object
    */
-  constructor(view, model) {
-    this.pubSub = new PubSub();
-    this.view = new view();
-    this.model = new model(this.pubSub.pub.bind(this.pubSub));
+  constructor(view, model, ps) {
+    this.view = view;
+    this.model = model;
 
-    this.pubSub.subscribe(this.view.update);
+    ps.subscribe(this.view.update);
   }
 
   /**
@@ -36,4 +37,11 @@ class NavBarController {
   }
 }
 
-export const navBar = new NavBarController(NavBarView, NavBarModel);
+const ps = new PubSub();
+const navBar = new NavBarController(new NavBarView(), new NavBarModel(ps.pub), ps);
+
+navBar.addProject(new Project('Kek'), []);
+navBar.addProject(new Project('Test'), []);
+console.dir(navBar);
+
+export { navBar };

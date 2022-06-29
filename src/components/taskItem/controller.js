@@ -1,11 +1,12 @@
 import { TaskItem as Model } from './model/taskItem';
 import { TaskItem as View } from './view/taskItem';
-import { PubSub } from './../../generic/observer';
+import { PubSub } from '../../generic/pubSub';
 
 export class TaskItemController {
-  constructor() {
-    this.view = View;
-    this.model = Model;
+  constructor(view, model, ps) {
+    this.view = view;
+    this.model = model;
+    this.ps = ps;
   }
 
   /** Return an instance of taskItem
@@ -15,7 +16,7 @@ export class TaskItemController {
    * @param {String} priority
    * @param {String} dueDate
    * @param {String} tag
-   * @returns 
+   * @returns
    */
   getTaskItem(name, description, priority, dueDate, tag) {
     const model = new this.model(name, description, priority, dueDate, tag);
