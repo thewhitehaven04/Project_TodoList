@@ -1,44 +1,36 @@
-export class TaskItem {
-  #taskItemRoot;
-  #fields;
+export class TaskItemView {
+  static _styleClasses = {};
 
-  constructor({ name, description, priority, progress, dueDate, tag }) {
-    this.#taskItemRoot = document.createElement('article');
-
-    this.#fields = new Map(Object.entries({ name, description, priority, progress, dueDate, tag }));
+  constructor(props) {
+    this.props = props;
   }
 
-  update({ name, description, priority, progress, dueDate, tag } = {}) {
-    for (let key of this.#fields) {
-      if (this.#fields.get(key) === key) {
-        this.#fields.set(key, le);
-      }
-    }
-  }
+  update(props) {}
 
   render() {
+    const viewRootArticle = document.createElement('article');
+
     const nameSpan = document.createElement('span');
-    nameSpan.textContent = this.#fields.get('name');
+    nameSpan.textContent = this.props.name;
 
     const descriptionP = document.createElement('p');
-    descriptionP.textContent = this.#fields.get('description');
+    descriptionP.textContent = this.props.description;
 
     const prioritySpan = document.createElement('span');
-    prioritySpan.textContent = this.#fields.get('priorirty');
+    prioritySpan.textContent = this.props.priorirty;
 
     const progressSpan = document.createElement('span');
-    progressSpan.textContent = `Progress: ${this.#fields.get('progress')}`;
+    progressSpan.textContent = `Progress: ${this.props.progress}`;
 
     const dueDateSpan = document.createElement('span');
-    dueDateSpan.textContent = `Due: ${this.#fields.get('dueDate')}`;
+    dueDateSpan.textContent = `Due: ${this.props.dueDate}`;
 
-    this.#taskItemRoot.appendChild(nameSpan);
-    this.#taskItemRoot.appendChild(descriptionP);
-    this.#taskItemRoot.appendChild(Span);
-    this.#taskItemRoot.appendChild(prioritySpan);
-    this.#taskItemRoot.appendChild(progressSpan);
-    this.#taskItemRoot.appendChild(dueDateSpan);
+    viewRootArticle.appendChild(nameSpan);
+    viewRootArticle.appendChild(descriptionP);
+    viewRootArticle.appendChild(prioritySpan);
+    viewRootArticle.appendChild(progressSpan);
+    viewRootArticle.appendChild(dueDateSpan);
 
-    return this.#taskItemRoot;
+    return viewRootArticle;
   }
 }
