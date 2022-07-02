@@ -1,5 +1,5 @@
 import { PubSub } from '../../generic/pubSub';
-import { TaskItemModel } from './model/taskItem';
+import { TaskItemModel } from '../../../models/taskItem/taskItem';
 
 /**
  * @typedef TaskItemProps
@@ -26,7 +26,7 @@ export class TaskItemController {
   /** Return an instance of taskItem
    *
    * @param {TaskItemProps} props
-   * @returns {TaskItemInstance} task item instance 
+   * @returns {TaskItemInstance} task item instance
    */
   getInstance(props) {
     const model = new this.model(props);
@@ -49,5 +49,3 @@ export class TaskItemController {
     this.model.progress();
   }
 }
-
-const p = new TaskItemController(TaskItemView, new TaskItemModel)

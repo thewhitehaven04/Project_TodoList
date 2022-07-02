@@ -6,6 +6,11 @@ export class Project {
   /** Project title */
   #title;
 
+  /**
+   * 
+   * @param {String} title 
+   * @param  {...Todo} todos 
+   */
   constructor(title, ...todos) {
     this.#title = title;
     [this.#todos] = todos;

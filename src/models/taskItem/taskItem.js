@@ -56,7 +56,7 @@ class TaskItemModel extends TaskModel {
   }
 
   /**
-   * @param {TaskItemProps} props task item properties 
+   * @param {TaskItemProps} props task item properties
    */
   update(props) {
     this.name = this.name || props.name;
@@ -68,7 +68,6 @@ class TaskItemModel extends TaskModel {
   }
 
   /**
-   *
    * @returns {TaskItemProps} taskItemProps
    */
   toJSON() {

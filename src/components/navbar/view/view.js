@@ -1,12 +1,11 @@
 import style from './style.css';
 
 export class NavBarView {
-  navRoot;
   #projects;
 
-  constructor() {
-    this.navRoot = document.createElement('nav');
+  constructor(newProjectFormCallback) {
     this.#projects = [];
+    this.newProjectFormCallback = newProjectFormCallback;
   }
 
   #renderProjectList() {
@@ -36,7 +35,27 @@ export class NavBarView {
   };
 
   render() {
-    this.navRoot.replaceChildren(this.#renderProjectList());
-    return this.navRoot;
+    const navRoot = document.createElement('nav');
+
+    const projectsDiv = document.createElement('div');
+
+    const projectsHeader = document.createElement('div');
+
+    const headerSpan = document.createElement('span');
+    headerSpan.textContent = 'Projects';
+    projectsHeader.appendChild(headerSpan);
+
+    const addButton = document.createElement('button');
+    addButton.textContent = '+';
+    addButton.addEventListener('click', this.newProjectFormCallback);
+
+    projectsHeader.appendChild(headerSpan);
+    projectsHeader.appendChild(addButton);
+
+    projectsDiv.appendChild(projectsHeader);
+    projectsDiv.appendChild(this.#renderProjectList());
+    navRoot.appendChild(projectsDiv);
+
+    return navRoot;
   }
 }

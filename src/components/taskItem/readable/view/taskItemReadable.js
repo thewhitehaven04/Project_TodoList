@@ -1,11 +1,9 @@
-export class TaskItemView {
+export class TaskItemReadableView {
   static _styleClasses = {};
 
   constructor(props) {
     this.props = props;
   }
-
-  update(props) {}
 
   render() {
     const viewRootArticle = document.createElement('article');

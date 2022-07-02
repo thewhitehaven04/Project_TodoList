@@ -1,4 +1,4 @@
-import { Project } from '../../project/model/project';
+import { Project } from '../../components/project/model/project';
 
 export class NavBarModel {
   /**
@@ -9,26 +9,12 @@ export class NavBarModel {
     this.publisherCallback = publisherCallback;
   }
 
-  #publishAddProjectEvent(project) {
-    this.publisherCallback({
-      type: 'projectAdded',
-      args: project,
-    });
-  }
-
   /**
    * @param {Project} project
    */
   addProject(newProject) {
     this.projects.push(newProject.getTitle());
     this.#publishAddProjectEvent(newProject);
-  }
-
-  #publishRemoveProjectEvent(project) {
-    this.publisherCallback({
-      type: 'projectRemoved',
-      args: project,
-    });
   }
 
   /**
@@ -39,5 +25,19 @@ export class NavBarModel {
       (project) => project.getTitle() !== existingProject.getTitle(),
     );
     this.#publishRemoveProjectEvent(existingProject);
+  }
+
+  #publishAddProjectEvent(project) {
+    this.publisherCallback({
+      type: 'projectAdded',
+      args: project,
+    });
+  }
+
+  #publishRemoveProjectEvent(project) {
+    this.publisherCallback({
+      type: 'projectRemoved',
+      args: project,
+    });
   }
 }

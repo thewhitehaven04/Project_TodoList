@@ -1,0 +1,10 @@
+.project-input-label {
+  position: absolute;
+}
+
+.project-input-label::after {
+  position: relative;
+  left: -50px;
+  top: 10px;
+  content: 'Project';
+}
