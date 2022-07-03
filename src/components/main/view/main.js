@@ -1,4 +1,4 @@
-import { createNewProjectWidget } from './widgets/createNewProject';
+import { createNewProjectWidget } from '../widgets/view/createNewProjectView';
 
 export class MainView {
   /** Instantiates the main view object.

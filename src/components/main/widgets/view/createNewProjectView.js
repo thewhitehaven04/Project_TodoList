@@ -1,4 +1,4 @@
-export class createNewProjectWidget {
+export class CreateNewProjectWidgetView {
   /** Render the project creation form */
   render() {
     const div = document.createElement('div');
@@ -19,4 +19,3 @@ export class createNewProjectWidget {
     return div;
   }
 }
-

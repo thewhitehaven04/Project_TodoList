@@ -1,4 +1,8 @@
-/** Implemenets the so-called "publish-subscribe" / "observer" pattern */
+/** Implemenets the so-called "publish-subscribe" / "observer" pattern
+ * @property {Function} subscribe
+ * @property {Function} unsubscribe
+ * @property {Function} pub
+ */
 export class PubSub {
   constructor() {
     this.observers = [];
