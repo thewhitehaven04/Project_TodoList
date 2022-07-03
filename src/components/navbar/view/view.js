@@ -1,61 +1,84 @@
+import { ProjectAddedEvent, ProjectRemovedEvent } from '../../../models/navBar/events';
 import style from './style.css';
 
 export class NavBarView {
-  #projects;
-
-  constructor(newProjectFormCallback) {
-    this.#projects = [];
-    this.newProjectFormCallback = newProjectFormCallback;
-  }
-
-  #renderProjectList() {
-    const ulProjectItems = document.createElement('ul');
-
-    ulProjectItems.append(
-      this.#projects.forEach((project) => {
-        const liProjectItem = document.createElement('li');
-        liProjectItem.textContent = project;
-        return liProjectItem;
-      }),
-    );
-    return ulProjectItems;
-  }
-
-  /** Updates view depending on the event being received
-   * @param {*} updateEvent
+  /** Initialize navbar view with given list of projects
+   * @param {Project[]} projects an array of projects
    */
-  update = (updateEvent) => {
-    if (updateEvent.type === 'projectAdded') {
-      this.#projects.push(updateEvent.args.getTitle());
-    } else if (updateEvent.type === 'projectRemoved') {
-      this.#projects = this.#projects.filter((project) => project !== updateEvent.args.getTitle());
+  constructor() {
+    this.projects = [];
+    this.navRoot = document.createElement('nav');
+
+    this.projectListRoot = document.createElement('ul');
+    this.navRoot.appendChild(this.projectListRoot);
+  }
+
+  /**
+   * @param {String} projectTitle
+   */
+  addProject(projectTitle) {
+    this.projects.push(projectTitle);
+  }
+
+  /**
+   * @param {String} projectTitle
+   */
+  removeProject(projectTitle) {
+    this.projects = this.projects.filter((existingProject) => existingProject != projectTitle);
+  }
+
+  renderProjects() {
+    this.projectListRoot.replaceChildren();
+    this.projects.forEach((projectTitle) => {
+      const liProject = document.createElement('li');
+      liProject.textContent = projectTitle;
+      liProject.dataset.projectTitle = projectTitle;
+      this.projectListRoot.appendChild(liProject);
+    });
+
+    this.projectListRoot.addEventListener('click', (event) => {
+      this.openExistingProjectForm(event.target.dataset.projectTitle);
+    });
+  }
+
+  update(event) {
+    if (event instanceof ProjectAddedEvent) {
+      this.addProject(event.project);
+    } else if (event instanceof ProjectRemovedEvent) {
+      this.removeProject(event.project);
     }
 
-    this.render();
+    this.renderProjects();
+  }
+
+  _bindHandleOpenProjectForm(obj, handler) {
+    this.openNewProjectForm = this.openNewProjectForm.bind(obj, handler);
+  }
+
+  openNewProjectForm(newProjectFormHandler) {
+    newProjectFormHandler();
+  }
+
+  openExistingProjectForm = () => {
+    callback(project);
   };
 
   render() {
-    const navRoot = document.createElement('nav');
+    const divProjects = document.createElement('div');
+    const spanProjects = document.createElement('span');
+    spanProjects.textContent = 'Projects';
 
-    const projectsDiv = document.createElement('div');
+    const buttonAddProjects = document.createElement('button');
+    buttonAddProjects.textContent = '+';
+    buttonAddProjects.addEventListener('click', (event) => {
+      this.openNewProjectForm();
+    });
 
-    const projectsHeader = document.createElement('div');
+    divProjects.appendChild(spanProjects);
+    divProjects.appendChild(buttonAddProjects);
 
-    const headerSpan = document.createElement('span');
-    headerSpan.textContent = 'Projects';
-    projectsHeader.appendChild(headerSpan);
-
-    const addButton = document.createElement('button');
-    addButton.textContent = '+';
-    addButton.addEventListener('click', this.newProjectFormCallback);
-
-    projectsHeader.appendChild(headerSpan);
-    projectsHeader.appendChild(addButton);
-
-    projectsDiv.appendChild(projectsHeader);
-    projectsDiv.appendChild(this.#renderProjectList());
-    navRoot.appendChild(projectsDiv);
-
-    return navRoot;
+    this.renderProjects();
+    this.navRoot.appendChild(divProjects);
+    return this.navRoot;
   }
 }

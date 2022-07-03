@@ -1,3 +1,6 @@
 .navbar {
-  background-color: aquamarine;
+  display: flex;
+  flex-flow: column wrap;
+
+  width: min-content;
 }

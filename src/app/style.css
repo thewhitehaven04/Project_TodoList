@@ -12,10 +12,8 @@ html {
   height: 100vh;
 }
 
-body {
+#todo-list-app {
   display: grid;
-  grid-template-columns:  [navbar-start] minmax(min-content, 300px) [navbar-end] 
-                          [main-section-start] 1fr [main-section-end];
-
+  grid-template-columns:  [navbar-start] minmax(min-content, 300px) [navbar-end] [main-section-start] 1fr [main-section-end];
   grid-template-areas: "navbar main";
 }

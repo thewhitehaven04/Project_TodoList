@@ -2,25 +2,21 @@
 import style from './style.css';
 
 export class AppView {
-  #mainView;
-  #navBarView;
-  #appRoot;
-
   constructor(appRoot, main, navBar) {
-    this.#appRoot = appRoot;
-    this.#mainView = main;
-    this.#navBarView = navBar;
+    this.appRoot = appRoot;
+    this.mainView = main.render();
+    this.navBarView = navBar.render();
   }
 
   #positionChildInAppGrid(child, gridArea) {
-    child.render().style.gridArea = gridArea;
+    child.style.gridArea = gridArea;
   }
 
   render() {
-    this.#positionChildInAppGrid(this.#mainView, 'main');
-    this.#positionChildInAppGrid(this.#navBarView, 'navbar');
+    this.#positionChildInAppGrid(this.mainView, 'main');
+    this.#positionChildInAppGrid(this.navBarView, 'navbar');
 
-    this.#appRoot.appendChild(this.#mainView.render());
-    this.#appRoot.appendChild(this.#navBarView.render());
+    this.appRoot.appendChild(this.mainView);
+    this.appRoot.appendChild(this.navBarView);
   }
 }
