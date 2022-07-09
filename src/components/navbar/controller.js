@@ -1,7 +1,7 @@
 import { PubSub } from '../../generic/pubSub';
 import { NavBarView } from './view/view';
 import { NavBarModel } from '../../models/navBar/navBar';
-import { events } from '../../models/navBar/navBarEvents';
+import { projectEvents } from '../../models/project/projectEvents';
 import { appEvents } from '../../models/main/appEvents';
 
 export class NavBarController {
@@ -15,20 +15,43 @@ export class NavBarController {
   constructor(view, model, localPs, globalPs) {
     this.view = view;
     this.view._bindHandleOpenProjectForm(this, this.openNewProjectForm);
+    this.view._bindHandleProjectRemoval(this, this.removeProject);
+    this.view._bindOpenExistingProjectHandler(this, this.openProjectWidget);
 
     this.model = model;
     this.globalPs = globalPs;
-    this.globalPs.subscribe(events.projectAdded, this.model.addProject);
-    this.globalPs.subscribe(events.projectRemoved, this.model.removeProject);
 
+    // the model is subscribed to the events from the project storage so that the projects
+    // are not removed from the view before they are actually removed from the storage.
+    this.globalPs.subscribe(projectEvents.projectAddedToStorage().getName(), this.model.addProject);
+    this.globalPs.subscribe(
+      projectEvents.projectRemovedFromStorage().getName(),
+      this.model.removeProject,
+    );
+
+    // projects are removed from the view after the model has received confirmation
     this.localPs = localPs;
-    this.localPs.subscribe(events.projectRemoved, this.view.addProject);
-    this.localPs.subscribe(events.projectAdded, this.view.removeProject);
+    this.localPs.subscribe(projectEvents.projectRemoved().getName(), this.view.removeProject);
+    this.localPs.subscribe(projectEvents.projectAdded().getName(), this.view.addProject);
   }
 
   /** Publish an event to trigger opening of the new form creation widget. */
   openNewProjectForm = () => {
     this.globalPs.pub(appEvents.openNewProjectForm);
+  };
+
+  removeProject = (projectTitle) => {
+    this.globalPs.pub(
+      projectEvents.projectRemoved().getName(),
+      projectEvents.projectRemoved().setArgs(projectTitle),
+    );
+  };
+
+  openProjectWidget = (projectTitle) => {
+    this.globalPs.pub(
+      appEvents.openExistingProjectWidget().getName(),
+      appEvents.openExistingProjectWidget().setArgs(projectTitle),
+    );
   };
 
   render() {

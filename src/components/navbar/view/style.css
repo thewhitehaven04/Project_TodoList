@@ -2,5 +2,24 @@
   display: flex;
   flex-flow: column wrap;
 
-  width: min-content;
+  width: 15%; 
+  min-width: min-content; 
+
+  padding: 15px;
+  align-items: flex-start;
+}
+
+.navbar-section {
+  display: flex;
+}
+
+.section-header {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.navbar-list-item {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
 }

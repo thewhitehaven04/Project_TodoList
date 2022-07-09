@@ -4,14 +4,14 @@ import { NavBarController } from './controller';
 import { PubSub } from '../../generic/pubSub';
 
 /**
- * @param {ProjectStorage} projectStorage
+ * @param {String[]} projects
  * @param {PubSub} fromNavBarPs
  */
-export function initNavBar(projectStorage, fromNavBarPs) {
+export function initNavBar(projects, fromNavBarPs) {
   const localPs = new PubSub();
   return new NavBarController(
     new NavBarView(),
-    new NavBarModel(projectStorage, localPs),
+    new NavBarModel(projects, localPs),
     localPs,
     fromNavBarPs,
   );

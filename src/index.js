@@ -3,14 +3,18 @@ import { MainController } from './components/main/main';
 import { MainView } from './components/main/view/main';
 import { initNavBar } from './components/navbar/init';
 import { PubSub } from './generic/pubSub';
-import { pStorage } from './models/projectStorage/model';
+import { ProjectStorage } from './models/projectStorage/model';
 
 const runApp = function (/** @type {Node} */ appRoot) {
   const appEventBus = new PubSub();
+  const projectStorage = new ProjectStorage([], appEventBus);
   const appView = new AppView(
     appRoot,
     new MainController(new MainView(), appEventBus),
-    initNavBar(pStorage, appEventBus),
+    initNavBar(
+      projectStorage.getProjects().map((project) => project.title),
+      appEventBus,
+    ),
   );
 
   appView.render();

@@ -1,5 +1,7 @@
 :root {
   box-sizing: border-box;
+
+  font-size: 16pt;
 }
 
 *,
@@ -14,6 +16,6 @@ html {
 
 #todo-list-app {
   display: grid;
-  grid-template-columns:  [navbar-start] minmax(min-content, 300px) [navbar-end] [main-section-start] 1fr [main-section-end];
-  grid-template-areas: "navbar main";
+  grid-template-columns: [navbar-start] minmax(min-content, 300px) [navbar-end main-start] 1fr [main-end];
+  grid-template-areas: 'navbar main';
 }
