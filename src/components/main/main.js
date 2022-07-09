@@ -1,27 +1,31 @@
-import { AppEvent } from '../../generic/event';
 import { MainView } from './view/main';
 import { PubSub } from '../../generic/pubSub';
-import { EventWidgetMapper } from '../../models/main/eventWidgetMapperModel.js';
+import { appEvents } from '../../models/main/appEvents';
+import { CreateNewProjectWidgetController } from './widgets/createNewProjectWidgetController';
+import { CreateNewProjectWidgetView } from './widgets/view/createNewProjectView';
 
 export class MainController {
   /**
    * Initialize main pane controller
    * @param {MainView} view view instance
-   * @param {PubSub} toMainPubSub PubSub instance receives events to the controller
-   * @param {EventWidgetMapper} eventWidgetMapper event to widgets mapper
+   * @param {PubSub} eventBus app event bus that handles communication between app modules
    * */
-  constructor(view, toMainPubSub, eventWidgetMapper) {
+  constructor(view, eventBus) {
     this.view = view;
-    this.eventWidgetMapper = eventWidgetMapper;
-    toMainPubSub.subscribe(this.handleEvent);
+    this.appEventBus = eventBus;
+    this.appEventBus.subscribe(appEvents.openNewProjectForm, this.openNewProjectWidget);
   }
 
   /** Calls the view to display the widget mapped to an event in the eventMapper
-   * @param {AppEvent} event
+   * @param {Object} event
    */
-  handleEvent = (event) => {
-    const widgetController = this.eventWidgetMapper.getWidgetForEvent(event);
-    this.view.updateWidget(widget);
+  openNewProjectWidget = () => {
+    this.view.updateWidget(
+      new CreateNewProjectWidgetController(
+        new CreateNewProjectWidgetView(),
+        this.appEventBus,
+      ).render(),
+    );
     this.render();
   };
 

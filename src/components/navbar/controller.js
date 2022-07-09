@@ -1,7 +1,8 @@
 import { PubSub } from '../../generic/pubSub';
 import { NavBarView } from './view/view';
 import { NavBarModel } from '../../models/navBar/navBar';
-import { EVENT_NEW_PROJECT_OPEN_WIDGET } from '../../models/main/mainEvents';
+import { events } from '../../models/navBar/navBarEvents';
+import { appEvents } from '../../models/main/appEvents';
 
 export class NavBarController {
   /**
@@ -19,12 +20,13 @@ export class NavBarController {
     this.globalPs = globalPs;
 
     this.localPs = localPs;
-    this.localPs.subscribe(this.view.update);
+    this.localPs.subscribe(events.projectRemoved, this.view.update);
+    this.localPs.subscribe(events.projectAdded, this.view.update);
   }
 
   /** Publish an event to trigger opening of the new form creation widget. */
   openNewProjectForm = () => {
-    this.globalPs.pub(EVENT_NEW_PROJECT_OPEN_WIDGET);
+    this.globalPs.pub(appEvents.openNewProjectForm, null);
   };
 
   render() {

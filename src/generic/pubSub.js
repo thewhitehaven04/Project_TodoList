@@ -5,21 +5,35 @@
  */
 export class PubSub {
   constructor() {
-    this.observers = [];
+    this.eventMap = new Map();
   }
 
-  /** Adds an object to the observer list */
-  subscribe(observer) {
-    this.observers.push(observer);
+  /** Adds an object to the observer list
+   * @param {String} eventName name of an event
+   * @param {Function} observer event callback function
+   */
+  subscribe(eventName, observer) {
+    if (this.eventMap.has(eventName)) {
+      this.eventMap.get(eventName).push(observer);
+    } else {
+      this.eventMap.set(eventName, [observer]);
+    }
   }
-
-  /** Removes an object from the observer list */
-  unsubscribe(observer) {
-    this.observers = this.observers.filter((obs) => obs !== observer);
+  /**
+   * Removes an object from the observer list
+   * @param {String} eventName
+   * @param {Function} observer
+   */
+  unsubscribe(eventName, observer) {
+    const events = this.eventMap.get(eventName);
+    this.eventMap.set(
+      eventName,
+      events.filter((obs) => obs != observer),
+    );
   }
 
   /** Publishes an event to all subscribers */
-  pub = (data) => {
-    this.observers.forEach((obs) => obs(data));
+  pub = (/** @type {string} */ eventName, /** @type {string} */ data) => {
+    this.eventMap.get(eventName).forEach((observer) => observer(data));
   };
 }

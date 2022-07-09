@@ -3,18 +3,16 @@ import { MainController } from './components/main/main';
 import { MainView } from './components/main/view/main';
 import { initNavBar } from './components/navbar/init';
 import { PubSub } from './generic/pubSub';
-import { initMapper } from './models/main/eventWidgetMapperModel.js';
 import { pStorage } from './models/projectStorage/model';
 
-const runApp = function (appRoot) {
-  const topics = {
-    toMain: new PubSub(),
-  };
+const runApp = function (/** @type {Node} */ appRoot) {
+
+  const appEventBus = new PubSub();
 
   const appView = new AppView(
     appRoot,
-    new MainController(new MainView(), topics.toMain, initMapper()),
-    initNavBar(pStorage, topics.toMain),
+    new MainController(new MainView(), appEventBus),
+    initNavBar(pStorage, appEventBus),
   );
 
   appView.render();

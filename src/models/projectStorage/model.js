@@ -1,8 +1,5 @@
-/**
- * @classdesc {ProjectStorage}
- * @method {addProject}
- * @method {deleteProject}
- */
+import { ProjectModel } from "../project/model";
+
 class ProjectStorage {
   /**
    * @param {ProjectModel[]} projects
@@ -12,14 +9,14 @@ class ProjectStorage {
   }
 
   /**
-   * @param {Project} project
+   * @param {ProjectModel} project
    */
   addProject(project) {
     this.projects.push(project);
   }
 
   /**
-   * @param {Project} project
+   * @param {ProjectModel} projectTitle
    */
   deleteProject(projectTitle) {
     this.projects = this.projects.filter(
@@ -28,5 +25,5 @@ class ProjectStorage {
   }
 }
 
-const pStorage = new ProjectStorage();
+const pStorage = new ProjectStorage([]);
 export { pStorage };

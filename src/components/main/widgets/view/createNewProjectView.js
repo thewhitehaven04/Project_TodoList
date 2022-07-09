@@ -2,7 +2,6 @@ export class CreateNewProjectWidgetView {
   /** Render the project creation form */
   render() {
     const div = document.createElement('div');
-    const form = document.createElement('form');
 
     const inputProjectTitle = document.createElement('input');
     inputProjectTitle.type = 'text';
@@ -12,10 +11,9 @@ export class CreateNewProjectWidgetView {
     buttonSubmit.textContent = 'new';
     buttonSubmit.type = 'submit';
 
-    form.appendChild(inputProjectTitle);
-    form.appendChild(buttonSubmit);
+    div.appendChild(inputProjectTitle);
+    div.appendChild(buttonSubmit);
 
-    div.appendChild(form);
     return div;
   }
 }
