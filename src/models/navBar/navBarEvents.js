@@ -1,4 +1,4 @@
 export const events = {
-  projectRemoved: 'projectRemovedEvent',
+  projectRemoved: 'projectRemovedEvent', 
   projectAdded: 'projectAddedEvent',
 };

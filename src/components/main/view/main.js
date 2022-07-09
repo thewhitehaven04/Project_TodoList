@@ -1,26 +1,29 @@
-import { createNewProjectWidget } from '../widgets/view/createNewProjectView';
-
+/**
+ * @typedef Widget 
+ * @property {Function} render
+ */
 export class MainView {
-  /** Instantiates the main view object.
-   * @param {Node}
-   * @param {createNewProjectWidget} widget
-   * */
   main = document.createElement('main');
 
+  /** Instantiates the main view object.
+  @param {Widget} [widget]  
+  */
   constructor(widget) {
-    this.currentlyDisplayedWidget = widget;
+    this.currentlyDisplayedWidget = widget ?? null;
   }
 
   /**
-   * @param {createNewProjectWidget} widget update the widget being displayed
+   * Updates the currently displayed widget
+   * @param {Widget} widget widget to display
    */
-  updateWidget(widget) {
-    this.currentlyDisplayedWidget = new widget();
+  setWidget(widget) {
+    this.currentlyDisplayedWidget = widget; 
   }
 
   render() {
     if (this.currentlyDisplayedWidget != null) {
-      this.main.replaceChildren(this.currentlyDisplayedWidget.render());
+      this.main.replaceChildren();
+      this.main.appendChild(this.currentlyDisplayedWidget.render());
     }
     return this.main;
   }

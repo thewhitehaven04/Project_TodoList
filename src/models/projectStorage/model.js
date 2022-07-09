@@ -9,18 +9,18 @@ class ProjectStorage {
   }
 
   /**
-   * @param {ProjectModel} project
+   * @param {ProjectModel} projectModel
    */
-  addProject(project) {
-    this.projects.push(project);
+  addProject(projectModel) {
+    this.projects.push(projectModel);
   }
 
   /**
-   * @param {ProjectModel} projectTitle
+   * @param {ProjectModel} projectModel 
    */
-  deleteProject(projectTitle) {
+  deleteProject(projectModel) {
     this.projects = this.projects.filter(
-      (existingProject) => projectTitle !== existingProject.title,
+      (existingProject) => projectModel.title !== existingProject.title,
     );
   }
 }

@@ -16,16 +16,12 @@ export class MainController {
     this.appEventBus.subscribe(appEvents.openNewProjectForm, this.openNewProjectWidget);
   }
 
-  /** Calls the view to display the widget mapped to an event in the eventMapper
-   * @param {Object} event
-   */
+  /** Calls the view to display the new project creation widget */
   openNewProjectWidget = () => {
-    this.view.updateWidget(
-      new CreateNewProjectWidgetController(
-        new CreateNewProjectWidgetView(),
-        this.appEventBus,
-      ).render(),
-    );
+    this.view.setWidget(new CreateNewProjectWidgetController(
+      new CreateNewProjectWidgetView(),
+      this.appEventBus,
+    ));
     this.render();
   };
 

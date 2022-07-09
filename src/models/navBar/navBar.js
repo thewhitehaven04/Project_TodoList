@@ -3,29 +3,29 @@ import { PubSub } from '../../generic/pubSub';
 import { events } from './navBarEvents';
 
 export class NavBarModel {
+
   /**
    * @param {ProjectStorage} projectStorage
    * @param {PubSub} publisher
    */
-
   constructor(projectStorage, publisher) {
     this.projectStorage = projectStorage;
     this.publisher = publisher;
   }
 
   /**
-   * @param {String} project
+   * @param {import('../project/model').ProjectProps} projectProps 
    */
-  addProject(project) {
-    this.projectStorage.addProject(new ProjectModel(project));
-    this.publisher.pub(events.projectRemoved, project);
+  addProject = (projectProps) => {
+    this.projectStorage.addProject(new ProjectModel(projectProps));
+    this.publisher.pub(events.projectRemoved, projectProps.title);
   }
 
   /**
-   * @param {String} projectTitle
+   * @param {import('../project/model').ProjectProps} projectProps 
    */
-  removeProject(projectTitle) {
-    this.projectStorage.removeProject(projectTitle);
-    this.publisher.pub(events.projectAdded, projectTitle);
+  removeProject = (projectProps) => {
+    this.projectStorage.removeProject(projectProps.title);
+    this.publisher.pub(events.projectAdded, projectProps.title);
   }
 }

@@ -3,6 +3,10 @@ import { NavBarModel } from '../../models/navBar/navBar';
 import { NavBarController } from './controller';
 import { PubSub } from '../../generic/pubSub';
 
+/**
+ * @param {ProjectStorage} projectStorage
+ * @param {PubSub} fromNavBarPs
+ */
 export function initNavBar(projectStorage, fromNavBarPs) {
   const localPs = new PubSub();
   return new NavBarController(

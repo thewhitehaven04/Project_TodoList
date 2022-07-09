@@ -18,15 +18,17 @@ export class NavBarController {
 
     this.model = model;
     this.globalPs = globalPs;
+    this.globalPs.subscribe(events.projectAdded, this.model.addProject);
+    this.globalPs.subscribe(events.projectRemoved, this.model.removeProject);
 
     this.localPs = localPs;
-    this.localPs.subscribe(events.projectRemoved, this.view.update);
-    this.localPs.subscribe(events.projectAdded, this.view.update);
+    this.localPs.subscribe(events.projectRemoved, this.view.addProject);
+    this.localPs.subscribe(events.projectAdded, this.view.removeProject);
   }
 
   /** Publish an event to trigger opening of the new form creation widget. */
   openNewProjectForm = () => {
-    this.globalPs.pub(appEvents.openNewProjectForm, null);
+    this.globalPs.pub(appEvents.openNewProjectForm);
   };
 
   render() {

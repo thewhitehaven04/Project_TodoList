@@ -6,9 +6,7 @@ import { PubSub } from './generic/pubSub';
 import { pStorage } from './models/projectStorage/model';
 
 const runApp = function (/** @type {Node} */ appRoot) {
-
   const appEventBus = new PubSub();
-
   const appView = new AppView(
     appRoot,
     new MainController(new MainView(), appEventBus),

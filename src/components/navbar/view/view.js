@@ -1,4 +1,3 @@
-import { ProjectAddedEvent, ProjectRemovedEvent } from '../../../models/navBar/events';
 import style from './style.css';
 
 export class NavBarView {
@@ -16,15 +15,17 @@ export class NavBarView {
   /**
    * @param {String} projectTitle
    */
-  addProject(projectTitle) {
+  addProject = (projectTitle) => {
     this.projects.push(projectTitle);
+    this.renderProjects();
   }
 
   /**
    * @param {String} projectTitle
    */
-  removeProject(projectTitle) {
+  removeProject = (projectTitle) => {
     this.projects = this.projects.filter((existingProject) => existingProject != projectTitle);
+    this.renderProjects();
   }
 
   renderProjects() {
@@ -35,20 +36,6 @@ export class NavBarView {
       liProject.dataset.projectTitle = projectTitle;
       this.projectListRoot.appendChild(liProject);
     });
-
-    this.projectListRoot.addEventListener('click', (event) => {
-      this.openExistingProjectForm(event.target.dataset.projectTitle);
-    });
-  }
-
-  update(event) {
-    if (event instanceof ProjectAddedEvent) {
-      this.addProject(event.project);
-    } else if (event instanceof ProjectRemovedEvent) {
-      this.removeProject(event.project);
-    }
-
-    this.renderProjects();
   }
 
   _bindHandleOpenProjectForm(obj, handler) {
@@ -58,10 +45,6 @@ export class NavBarView {
   openNewProjectForm(newProjectFormHandler) {
     newProjectFormHandler();
   }
-
-  openExistingProjectForm = () => {
-    callback(project);
-  };
 
   render() {
     const divProjects = document.createElement('div');
