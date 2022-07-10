@@ -1,10 +1,11 @@
 import { MainView } from './view/main';
 import { PubSub } from '../../generic/pubSub';
 import { appEvents } from '../../models/main/appEvents';
-import { CreateNewProjectWidgetController } from './widgets/createNewProjectWidgetController';
-import { CreateNewProjectWidgetView } from './widgets/view/createNewProjectView';
-import { ProjectViewController } from './widgets/existingProjectWidgetController';
-import { ProjectView } from './widgets/view/existingProjectView';
+import { CreateNewProjectWidgetController } from './widgets/createNewProjectWidget/createNewProjectWidgetController';
+import { CreateNewProjectWidgetView } from './widgets/createNewProjectWidget/createNewProjectView';
+import { ProjectViewController } from './widgets/projectViewWidget/existingProjectWidgetController';
+import { ProjectView } from './widgets/projectViewWidget/existingProjectView';
+import { getProject } from '../..';
 
 export class MainController {
   /**
@@ -15,7 +16,12 @@ export class MainController {
   constructor(view, eventBus) {
     this.view = view;
     this.appEventBus = eventBus;
+
     this.appEventBus.subscribe(appEvents.openNewProjectForm, this.openNewProjectWidget);
+    this.appEventBus.subscribe(
+      appEvents.openProjectViewWidget.getName(),
+      this.openProjectViewWidget,
+    );
   }
 
   /** Calls the view to display the new project creation widget */
@@ -30,7 +36,7 @@ export class MainController {
    * @param {import('../../models/project/model').ProjectProps} projectProps
    */
   openProjectViewWidget = (projectProps) => {
-    this.view.setWidget(new ProjectViewController(new ProjectView(projectProps)));
+    this.view.setWidget(new ProjectViewController(new ProjectView(getProject(projectProps))));
     this.view.render();
   };
 

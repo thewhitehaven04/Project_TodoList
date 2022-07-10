@@ -1,4 +1,4 @@
-import { ProjectView } from './view/existingProjectView';
+import { ProjectView } from './existingProjectView';
 
 export class ProjectViewController {
   /**

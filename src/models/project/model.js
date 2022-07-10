@@ -6,11 +6,22 @@
  */
 export class ProjectModel {
   /**
-   * @param {ProjectProps} projectProps 
+   * @param {ProjectProps} projectProps
    */
   constructor(projectProps) {
     this.title = projectProps.title;
-    this.checklists = projectProps.checklists;
-    this.tasks = projectProps.title;
+    this.checklists = projectProps.checklists ?? [];
+    this.tasks = projectProps.tasks ?? [];
+  }
+
+  /**
+   * @returns {ProjectProps} projectProps
+   */
+  toJSON() {
+    return {
+      title: this.title,
+      checklists: this.checklists,
+      tasks: this.tasks,
+    };
   }
 }

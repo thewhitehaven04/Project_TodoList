@@ -1,24 +1,24 @@
 import { AppView } from './app/renderApp';
 import { MainController } from './components/main/main';
 import { MainView } from './components/main/view/main';
-import { initNavBar } from './components/navbar/init';
+import { NavBarFacade } from './components/navbar/facade';
 import { PubSub } from './generic/pubSub';
-import { ProjectStorage } from './models/projectStorage/model';
+import { ProjectStorageFacade } from './models/projectStorage/facade';
 
-const runApp = function (/** @type {Node} */ appRoot) {
-  const appEventBus = new PubSub();
-  const projectStorage = new ProjectStorage([], appEventBus);
-  const appView = new AppView(
+const appEventBus = new PubSub();
+const appRoot = document.querySelector('#todo-list-app');
+const projectStorage = new ProjectStorageFacade([], appEventBus);
+
+const runApp = function (appRoot, eventBus) {
+  new AppView(
     appRoot,
-    new MainController(new MainView(), appEventBus),
-    initNavBar(
-      projectStorage.getProjects().map((project) => project.title),
-      appEventBus,
-    ),
-  );
-
-  appView.render();
+    new MainController(new MainView(), eventBus),
+    new NavBarFacade(projectStorage.getAllProjects(), eventBus),
+  ).render();
 };
 
-const appRoot = document.querySelector('#todo-list-app');
-runApp(appRoot);
+runApp(appRoot, appEventBus);
+
+const getProject = projectStorage.getProject;
+
+export { getProject };

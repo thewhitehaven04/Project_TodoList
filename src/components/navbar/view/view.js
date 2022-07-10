@@ -1,10 +1,6 @@
 import style from './style.css';
 
 export class NavBarView {
-  /** Initialize navbar view with given list of projects
-   * @param {Project[]} projects an array of projects
-   */
-
   navRoot = document.createElement('nav');
   projectsRoot = document.createElement('ul');
 
@@ -35,7 +31,7 @@ export class NavBarView {
       const liProjectContainer = document.createElement('li');
       liProjectContainer.classList.add('navbar-list-item');
       liProjectContainer.addEventListener('click', () => {
-        this.openProjectWidget(projectTitle);
+        this.openExistingProject(projectTitle);
       });
 
       const span = document.createElement('span');
@@ -72,10 +68,10 @@ export class NavBarView {
   }
 
   _bindOpenExistingProjectHandler(obj, handler) {
-    this.openProjectWidget = this.openProjectWidget.bind(obj, handler);
+    this.openExistingProject = this.openExistingProject.bind(obj, handler);
   }
 
-  openProjectWidget(handler, projectTitle) {
+  openExistingProject(handler, projectTitle) {
     handler(projectTitle);
   }
 

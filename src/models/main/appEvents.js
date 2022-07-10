@@ -1,11 +1,9 @@
 export const appEvents = {
   openNewProjectForm: 'openNewProjectFormEvent',
-  openProjectViewWidget: () => {
-    return {
-      getName: () => 'openProjectViewWidgetEvent',
-      setArgs: (projectTitle) => {
-        title: projectTitle;
-      },
-    };
+  openProjectViewWidget: {
+    getName: () => 'openProjectViewWidgetEvent',
+    setArgs: (projectTitle) => {
+      return { title: projectTitle };
+    },
   },
 };

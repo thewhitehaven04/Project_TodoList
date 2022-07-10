@@ -1,40 +1,33 @@
-import { PubSub } from '../../generic/pubSub';
 import { ProjectModel } from '../project/model';
-import { projectEvents } from '../project/projectEvents';
 
 class ProjectStorage {
+  constructor() {
+    /**
+     * @type {ProjectModel[]}
+     */
+    this.projects = [];
+  }
   /**
-   * @param {ProjectModel[]} projects
-   * @param {PubSub} eventBus
+   * @param {import('../project/model').ProjectProps} projectProps
    */
-  constructor(projects, eventBus) {
-    this.projects = projects;
-    this.eventBus = eventBus;
-
-    this.eventBus.subscribe(projectEvents.projectAdded().getName(), this.addProject);
-    this.eventBus.subscribe(projectEvents.projectRemoved().getName(), this.deleteProject);
+  addProject(projectProps) {
+    this.projects.push(new ProjectModel(projectProps));
+  }
+  /**
+   * @param {import('../project/model').ProjectProps} projectProps
+   */
+  deleteProject(projectProps) {
+    this.projects = this.projects.filter(
+      (existingProject) => projectProps.title !== existingProject.title,
+    );
   }
 
   /**
    * @param {import('../project/model').ProjectProps} projectProps
+   * @returns
    */
-  addProject = (projectProps) => {
-    this.projects.push(new ProjectModel(projectProps));
-    this.eventBus.pub(projectEvents.projectAddedToStorage().getName(), projectProps);
-  };
-
-  /**
-   * @param {import('../project/model').ProjectProps} projectProps
-   */
-  deleteProject = (projectProps) => {
-    this.projects = this.projects.filter(
-      (existingProject) => projectProps.title !== existingProject.title,
-    );
-    this.eventBus.pub(projectEvents.projectRemovedFromStorage().getName(), projectProps);
-  };
-
-  getProjects() {
-    return this.projects;
+  getProject(projectProps) {
+    return this.projects.find((project) => project.title === projectProps.title) ?? projectProps;
   }
 }
 

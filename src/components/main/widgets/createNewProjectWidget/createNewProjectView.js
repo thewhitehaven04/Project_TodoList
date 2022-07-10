@@ -10,18 +10,21 @@ export class CreateNewProjectWidgetView {
     inputProjectTitle.type = 'text';
     inputProjectTitle.width = 300;
     inputProjectTitle.maxLength = 16;
+    inputProjectTitle.required = true;
+    inputProjectTitle.minLength = 3;
 
     const buttonSubmit = document.createElement('button');
     buttonSubmit.textContent = 'new';
     buttonSubmit.type = 'submit';
 
     buttonSubmit.addEventListener('click', () => {
-      this.createNewProject(inputProjectTitle.value);
-      this.close();
+      if (inputProjectTitle.value !== '') {
+        this.createNewProject(inputProjectTitle.value);
+        this.close();
+      }
     });
 
-    this.root.appendChild(inputProjectTitle);
-    this.root.appendChild(buttonSubmit);
+    this.root.append(...[inputProjectTitle, buttonSubmit]);
 
     return this.root;
   }
@@ -30,7 +33,6 @@ export class CreateNewProjectWidgetView {
    * @param {import('../../../../models/project/model').ProjectProps} projectProps
    */
   createNewProject(handler, projectProps) {
-    console.log(`Passing props to handler: ${projectProps}`);
     handler(projectProps);
   }
 

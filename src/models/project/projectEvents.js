@@ -1,34 +1,26 @@
 export const projectEvents = {
-  projectAdded: () => {
-    return {
-      getName: () => 'projectAddedEvent',
-      setArgs: (projectTitle) => {
-        title: projectTitle;
-      },
-    };
+  projectAdded: {
+    getName: () => 'projectAddedEvent',
+    setArgs: (projectTitle) => {
+      title: projectTitle;
+    },
   },
-  projectRemoved: () => {
-    return {
-      getName: () => 'projectRemovedEvent',
-      setArgs: (projectTitle) => {
-        title: projectTitle;
-      },
-    };
+  projectRemoved: {
+    getName: () => 'projectRemovedEvent',
+    setArgs: (projectTitle) => {
+      title: projectTitle;
+    },
   },
-  projectAddedToStorage: () => {
-    return {
-      getName: () => 'projectInStorageEvent',
-      setArgs: (projectTitle) => {
-        title: projectTitle;
-      },
-    };
+  projectAddedToStorage: {
+    getName: () => 'projectInStorageEvent',
+    setArgs: (projectTitle) => {
+      title: projectTitle;
+    },
   },
-  projectRemovedFromStorage: () => {
-    return {
-      getName: () => 'projectRemovedFromStorageEvent',
-      setArgs: (projectTitle) => {
-        title: projectTitle;
-      },
-    };
+  projectRemovedFromStorage: {
+    getName: () => 'projectRemovedFromStorageEvent',
+    setArgs: (projectTitle) => {
+      title: projectTitle;
+    },
   },
 };

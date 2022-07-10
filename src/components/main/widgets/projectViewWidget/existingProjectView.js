@@ -1,3 +1,5 @@
+import style from './style.css';
+
 export class ProjectView {
   /**
    * @param {import("../../../../models/project/model").ProjectProps} projectProps
@@ -20,6 +22,7 @@ export class ProjectView {
     spanChecklists.textContent = 'Checklists';
 
     const ulChecklist = document.createElement('ul');
+    ulChecklist.classList.add('flex-list');
     this.checklists.forEach((checklist) => {
       const liChecklist = document.createElement('li');
       liChecklist.textContent = checklist;
@@ -27,12 +30,14 @@ export class ProjectView {
     });
 
     checklistsSection.append(...[spanChecklists, ulChecklist]);
+    rootDiv.appendChild(checklistsSection);
 
     const tasksSection = document.createElement('section');
     const taskSectionHeader = document.createElement('span');
     taskSectionHeader.textContent = 'Tasks';
 
     const ulTasks = document.createElement('ul');
+    ulTasks.classList.add('flex-list');
     this.checklists.forEach((task) => {
       const liTask = document.createElement('li');
       liTask.textContent = task;
@@ -40,5 +45,13 @@ export class ProjectView {
     });
 
     tasksSection.append(...[taskSectionHeader, ulTasks]);
+    rootDiv.appendChild(tasksSection);
+    
+    // These are temporary
+    rootDiv.classList.add('border');
+    tasksSection.classList.add('border'); 
+    checklistsSection.classList.add('border');
+
+    return rootDiv;
   }
 }

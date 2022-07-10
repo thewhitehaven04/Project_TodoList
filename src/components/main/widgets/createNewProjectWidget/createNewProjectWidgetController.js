@@ -1,6 +1,6 @@
-import { CreateNewProjectWidgetView } from './view/createNewProjectView';
-import { PubSub } from './../../../generic/pubSub';
-import { projectEvents } from '../../../models/project/projectEvents';
+import { CreateNewProjectWidgetView } from './createNewProjectView';
+import { PubSub } from '../../../../generic/pubSub';
+import { projectEvents } from '../../../../models/project/projectEvents';
 
 /**
  * Project creation widget controller
@@ -18,7 +18,7 @@ export class CreateNewProjectWidgetController {
   }
 
   publishNewProjectCreation = (projectTitle) => {
-    this.newProjectPubSub.pub(projectEvents.projectAdded().getName(), { title: projectTitle });
+    this.newProjectPubSub.pub(projectEvents.projectAdded.getName(), { title: projectTitle });
   };
 
   render() {
