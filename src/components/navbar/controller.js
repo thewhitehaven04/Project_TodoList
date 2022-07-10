@@ -49,8 +49,8 @@ export class NavBarController {
 
   openProjectWidget = (projectTitle) => {
     this.globalPs.pub(
-      appEvents.openExistingProjectWidget().getName(),
-      appEvents.openExistingProjectWidget().setArgs(projectTitle),
+      appEvents.openProjectViewWidget().getName(),
+      appEvents.openProjectViewWidget().setArgs(projectTitle),
     );
   };
 

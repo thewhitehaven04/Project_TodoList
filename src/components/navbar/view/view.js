@@ -34,8 +34,8 @@ export class NavBarView {
     this.projects.forEach((projectTitle) => {
       const liProjectContainer = document.createElement('li');
       liProjectContainer.classList.add('navbar-list-item');
-      liProjectContainer.addEventListener("click", () => {
-        this.openExistingProject(projectTitle)
+      liProjectContainer.addEventListener('click', () => {
+        this.openProjectWidget(projectTitle);
       });
 
       const span = document.createElement('span');
@@ -72,16 +72,16 @@ export class NavBarView {
   }
 
   _bindOpenExistingProjectHandler(obj, handler) {
-    this.openExistingProject.bind(obj, handler);
+    this.openProjectWidget = this.openProjectWidget.bind(obj, handler);
   }
 
-  openExistingProject(handler, projectTitle){ 
+  openProjectWidget(handler, projectTitle) {
     handler(projectTitle);
   }
 
   render() {
     this.navRoot.classList.add('navbar');
-    
+
     const sectionProjects = document.createElement('section');
     const projectsSectionHeader = document.createElement('div');
     projectsSectionHeader.classList.add('section-header');
@@ -92,7 +92,7 @@ export class NavBarView {
 
     const buttonAddProjects = document.createElement('button');
     buttonAddProjects.textContent = 'Add project';
-    buttonAddProjects.addEventListener('click', (event) => this.openNewProjectForm());
+    buttonAddProjects.addEventListener('click', () => this.openNewProjectForm());
     projectsSectionHeader.appendChild(buttonAddProjects);
 
     sectionProjects.appendChild(projectsSectionHeader);
