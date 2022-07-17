@@ -23,4 +23,10 @@ export const projectEvents = {
       title: projectTitle;
     },
   },
+  taskAddedToProject: {
+    getName: () => 'taskAddedToProjectEvent',
+    setArgs: (uuid) => {
+      taskId: uuid;
+    },
+  },
 };

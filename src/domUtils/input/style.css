@@ -1,0 +1,15 @@
+.named-input {
+  display: flex;
+  flex-flow: row wrap;
+
+  align-items: center;
+}
+
+.named-input > span {
+  width: 100px;
+}
+
+.flex-radios {
+  display: flex;
+  flex-flow: row nowrap;
+}

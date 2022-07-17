@@ -24,10 +24,12 @@ class ProjectStorage {
 
   /**
    * @param {import('../project/model').ProjectProps} projectProps
-   * @returns
+   * @returns {ProjectModel}
    */
   getProject(projectProps) {
-    return this.projects.find((project) => project.title === projectProps.title) ?? projectProps;
+    return this.projects.find(
+      (project) => project.title === projectProps.title,
+    );
   }
 }
 

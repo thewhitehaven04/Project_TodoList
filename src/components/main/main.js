@@ -17,7 +17,10 @@ export class MainController {
     this.view = view;
     this.appEventBus = eventBus;
 
-    this.appEventBus.subscribe(appEvents.openNewProjectForm, this.openNewProjectWidget);
+    this.appEventBus.subscribe(
+      appEvents.openNewProjectForm,
+      this.openNewProjectWidget,
+    );
     this.appEventBus.subscribe(
       appEvents.openProjectViewWidget.getName(),
       this.openProjectViewWidget,
@@ -27,7 +30,10 @@ export class MainController {
   /** Calls the view to display the new project creation widget */
   openNewProjectWidget = () => {
     this.view.setWidget(
-      new CreateNewProjectWidgetController(new CreateNewProjectWidgetView(), this.appEventBus),
+      new CreateNewProjectWidgetController(
+        new CreateNewProjectWidgetView(),
+        this.appEventBus,
+      ),
     );
     this.render();
   };
@@ -36,7 +42,16 @@ export class MainController {
    * @param {import('../../models/project/model').ProjectProps} projectProps
    */
   openProjectViewWidget = (projectProps) => {
-    this.view.setWidget(new ProjectViewController(new ProjectView(getProject(projectProps))));
+    const model = getProject(projectProps);
+    const enrichedProps = model.toJSON();
+
+    this.view.setWidget(
+      new ProjectViewController(
+        model,
+        new ProjectView(getProject(enrichedProps)),
+        this.appEventBus,
+      ),
+    );
     this.view.render();
   };
 

@@ -3,11 +3,15 @@ import { MainController } from './components/main/main';
 import { MainView } from './components/main/view/main';
 import { NavBarFacade } from './components/navbar/facade';
 import { PubSub } from './generic/pubSub';
-import { ProjectStorageFacade } from './models/projectStorage/facade';
+import { ProjectStoragePublisher } from './models/projectStorage/decorator';
+import { TaskStoragePublisher } from './models/taskStorage/taskStorageFacade';
 
 const appEventBus = new PubSub();
+
+const projectStorage = new ProjectStoragePublisher([], appEventBus);
+const taskStorage = new TaskStoragePublisher(appEventBus);
+
 const appRoot = document.querySelector('#todo-list-app');
-const projectStorage = new ProjectStorageFacade([], appEventBus);
 
 const runApp = function (appRoot, eventBus) {
   new AppView(
@@ -20,5 +24,6 @@ const runApp = function (appRoot, eventBus) {
 runApp(appRoot, appEventBus);
 
 const getProject = projectStorage.getProject;
+const getTask = taskStorage.getTask;
 
-export { getProject };
+export { getProject, getTask };

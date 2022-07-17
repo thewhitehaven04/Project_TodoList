@@ -1,9 +1,9 @@
 import { PubSub } from '../../generic/pubSub';
 import { projectEvents } from '../project/projectEvents';
 import { ProjectStorage } from './model';
-import { ProjectProps } from './../project/model';
+import { ProjectProps } from '../project/model';
 
-export class ProjectStorageFacade {
+export class ProjectStoragePublisher {
   /**
    * @param {ProjectProps[]} projectPropsArr
    * @param {PubSub} eventBus
@@ -11,8 +11,14 @@ export class ProjectStorageFacade {
   constructor(projectPropsArr, eventBus) {
     this.projectStorage = new ProjectStorage();
     this.eventBus = eventBus;
-    this.eventBus.subscribe(projectEvents.projectAdded.getName(), this.addProject);
-    this.eventBus.subscribe(projectEvents.projectRemoved.getName(), this.deleteProject);
+    this.eventBus.subscribe(
+      projectEvents.projectAdded.getName(),
+      this.addProject,
+    );
+    this.eventBus.subscribe(
+      projectEvents.projectRemoved.getName(),
+      this.deleteProject,
+    );
 
     projectPropsArr.forEach((projectProps) => this.addProject(projectProps));
   }
@@ -22,7 +28,10 @@ export class ProjectStorageFacade {
    */
   addProject = (projectProps) => {
     this.projectStorage.addProject(projectProps);
-    this.eventBus.pub(projectEvents.projectAddedToStorage.getName(), projectProps);
+    this.eventBus.pub(
+      projectEvents.projectAddedToStorage.getName(),
+      projectProps,
+    );
   };
 
   /**
@@ -30,14 +39,17 @@ export class ProjectStorageFacade {
    */
   deleteProject = (projectProps) => {
     this.projectStorage.deleteProject(projectProps);
-    this.eventBus.pub(projectEvents.projectRemovedFromStorage.getName(), projectProps);
+    this.eventBus.pub(
+      projectEvents.projectRemovedFromStorage.getName(),
+      projectProps,
+    );
   };
 
   /**
    * @param {ProjectProps} projectProps
    */
   getProject = (projectProps) => {
-    return this.projectStorage.getProject(projectProps)?.toJSON();
+    return this.projectStorage.getProject(projectProps);
   };
 
   /**
