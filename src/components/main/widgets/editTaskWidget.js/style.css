@@ -1,0 +1,37 @@
+.task-container {
+  display: grid;
+
+  grid-template-columns: repeat(2, 300px) 200px;
+  grid-template-areas:
+    'title title priority'
+    'description description description'
+    'progress tag .';
+}
+
+.task-progress {
+  grid-area: 'progress';
+}
+
+.task-title {
+  font-size: 1.5rem;
+  grid-area: 'title';
+}
+
+.task-description {
+  grid-area: 'description';
+}
+
+.task-priority {
+  grid-area: 'priority';
+}
+
+.task-tag {
+  padding: 15px 10px;
+
+  border: 1px solid black;
+  border-radius: 8px;
+
+  background-color: rgba(210, 200, 200, 0.603);
+
+  grid-area: 'task-tag';
+}

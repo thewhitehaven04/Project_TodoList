@@ -6,8 +6,6 @@
  */
 
 import { PublisherModel } from '../../generic/modelPublisher';
-import { PubSub } from '../../generic/pubSub';
-import { taskEvents } from '../task/taskEvents';
 import { projectEvents } from './projectEvents';
 
 export class ProjectModel extends PublisherModel {
@@ -42,8 +40,8 @@ export class ProjectModel extends PublisherModel {
   toJSON() {
     return {
       title: this.title,
-      checklists: this.checklists,
-      tasks: this.tasks,
+      checklists: Array.from(this.checklists),
+      tasks: Array.from(this.tasks),
     };
   }
 }

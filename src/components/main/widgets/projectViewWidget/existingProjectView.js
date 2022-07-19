@@ -37,8 +37,7 @@ export class ProjectView {
   #renderTasks() {
     this.tasks.classList.add('flex-list');
     this.props.tasks.forEach((task) => {
-      const liTask = document.createElement('li');
-      liTask.textContent = task;
+      const liTask = this.displayTaskUpdateWidget(task);
       this.tasks.appendChild(liTask);
     });
   }
@@ -81,7 +80,7 @@ export class ProjectView {
     const addTaskButton = document.createElement('button');
     addTaskButton.textContent = '+';
     addTaskButton.addEventListener('click', () => {
-      divNewTaskForm.appendChild(this.displayTaskWidget());
+      divNewTaskForm.appendChild(this.displayTaskCreateWidget());
     });
 
     tasksSection.append(
@@ -97,19 +96,7 @@ export class ProjectView {
     return rootDiv;
   }
 
-  // _bindDisplayChecklistWidgetHandler(handler) {
-  //   this.displayChecklistWidget = this.displayChecklistWidget.bind(
-  //     this,
-  //     handler,
-  //   );
-  // }
-
-  // displayChecklistWidget = (displayChecklistWidgetHandler) => {
-  //   displayChecklistWidgetHandler();
-  // };
-
   /**
-   *
    * @param {View} displayTaskWidgetHandler
    * @returns
    */

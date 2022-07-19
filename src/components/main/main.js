@@ -48,7 +48,7 @@ export class MainController {
     this.view.setWidget(
       new ProjectViewController(
         model,
-        new ProjectView(getProject(enrichedProps)),
+        new ProjectView(enrichedProps),
         this.appEventBus,
       ),
     );
