@@ -1,6 +1,8 @@
 import { createRequiredInputOfType } from '../../../../domUtils/input/input';
 import { createSelectWithOptions } from '../../../../domUtils/select/select';
 import { progressModel } from '../../../../models/progress/model';
+import { PrioritiesModel } from '../../../../models/priority/model';
+import { zipObject } from 'lodash';
 import style from './style.css';
 
 export class EditTaskView {
@@ -34,17 +36,22 @@ export class EditTaskView {
     titleDiv.appendChild(title);
     titleDiv.classList.add('task-title');
 
-
     const description = document.createElement('p');
     description.textContent = this.taskProps.description;
     description.classList.add('task-description');
 
-    const priorityInput = createSelectWithOptions('task', 'task', {
-      minor: 'Minor',
-      major: 'Major',
-      moderate: 'Moderate',
-    });
-    priorityInput.classList.add('task-input');
+    const names = Object.entries(PrioritiesModel).map((entry) => entry[1].name);
+    const values = Object.entries(PrioritiesModel).map(
+      (entry) => entry[1].displayName,
+    );
+
+    const priorityInput = createSelectWithOptions(
+      'task',
+      'task',
+      zipObject(names, values),
+    );
+
+    priorityInput.classList.add('task-priority');
 
     const progress = createRequiredInputOfType('checkbox', 'Progress').render();
     if (this.taskProps.progress === progressModel.COMPLETE.name) {

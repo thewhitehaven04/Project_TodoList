@@ -9,20 +9,20 @@
 }
 
 .task-progress {
-  grid-area: 'progress';
+  grid-area: progress;
 }
 
 .task-title {
   font-size: 1.5rem;
-  grid-area: 'title';
+  grid-area: title;
 }
 
 .task-description {
-  grid-area: 'description';
+  grid-area: description;
 }
 
 .task-priority {
-  grid-area: 'priority';
+  grid-area: priority;
 }
 
 .task-tag {
@@ -33,5 +33,5 @@
 
   background-color: rgba(210, 200, 200, 0.603);
 
-  grid-area: 'task-tag';
+  grid-area: tag;
 }

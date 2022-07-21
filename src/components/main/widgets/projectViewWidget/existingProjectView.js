@@ -15,9 +15,6 @@ export class ProjectView {
       checklists: projectProps.checklists ?? [],
       tasks: projectProps.tasks ?? [],
     };
-
-    this.#renderChecklists();
-    this.#renderTasks();
   }
 
   addTask = (taskProps) => {
