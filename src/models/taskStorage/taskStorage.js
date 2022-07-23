@@ -2,12 +2,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { TaskModel } from '../task/model';
 
 export class TaskStorage {
-  constructor() {
+  /**
+   *
+   * @param {import('../task/model').TaskProps[]} tasks
+   */
+  constructor(tasks = []) {
     this.tasks = new Map();
   }
 
   /**
-   * @param {TaskProps} taskProps
+   * @param {import('../task/model').TaskProps} taskProps
    */
   addTask(taskProps) {
     const taskId = uuidv4();

@@ -25,8 +25,7 @@ export class ProjectView {
   #renderChecklists() {
     this.checklists.classList.add('flex-list');
     this.props.checklists.forEach((checklist) => {
-      const liChecklist = document.createElement('li');
-      liChecklist.textContent = checklist;
+      const liChecklist = this.displayChecklistUpdateWidget(checklist);
       this.checklists.appendChild(liChecklist);
     });
   }
@@ -55,7 +54,7 @@ export class ProjectView {
     const addCheckListButton = document.createElement('button');
     addCheckListButton.textContent = '+';
     addCheckListButton.addEventListener('click', () => {
-      divNewChecklistForm.appendChild(this.displayChecklistWidget());
+      divNewChecklistForm.appendChild(this.displayCreateChecklistWidget());
     });
 
     checklistsSection.append(
@@ -93,14 +92,26 @@ export class ProjectView {
     return rootDiv;
   }
 
+  displayChecklistCreateWidget = (handler) => {
+    return handler();
+  };
+
   /**
-   * @param {View} displayTaskWidgetHandler
-   * @returns
+   * @param {import('../../../../models/checklist/model').ChecklistProps} checklistProps
    */
+  displayChecklistUpdateWidget = (handler, checklistProps) => {
+    return handler(checklistProps);
+  };
+
   displayTaskCreateWidget = (displayTaskWidgetHandler) => {
     return displayTaskWidgetHandler();
   };
 
+  /**
+   *
+   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   * @returns
+   */
   displayTaskUpdateWidget = (displayTaskWidgetHandler, taskProps) => {
     return displayTaskWidgetHandler(taskProps);
   };

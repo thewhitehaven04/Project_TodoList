@@ -1,10 +1,13 @@
 import { getTask } from '../../../..';
 import { PubSub } from '../../../../generic/pubSub';
+import { ChecklistModel } from '../../../../models/checklist/model';
 import { PrioritiesModel } from '../../../../models/priority/model';
 import { ProjectModel } from '../../../../models/project/model';
 import { projectEvents } from '../../../../models/project/projectEvents';
 import { TaskModel } from '../../../../models/task/model';
 import { taskEvents } from '../../../../models/task/taskEvents';
+import { ChecklistController } from '../createNewChecklist/controller/checklistController';
+import { ChecklistCreateView, ChecklistView } from '../createNewChecklist/views/createNewChecklistView';
 import { TaskController } from '../createTaskWidget/createTaskWidgetController';
 import { CreateTaskWidgetView } from '../createTaskWidget/createTaskWidgetView';
 import { EditTaskView } from '../editTaskWidget.js/taskView';
@@ -33,6 +36,16 @@ export class ProjectViewController {
       this,
       this.displayTaskUpdateWidget,
     );
+    this.view.displayCreateChecklistWidget =
+      this.view.displayCreateChecklistWidget.bind(
+        this,
+        this.displayChecklistCreateWidget,
+      );
+    this.view.displayUpdateChecklistWidget =
+      this.view.displayUpdateChecklistWidget.bind(
+        this,
+        this.displayChecklistUpdateWidget,
+      );
 
     /** This is a local event bus for events  */
     this.localEventBus = new PubSub();
@@ -46,7 +59,7 @@ export class ProjectViewController {
   displayTaskCreateWidget = () => {
     return new TaskController(
       new CreateTaskWidgetView(PrioritiesModel),
-      new TaskModel({}),
+      new TaskModel(),
       this.eventBus,
     ).render();
   };
@@ -58,6 +71,18 @@ export class ProjectViewController {
       this.eventBus,
     ).render();
   };
+
+  displayChecklistCreateWidget = () => {
+    return new ChecklistController(
+      new ChecklistModel(),
+      new ChecklistCreateView(),
+      this.eventBus,
+    ).render();
+  };
+
+  // displayChecklistUpdateWidget = () => {
+  //   return new ChecklistController(new Chec);
+  // };
 
   addChecklist = (checklist) => {
     this.model.addChecklist(checklist);

@@ -14,12 +14,21 @@ import { progressModel } from '../progress/model';
 import { taskEvents } from './taskEvents';
 
 export class TaskModel extends PublisherModel {
+  #progress;
+
   /**
    * @param {TaskProps} props
    */
-  #progress;
-
-  constructor(props = {}) {
+  constructor(
+    props = {
+      name: '',
+      description: '',
+      dueDate: '',
+      priority: '',
+      progress: progressModel.NOT_STARTED.name,
+      tag: '',
+    },
+  ) {
     super();
     this.name = props.name;
     this.description = props.description;
