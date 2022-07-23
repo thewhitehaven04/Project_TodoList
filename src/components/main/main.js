@@ -3,8 +3,8 @@ import { PubSub } from '../../generic/pubSub';
 import { appEvents } from '../../models/main/appEvents';
 import { CreateNewProjectWidgetController } from './widgets/createNewProjectWidget/createNewProjectWidgetController';
 import { CreateNewProjectWidgetView } from './widgets/createNewProjectWidget/createNewProjectView';
-import { ProjectViewController } from './widgets/projectViewWidget/existingProjectWidgetController';
-import { ProjectView } from './widgets/projectViewWidget/existingProjectView';
+import { ProjectViewController } from './widgets/projectViewWidget/projectController';
+import { ProjectView } from './widgets/projectViewWidget/projectView';
 import { getProject } from '../..';
 
 export class MainController {

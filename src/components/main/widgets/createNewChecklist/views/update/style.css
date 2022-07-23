@@ -1,0 +1,6 @@
+.checklist-item {
+  display: flex;
+  flex-flow: row nowrap;
+
+  gap: 15px;
+}

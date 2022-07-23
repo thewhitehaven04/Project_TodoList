@@ -29,4 +29,5 @@ export const projectEvents = {
       taskId: uuid;
     },
   },
+  checklistAddedToProject: 'checklistAddedToProjectEvent',
 };

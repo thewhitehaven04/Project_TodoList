@@ -1,12 +1,8 @@
-import { add } from 'lodash';
-import { createRequiredInputOfType } from '../../../../../domUtils/input/input';
-import { createNamedTextarea } from '../../../../../domUtils/textarea/textarea';
+import { createRequiredInputOfType } from '../../../../../../domUtils/input/input';
 
 export class ChecklistCreateView {
+  widgetRoot = document.createElement('article');
   checklistItemsRoot = document.createElement('ul');
-  /**
-   * @param {import("../../../../../models/checklist/model").ChecklistProps} checklistProps
-   */
 
   #domElementToPropsMap;
   constructor() {
@@ -24,19 +20,32 @@ export class ChecklistCreateView {
     return li;
   }
 
+  #getTextareaValues() {
+    return Array.from(
+      this.checklistItemsRoot.querySelectorAll('.checklist-item'),
+    ).map((textarea) => textarea.value);
+  }
+
   /**
-   * @param {import('../../../../../models/checklist/model').ChecklistProps} props
+   * @param {import('../../../../../../models/checklist/model').ChecklistProps} props
    */
-  createChecklist = (handler, props) => handler(props);
+  createChecklist(handler, title, items) {
+    handler(title, items);
+  }
+
+  /** Hide all elements */
+  hide() {
+    this.widgetRoot.replaceChildren();
+  }
 
   render() {
-    const root = document.createElement('article');
     const checklistTitle = createRequiredInputOfType('text', 'Name');
     const checklistTitleElement = checklistTitle.render();
 
     const addChecklistItemButton = document.createElement('button');
     addChecklistItemButton.type = 'button';
     addChecklistItemButton.textContent = '+';
+    this.checklistItemsRoot.appendChild(this.#renderItem());
 
     addChecklistItemButton.addEventListener('click', () =>
       this.checklistItemsRoot.appendChild(this.#renderItem()),
@@ -48,15 +57,14 @@ export class ChecklistCreateView {
 
     createChecklistButton.addEventListener('click', () => {
       // @ts-ignore
-      this.createChecklist({
-        title: checklistTitle.getValue(),
-        items: Array.from(
-          this.checklistItemsRoot.querySelectorAll('textarea'),
-        ).map((textarea) => textarea.value),
-      });
+      this.createChecklist(
+        checklistTitle.getValue(),
+        this.#getTextareaValues(),
+      );
+      this.hide();
     });
 
-    root.append(
+    this.widgetRoot.append(
       ...[
         checklistTitleElement,
         this.checklistItemsRoot,
@@ -64,6 +72,6 @@ export class ChecklistCreateView {
         createChecklistButton,
       ],
     );
-    return root;
+    return this.widgetRoot;
   }
 }

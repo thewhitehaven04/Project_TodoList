@@ -1,12 +1,12 @@
 import { PubSub } from '../../../../../generic/pubSub';
-import { checklistEvents } from '../../../../../models/checklist/checklistEvents';
-import { ChecklistCreateView } from '../views/createNewChecklistView';
+import { ChecklistCreateView } from '../views/create/createNewChecklistView';
+import { ChecklistUpdateView } from '../views/update/checklistUpdateView';
 import { ChecklistModel } from '../../../../../models/checklist/model';
 
 export class ChecklistController {
   /**
    * @param {ChecklistModel} model
-   * @param {ChecklistCreateView | ChecklistUpdateView} view
+   * @param {(ChecklistCreateView | ChecklistUpdateView)} view
    * @param {PubSub} eventBus
    */
   constructor(model, view, eventBus) {
@@ -14,22 +14,31 @@ export class ChecklistController {
     this.model = model;
     this.eventBus = eventBus;
 
-    this.localEventBus = new PubSub();
-    this.model.add(this.localEventBus);
-    this.localEventBus.subscribe(
-      checklistEvents.checklistUpdated,
-      this.view.addItem,
-    );
-
-    this.view.updateProgress.bind(this, this.updateProgress);
+    this.model.add(this.eventBus);
+    if (this.view.createChecklist !== undefined) {
+      this.view.createChecklist = this.view.createChecklist.bind(
+        this,
+        this.initChecklist,
+      );
+    }
+    if (this.view.updateChecklist !== undefined) {
+      this.view.updateChecklist = this.view.updateChecklist.bind(
+        this,
+        this.updateChecklistItems,
+      );
+    }
   }
 
-  updateProgress = () => this.model.advance();
-  
   /**
-   * @param {import('../../../../../models/checklist/model').ChecklistProps} props 
+   * @param {String} title
+   * @param {String[]} items
    */
-  updateChecklist = (props) => this.model.update(props)
+  initChecklist = (title, items) => this.model.init(title, items);
+
+  /**
+   * @param {Object<string, import('../../../../../models/checklist/model').ChecklistItem>} props
+   */
+  updateChecklistItems = (props) => this.model.updateChecklistItems(props);
 
   render() {
     return this.view.render();

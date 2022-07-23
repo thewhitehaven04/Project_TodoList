@@ -2,7 +2,7 @@ import { TaskModel, TaskProps } from '../../../../models/task/model';
 import { taskEvents } from '../../../../models/task/taskEvents';
 import { CreateTaskWidgetView } from './createTaskWidgetView';
 import { PubSub } from './../../../../generic/pubSub';
-import { EditTaskView } from '../editTaskWidget.js/taskView';
+import { EditTaskView } from '../editTaskWidget/taskView';
 export class TaskController {
   /**
    * @param {(CreateTaskWidgetView | EditTaskView)} view

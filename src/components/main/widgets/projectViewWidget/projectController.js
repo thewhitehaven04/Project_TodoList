@@ -1,5 +1,6 @@
 import { getTask } from '../../../..';
 import { PubSub } from '../../../../generic/pubSub';
+import { checklistEvents } from '../../../../models/checklist/checklistEvents';
 import { ChecklistModel } from '../../../../models/checklist/model';
 import { PrioritiesModel } from '../../../../models/priority/model';
 import { ProjectModel } from '../../../../models/project/model';
@@ -7,11 +8,12 @@ import { projectEvents } from '../../../../models/project/projectEvents';
 import { TaskModel } from '../../../../models/task/model';
 import { taskEvents } from '../../../../models/task/taskEvents';
 import { ChecklistController } from '../createNewChecklist/controller/checklistController';
-import { ChecklistCreateView, ChecklistView } from '../createNewChecklist/views/createNewChecklistView';
+import { ChecklistUpdateView } from '../createNewChecklist/views/update/checklistUpdateView';
+import { ChecklistCreateView } from '../createNewChecklist/views/create/createNewChecklistView';
 import { TaskController } from '../createTaskWidget/createTaskWidgetController';
 import { CreateTaskWidgetView } from '../createTaskWidget/createTaskWidgetView';
-import { EditTaskView } from '../editTaskWidget.js/taskView';
-import { ProjectView } from './existingProjectView';
+import { EditTaskView } from '../editTaskWidget/taskView';
+import { ProjectView } from './projectView';
 
 export class ProjectViewController {
   /**
@@ -23,11 +25,18 @@ export class ProjectViewController {
     this.view = view;
 
     this.eventBus = eventBus;
+
+    /** Display added tasks and checklists after they are succesfully added to storage */
     this.eventBus.subscribe(
       taskEvents.taskAddedToStorage.getName(),
       this.addTask,
     );
+    this.eventBus.subscribe(
+      checklistEvents.checklistAddedToStorage,
+      this.addChecklist,
+    );
 
+    /** The following binds view event listeners to controller handlers */
     this.view.displayTaskCreateWidget = this.view.displayTaskCreateWidget.bind(
       this,
       this.displayTaskCreateWidget,
@@ -36,13 +45,13 @@ export class ProjectViewController {
       this,
       this.displayTaskUpdateWidget,
     );
-    this.view.displayCreateChecklistWidget =
-      this.view.displayCreateChecklistWidget.bind(
+    this.view.displayChecklistCreateWidget =
+      this.view.displayChecklistCreateWidget.bind(
         this,
         this.displayChecklistCreateWidget,
       );
-    this.view.displayUpdateChecklistWidget =
-      this.view.displayUpdateChecklistWidget.bind(
+    this.view.displayChecklistUpdateWidget =
+      this.view.displayChecklistUpdateWidget.bind(
         this,
         this.displayChecklistUpdateWidget,
       );
@@ -53,6 +62,10 @@ export class ProjectViewController {
     this.localEventBus.subscribe(
       projectEvents.taskAddedToProject.getName(),
       this.view.addTask,
+    );
+    this.localEventBus.subscribe(
+      projectEvents.checklistAddedToProject,
+      this.view.addChecklist,
     );
   }
 
@@ -80,12 +93,19 @@ export class ProjectViewController {
     ).render();
   };
 
-  // displayChecklistUpdateWidget = () => {
-  //   return new ChecklistController(new Chec);
-  // };
+  /**
+   * @param {import('../../../../models/checklist/model').ChecklistProps} checklistProps
+   */
+  displayChecklistUpdateWidget = (checklistProps) => {
+    return new ChecklistController(
+      new ChecklistModel(checklistProps),
+      new ChecklistUpdateView(checklistProps),
+      this.eventBus,
+    ).render();
+  };
 
-  addChecklist = (checklist) => {
-    this.model.addChecklist(checklist);
+  addChecklist = (checklistProps) => {
+    this.model.addChecklist(checklistProps);
   };
 
   addTask = (taskProps) => {

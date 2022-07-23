@@ -1,5 +1,5 @@
 import style from './style.css';
-import { ProjectProps } from './../../../../models/project/model';
+import { ProjectProps } from '../../../../models/project/model';
 
 export class ProjectView {
   /**
@@ -21,6 +21,11 @@ export class ProjectView {
     this.props.tasks.push(taskProps);
     this.#renderTasks();
   };
+
+  addChecklist = (checklistProps) => {
+    this.props.checklists.push(checklistProps);
+    this.#renderChecklists();
+  }
 
   #renderChecklists() {
     this.checklists.classList.add('flex-list');
@@ -54,7 +59,7 @@ export class ProjectView {
     const addCheckListButton = document.createElement('button');
     addCheckListButton.textContent = '+';
     addCheckListButton.addEventListener('click', () => {
-      divNewChecklistForm.appendChild(this.displayCreateChecklistWidget());
+      divNewChecklistForm.appendChild(this.displayChecklistCreateWidget());
     });
 
     checklistsSection.append(

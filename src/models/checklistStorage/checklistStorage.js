@@ -1,28 +1,54 @@
-import { v4 as uuidv4 } from 'uuid';
-import { ChecklistModel } from '../checklist/model';
+import { PubSub } from '../../generic/pubSub';
+import { checklistEvents } from '../checklist/checklistEvents';
 
 export class ChecklistStorage {
   /**
    * @param {import("../checklist/model").ChecklistProps[]} checklists
+   * @param {PubSub} eventBus
    */
-  constructor(checklists = []) {
+  constructor(checklists = [], eventBus) {
     this.checklists = new Map(
-      checklists.map((checklist) => [uuidv4(), new ChecklistModel(checklist)]),
+      checklists.map((checklist) => [checklist.id, checklist]),
+    );
+    this.eventBus = eventBus;
+
+    this.eventBus.subscribe(
+      checklistEvents.checklistCreated,
+      this.addChecklist,
+    );
+    this.eventBus.subscribe(
+      checklistEvents.checklistUpdated,
+      this.updateChecklist,
     );
   }
 
   /**
    * @param {import('../checklist/model').ChecklistProps} checklistProps
    */
-  addChecklist(checklistProps) {
-    const checklistId = uuidv4();
-    this.checklists.set(checklistId, new ChecklistModel(checklistProps));
-    return checklistId;
-  }
+  addChecklist = (checklistProps) => {
+    this.checklists.set(checklistProps.id, checklistProps);
+    this.eventBus.pub(checklistEvents.checklistAddedToStorage, checklistProps);
+    return checklistProps.id;
+  };
 
   /**
-   *
-   * @param {*} checklistId
+   * @param {String} checklistId
+   */
+  removeChecklist = (checklistId) => {
+    this.eventBus.pub(
+      checklistEvents.checklistRemovedFromStorage,
+      this.getChecklist(checklistId),
+    );
+    this.checklists.delete(checklistId);
+  };
+
+  updateChecklist = (checklistProps) => {
+    this.checklists.set(checklistProps.id, checklistProps);
+    return checklistProps;
+  };
+
+  /**
+   * @param {String} checklistId
    */
   getChecklist(checklistId) {
     return this.checklists.get(checklistId);

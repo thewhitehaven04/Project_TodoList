@@ -20,14 +20,17 @@ export class ProjectModel extends PublisherModel {
   }
 
   /**
-   * @param {Checklist} checklist
+   * Add a checklist to the model.
+   * @param {import('../checklist/model').ChecklistProps} checklistProps
    */
-  addChecklist = (checklist) => {
-    this.checklists.push(checklist);
+  addChecklist = (checklistProps) => {
+    this.checklists.push(checklistProps);
+    this.publish(projectEvents.checklistAddedToProject, checklistProps);
   };
 
   /**
-   * @param {TaskProps} taskProps
+   * Add a task to the model
+   * @param {import('../task/model').TaskProps} taskProps
    */
   addTask = (taskProps) => {
     this.tasks.push(taskProps);
