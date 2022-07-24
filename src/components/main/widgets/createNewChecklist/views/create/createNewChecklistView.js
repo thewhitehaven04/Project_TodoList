@@ -1,8 +1,11 @@
 import { createRequiredInputOfType } from '../../../../../../domUtils/input/input';
 
 export class ChecklistCreateView {
+  checklistTitle = createRequiredInputOfType('text', 'Name');
   widgetRoot = document.createElement('article');
   checklistItemsRoot = document.createElement('ul');
+  addChecklistItemButton = document.createElement('button');
+  createChecklistButton = document.createElement('button');
 
   #domElementToPropsMap;
   constructor() {
@@ -27,7 +30,8 @@ export class ChecklistCreateView {
   }
 
   /**
-   * @param {import('../../../../../../models/checklist/model').ChecklistProps} props
+   * @param {String} title
+   * @param {ChecklistItem[]} items
    */
   createChecklist(handler, title, items) {
     handler(title, items);
@@ -39,26 +43,31 @@ export class ChecklistCreateView {
   }
 
   render() {
-    const checklistTitle = createRequiredInputOfType('text', 'Name');
-    const checklistTitleElement = checklistTitle.render();
+    const checklistTitleElement = this.checklistTitle.render();
 
-    const addChecklistItemButton = document.createElement('button');
-    addChecklistItemButton.type = 'button';
-    addChecklistItemButton.textContent = '+';
-    this.checklistItemsRoot.appendChild(this.#renderItem());
+    this.addChecklistItemButton.type = 'button';
+    this.addChecklistItemButton.textContent = 'Add item';
+    this.checklistItemsRoot.appendChild(this.addChecklistItemButton);
 
-    addChecklistItemButton.addEventListener('click', () =>
-      this.checklistItemsRoot.appendChild(this.#renderItem()),
+    this.checklistItemsRoot.insertBefore(
+      this.#renderItem(),
+      this.addChecklistItemButton,
     );
 
-    const createChecklistButton = document.createElement('button');
-    createChecklistButton.type = 'button';
-    createChecklistButton.textContent = 'Create';
+    this.addChecklistItemButton.addEventListener('click', () =>
+      this.checklistItemsRoot.insertBefore(
+        this.#renderItem(),
+        this.addChecklistItemButton,
+      ),
+    );
 
-    createChecklistButton.addEventListener('click', () => {
+    this.createChecklistButton.type = 'button';
+    this.createChecklistButton.textContent = 'Create';
+
+    this.createChecklistButton.addEventListener('click', () => {
       // @ts-ignore
       this.createChecklist(
-        checklistTitle.getValue(),
+        this.checklistTitle.getValue(),
         this.#getTextareaValues(),
       );
       this.hide();
@@ -68,8 +77,7 @@ export class ChecklistCreateView {
       ...[
         checklistTitleElement,
         this.checklistItemsRoot,
-        addChecklistItemButton,
-        createChecklistButton,
+        this.createChecklistButton,
       ],
     );
     return this.widgetRoot;

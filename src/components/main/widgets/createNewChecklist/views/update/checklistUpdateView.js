@@ -3,6 +3,8 @@ import style from './style.css';
 export class ChecklistUpdateView {
   widgetRoot = document.createElement('article');
   checklistItemList = document.createElement('ul');
+  progress = document.createElement('span');
+
   /**
    * @param {import("../../../../../../models/checklist/model").ChecklistProps} checklistProps
    */
@@ -30,14 +32,40 @@ export class ChecklistUpdateView {
     return liChecklistItem;
   }
 
+  updateProps = (props) => {
+    this.props = props;
+  };
+
+  /** Updates how many items is left to complete. */
+  updateProgress = () => {
+    this.progress.textContent = `${
+      Object.keys(this.props.items).length - this.props.progress
+    } items left`;
+  };
+
   /**
-   * @param {import("../../../../../../models/checklist/model").ChecklistItem} checklistItemProps
+   * @param {String} itemId
    */
-  updateChecklist = (handler, checklistItemProps) => {
-    handler(checklistItemProps);
+  toggleComplete = (handler, itemId) => {
+    handler(itemId);
+    this.updateProgress();
+  };
+
+  deleteChecklist = (handler) => {
+    handler();
   };
 
   render() {
+    this.widgetRoot.classList.add('grid-checklist');
+    this.checklistItemList.classList.add('checklist-items');
+
+    const title = document.createElement('span');
+    title.textContent = this.props.title;
+    title.classList.add('grid-checklist-title');
+
+    this.progress.classList.add('grid-checklist-progress');
+    this.updateProgress();
+
     for (let item in this.props.items) {
       const liItem = this.#renderChecklistItem(
         this.props.items[item].itemText,
@@ -45,20 +73,29 @@ export class ChecklistUpdateView {
       );
 
       this.checklistItemList.appendChild(liItem);
-      this.domElementToChecklistPropsMap.set(item, liItem);
+      this.domElementToChecklistPropsMap.set(liItem, item);
     }
 
     this.checklistItemList.addEventListener('click', (event) => {
-      if (event.target.closest('li')) {
+      const closest = event.target.closest('li');
+      if (closest !== undefined) {
         // @ts-ignore
-        const props = this.domElementToChecklistPropsMap.get(event.target);
-        this.updateChecklist(
-          this.domElementToChecklistPropsMap.get(event.target),
-        );
+        this.toggleComplete(this.domElementToChecklistPropsMap.get(closest));
       }
     });
 
-    this.widgetRoot.appendChild(this.checklistItemList);
+    // deletes checklist
+    const removeButton = document.createElement('button');
+    removeButton.textContent = '✕';
+    removeButton.addEventListener('click', () => {
+      this.deleteChecklist();
+      this.hide();
+    });
+    removeButton.classList.add('grid-close');
+
+    this.widgetRoot.append(
+      ...[title, removeButton, this.checklistItemList, this.progress],
+    );
     return this.widgetRoot;
   }
 

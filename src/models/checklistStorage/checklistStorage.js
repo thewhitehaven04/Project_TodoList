@@ -20,6 +20,10 @@ export class ChecklistStorage {
       checklistEvents.checklistUpdated,
       this.updateChecklist,
     );
+    this.eventBus.subscribe(
+      checklistEvents.checklistRemoved,
+      this.removeChecklist,
+    );
   }
 
   /**

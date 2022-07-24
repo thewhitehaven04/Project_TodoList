@@ -1,6 +1,53 @@
 .checklist-item {
-  display: flex;
-  flex-flow: row nowrap;
+  display: grid;
+  grid-template-columns: max(300px, max-content), 10px;
+  column-gap: 25px;
 
-  gap: 15px;
+  grid-auto-rows: 30px;
+  grid-auto-flow: row;
+}
+
+.checklist-item > span {
+
+  font-size: 1rem;
+  grid-column: 1;
+}
+
+.checklist-item > input[type='checkbox'] {
+  grid-column: 2;
+  justify-self: flex-end;
+}
+
+.grid-checklist {
+  border: 1px solid black;
+  padding: 10px;
+
+  display: grid;
+  grid-template-columns: 1fr 150px 40px;
+  grid-template-areas:
+    'title title close'
+    '. progress progress';
+}
+
+.grid-checklist-title {
+  font-size: 1.5rem;
+  grid-area: title;
+}
+
+.grid-checklist-progress {
+  grid-area: progress;
+}
+
+.grid-close {
+  appearance: none;
+
+  background-color: cornflowerblue;
+  color: white;
+
+  border: 1px solid cornflowerblue;
+  border-radius: 10px;
+  box-shadow: 0px 1px 4px 1px black;
+
+  font-size: 1.5rem;
+  grid-area: close;
 }

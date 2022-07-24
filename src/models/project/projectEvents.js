@@ -1,16 +1,6 @@
 export const projectEvents = {
-  projectAdded: {
-    getName: () => 'projectAddedEvent',
-    setArgs: (projectTitle) => {
-      title: projectTitle;
-    },
-  },
-  projectRemoved: {
-    getName: () => 'projectRemovedEvent',
-    setArgs: (projectTitle) => {
-      title: projectTitle;
-    },
-  },
+  projectAdded: 'projectAddedEvent',
+  projectRemoved: 'projectRemovedEvent',
   projectAddedToStorage: {
     getName: () => 'projectInStorageEvent',
     setArgs: (projectTitle) => {
@@ -30,4 +20,5 @@ export const projectEvents = {
     },
   },
   checklistAddedToProject: 'checklistAddedToProjectEvent',
+  chekclistRemovedFromProject: 'checklistRemovedFromProjectEvent',
 };

@@ -23,7 +23,10 @@ export class NavBarController {
 
     // the model is subscribed to the events from the project storage so that the projects
     // are not removed from the view before they are actually removed from the storage.
-    this.globalPs.subscribe(projectEvents.projectAddedToStorage.getName(), this.model.addProject);
+    this.globalPs.subscribe(
+      projectEvents.projectAddedToStorage.getName(),
+      this.model.addProject,
+    );
     this.globalPs.subscribe(
       projectEvents.projectRemovedFromStorage.getName(),
       this.model.removeProject,
@@ -31,8 +34,11 @@ export class NavBarController {
 
     // projects are removed from the view after the model has received confirmation
     this.localPs = localPs;
-    this.localPs.subscribe(projectEvents.projectRemoved.getName(), this.view.removeProject);
-    this.localPs.subscribe(projectEvents.projectAdded.getName(), this.view.addProject);
+    this.localPs.subscribe(
+      projectEvents.projectRemoved,
+      this.view.removeProject,
+    );
+    this.localPs.subscribe(projectEvents.projectAdded, this.view.addProject);
   }
 
   /** Publish an event to trigger opening of the new form creation widget. */
@@ -41,10 +47,7 @@ export class NavBarController {
   };
 
   removeProject = (projectTitle) => {
-    this.globalPs.pub(
-      projectEvents.projectRemoved.getName(),
-      projectEvents.projectRemoved.setArgs(projectTitle),
-    );
+    this.globalPs.pub(projectEvents.projectRemoved, { title: projectTitle });
   };
 
   openProjectWidget = (projectTitle) => {

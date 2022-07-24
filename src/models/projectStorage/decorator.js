@@ -11,14 +11,8 @@ export class ProjectStoragePublisher {
   constructor(projectPropsArr, eventBus) {
     this.projectStorage = new ProjectStorage();
     this.eventBus = eventBus;
-    this.eventBus.subscribe(
-      projectEvents.projectAdded.getName(),
-      this.addProject,
-    );
-    this.eventBus.subscribe(
-      projectEvents.projectRemoved.getName(),
-      this.deleteProject,
-    );
+    this.eventBus.subscribe(projectEvents.projectAdded, this.addProject);
+    this.eventBus.subscribe(projectEvents.projectRemoved, this.deleteProject);
 
     projectPropsArr.forEach((projectProps) => this.addProject(projectProps));
   }

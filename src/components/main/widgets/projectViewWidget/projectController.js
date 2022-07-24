@@ -108,6 +108,10 @@ export class ProjectViewController {
     this.model.addChecklist(checklistProps);
   };
 
+  removeChecklist = (checklistProps) => {
+    this.model.removeChecklist(checklistProps);
+  };
+
   addTask = (taskProps) => {
     this.model.addTask(getTask(taskProps));
   };

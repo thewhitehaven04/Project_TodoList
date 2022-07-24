@@ -1,5 +1,6 @@
 import style from './style.css';
 import { ProjectProps } from '../../../../models/project/model';
+import { isThisSecond } from 'date-fns';
 
 export class ProjectView {
   /**
@@ -25,22 +26,24 @@ export class ProjectView {
   addChecklist = (checklistProps) => {
     this.props.checklists.push(checklistProps);
     this.#renderChecklists();
-  }
+  };
 
   #renderChecklists() {
     this.checklists.classList.add('flex-list');
-    this.props.checklists.forEach((checklist) => {
-      const liChecklist = this.displayChecklistUpdateWidget(checklist);
-      this.checklists.appendChild(liChecklist);
-    });
+    this.checklists.replaceWith(
+      ...this.props.checklists.map((checklist) => {
+        return this.displayChecklistUpdateWidget(checklist);
+      }),
+    );
   }
 
   #renderTasks() {
     this.tasks.classList.add('flex-list');
-    this.props.tasks.forEach((task) => {
-      const liTask = this.displayTaskUpdateWidget(task);
-      this.tasks.appendChild(liTask);
-    });
+    this.tasks.replaceWith(
+      ...this.props.tasks.map((task) => {
+        return this.displayTaskUpdateWidget(task);
+      }),
+    );
   }
 
   /** Display project information with its title, tasks and checklists. */

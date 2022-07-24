@@ -58,12 +58,18 @@ export class ChecklistModel extends PublisherModel {
   }
 
   /**
-   *
-   * @param {Object<string, ChecklistItem>} checklistItemProps
+   * @param itemId checklistItemProps
    */
-  updateChecklistItems(checklistItemProps) {
-    for (let uuid in checklistItemProps) {
-      this.items.set(uuid, checklistItemProps[uuid]);
+  toggleComplete(itemId) {
+    const currentProps = this.items.get(itemId);
+    if (currentProps !== undefined) {
+      currentProps.isComplete = !currentProps?.isComplete;
+      // count how many items are complete
+      this.#progress = Array.from(this.items.entries()).filter(
+        (item) => item[1].isComplete === true,
+      ).length;
+    } else {
+      throw new Error(`The entity with id ${itemId} does not exist.`);
     }
     this.publish(checklistEvents.checklistUpdated, this.toJSON());
   }

@@ -18,7 +18,9 @@ export class CreateNewProjectWidgetController {
   }
 
   publishNewProjectCreation = (projectTitle) => {
-    this.newProjectPubSub.pub(projectEvents.projectAdded.getName(), { title: projectTitle });
+    this.newProjectPubSub.pub(projectEvents.projectAdded, {
+      title: projectTitle,
+    });
   };
 
   render() {

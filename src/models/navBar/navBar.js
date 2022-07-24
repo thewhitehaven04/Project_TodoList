@@ -17,14 +17,16 @@ export class NavBarModel {
    */
   addProject = (projectProps) => {
     this.projects.push(projectProps.title);
-    this.publisher.pub(projectEvents.projectAdded.getName(), projectProps.title);
+    this.publisher.pub(projectEvents.projectAdded, projectProps.title);
   };
 
   /**
    * @param {import('../project/model').ProjectProps} projectProps
    */
   removeProject = (projectProps) => {
-    this.projects = this.projects.filter((project) => project != projectProps.title);
-    this.publisher.pub(projectEvents.projectAdded.getName(), projectProps.title);
+    this.projects = this.projects.filter(
+      (project) => project != projectProps.title,
+    );
+    this.publisher.pub(projectEvents.projectAdded, projectProps.title);
   };
 }
