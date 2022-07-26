@@ -27,12 +27,9 @@ export class ProjectViewController {
     this.eventBus = eventBus;
 
     /** Display added tasks and checklists after they are succesfully added to storage */
+    this.eventBus.subscribe(taskEvents.taskCreationEvent, this.addTask);
     this.eventBus.subscribe(
-      taskEvents.taskAddedToStorage.getName(),
-      this.addTask,
-    );
-    this.eventBus.subscribe(
-      checklistEvents.checklistAddedToStorage,
+      checklistEvents.checklistCreated,
       this.addChecklist,
     );
 
@@ -64,7 +61,7 @@ export class ProjectViewController {
     this.localEventBus = new PubSub();
     this.model.add(this.localEventBus);
     this.localEventBus.subscribe(
-      projectEvents.taskAddedToProject.getName(),
+      projectEvents.taskAddedToProject,
       this.view.addTask,
     );
     this.localEventBus.subscribe(
@@ -119,7 +116,7 @@ export class ProjectViewController {
   };
 
   addTask = (taskProps) => {
-    this.model.addTask(getTask(taskProps));
+    this.model.addTask(taskProps);
   };
 
   render() {

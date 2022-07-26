@@ -52,7 +52,7 @@ export class TaskModel extends PublisherModel {
     this.tag = this.tag || props.tag;
     this.dueDate = this.dueDate || props.dueDate;
 
-    this.publish(taskEvents.taskUpdateEvent.getName(), this.toJSON());
+    this.publish(taskEvents.taskUpdateEvent, this.toJSON());
   }
 
   /**

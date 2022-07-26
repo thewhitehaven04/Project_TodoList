@@ -28,11 +28,11 @@ export class TaskController {
    * @param {TaskProps} taskProps
    */
   createTask = (taskProps) => {
-    this.eventBus.pub(taskEvents.taskCreationEvent.getName(), taskProps);
+    this.eventBus.pub(taskEvents.taskCreationEvent, taskProps);
   };
 
   updateTask = (taskProps) => {
-    this.eventBus.pub(taskEvents.taskUpdateEvent.getName(), taskProps);
+    this.eventBus.pub(taskEvents.taskUpdateEvent, taskProps);
   };
 
   render() {

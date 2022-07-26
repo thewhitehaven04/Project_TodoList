@@ -41,14 +41,14 @@ export class ProjectModel extends PublisherModel {
    */
   addTask = (taskProps) => {
     this.tasks.push(taskProps);
-    this.publish(projectEvents.taskAddedToProject.getName(), taskProps);
+    this.publish(projectEvents.taskAddedToProject, taskProps);
   };
 
   removeChecklist = (checklistProps) => {
     this.checklists = this.checklists.filter(
       (existingChecklist) => existingChecklist !== checklistProps,
     );
-    this.publish(projectEvents.checklistAddedToProject);
+    this.publish(projectEvents.checklistAddedToProject, checklistProps);
   };
 
   /**

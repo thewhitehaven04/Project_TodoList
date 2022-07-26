@@ -1,6 +1,6 @@
 import { PubSub } from '../../generic/pubSub';
 import { projectEvents } from '../project/projectEvents';
-import { ProjectStorage } from './model';
+import { ProjectStorage } from './projectStorage';
 import { ProjectProps } from '../project/model';
 
 export class ProjectStoragePublisher {

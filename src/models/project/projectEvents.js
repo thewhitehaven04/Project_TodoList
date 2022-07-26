@@ -3,12 +3,7 @@ export const projectEvents = {
   projectRemoved: 'projectRemovedEvent',
   projectAddedToStorage: 'projectAddedToStorageEvent',
   projectRemovedFromStorage: 'projectRemovedFromStorageEvent',
-  taskAddedToProject: {
-    getName: () => 'taskAddedToProjectEvent',
-    setArgs: (uuid) => {
-      taskId: uuid;
-    },
-  },
+  taskAddedToProject: 'taskAddedToProjectEvent',
   taskRemovedFromProject: 'taskRemovedFromProject',
   checklistAddedToProject: 'checklistAddedToProjectEvent',
   chekclistRemovedFromProject: 'checklistRemovedFromProjectEvent',

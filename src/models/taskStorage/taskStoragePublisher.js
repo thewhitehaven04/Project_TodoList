@@ -4,16 +4,17 @@ import { TaskStorage } from './taskStorage';
 
 export class TaskStoragePublisher {
   /**
+   * @param {import('../task/model').TaskProps[]} tasks
    * @param {PubSub} eventBus
    */
-  constructor(eventBus) {
+  constructor(tasks = [], eventBus) {
     this.eventBus = eventBus;
     this.eventBus.subscribe(
       taskEvents.taskCreationEvent.getName(),
       this.addTask,
     );
 
-    this.storage = new TaskStorage();
+    this.storage = new TaskStorage(tasks);
   }
 
   addTask = (taskProps) => {
