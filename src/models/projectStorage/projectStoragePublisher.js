@@ -22,10 +22,7 @@ export class ProjectStoragePublisher {
    */
   addProject = (projectProps) => {
     this.projectStorage.addProject(projectProps);
-    this.eventBus.pub(
-      projectEvents.projectAddedToStorage.getName(),
-      projectProps,
-    );
+    this.eventBus.pub(projectEvents.projectAddedToStorage, projectProps);
   };
 
   /**
@@ -33,10 +30,7 @@ export class ProjectStoragePublisher {
    */
   deleteProject = (projectProps) => {
     this.projectStorage.deleteProject(projectProps);
-    this.eventBus.pub(
-      projectEvents.projectRemovedFromStorage.getName(),
-      projectProps,
-    );
+    this.eventBus.pub(projectEvents.projectRemovedFromStorage, projectProps);
   };
 
   /**

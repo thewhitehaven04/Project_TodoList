@@ -1,4 +1,4 @@
-export const PrioritiesModel = {
+export const prioritiesModel = {
   MINOR: {
     name: 'minor',
     displayName: 'Minor',

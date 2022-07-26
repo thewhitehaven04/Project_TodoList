@@ -1,6 +1,6 @@
 import style from './style.css';
 import { MainController } from '../components/main/main';
-import { NavBarFacade } from '../components/navbar/facade';
+import { NavBarController } from '../components/navbar/controller/navbarController';
 
 /** Renders the whole app (navigation + main section) */
 export class AppView {
@@ -8,7 +8,7 @@ export class AppView {
    *
    * @param {Node} appRoot root element of the application
    * @param {MainController} main main pane controller instance
-   * @param {NavBarFacade} navBar navbar controller instance
+   * @param {NavBarController} navBar navbar controller instance
    */
   constructor(appRoot, main, navBar) {
     this.appRoot = appRoot;

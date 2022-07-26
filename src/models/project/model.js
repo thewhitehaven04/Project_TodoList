@@ -1,8 +1,8 @@
 /**
  * @typedef ProjectProps projectProps
  * @property {String} title project Title
- * @property {import('../checklist/model').ChecklistProps[]} [checklists] array of checklist instances
- * @property {import('../task/model').TaskProps[]} [tasks] array of task instances
+ * @property {import('../checklist/model').ChecklistProps[]} checklists array of checklist instances
+ * @property {import('../task/model').TaskProps[]} tasks array of task instances
  */
 
 import { PublisherModel } from '../../generic/modelPublisher';
@@ -12,11 +12,18 @@ export class ProjectModel extends PublisherModel {
   /**
    * @param {ProjectProps} projectProps
    */
-  constructor(projectProps) {
+  constructor(projectProps = { title: '', checklists: [], tasks: [] }) {
     super();
+    this.update(projectProps);
+  }
+
+  /**
+   * @param {ProjectProps} projectProps
+   */
+  update(projectProps) {
     this.title = projectProps.title;
-    this.checklists = projectProps.checklists ?? [];
-    this.tasks = projectProps.tasks ?? [];
+    this.checklists = projectProps.checklists;
+    this.tasks = projectProps.tasks;
   }
 
   /**
@@ -41,7 +48,7 @@ export class ProjectModel extends PublisherModel {
     this.checklists = this.checklists.filter(
       (existingChecklist) => existingChecklist !== checklistProps,
     );
-    this.publish(projectEvents.checklistAddedToProject)
+    this.publish(projectEvents.checklistAddedToProject);
   };
 
   /**

@@ -31,7 +31,7 @@ export class ChecklistCreateView {
 
   /**
    * @param {String} title
-   * @param {ChecklistItem[]} items
+   * @param {import('../../../../../../models/checklist/model').ChecklistItem[]} items
    */
   createChecklist(handler, title, items) {
     handler(title, items);

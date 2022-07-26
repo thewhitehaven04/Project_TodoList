@@ -2,17 +2,17 @@ import { getTask } from '../../../..';
 import { PubSub } from '../../../../generic/pubSub';
 import { checklistEvents } from '../../../../models/checklist/checklistEvents';
 import { ChecklistModel } from '../../../../models/checklist/model';
-import { PrioritiesModel } from '../../../../models/priority/model';
+import { prioritiesModel } from '../../../../models/priority/model';
 import { ProjectModel } from '../../../../models/project/model';
 import { projectEvents } from '../../../../models/project/projectEvents';
 import { TaskModel } from '../../../../models/task/model';
 import { taskEvents } from '../../../../models/task/taskEvents';
-import { ChecklistController } from '../createNewChecklist/controller/checklistController';
-import { ChecklistUpdateView } from '../createNewChecklist/views/update/checklistUpdateView';
-import { ChecklistCreateView } from '../createNewChecklist/views/create/createNewChecklistView';
-import { TaskController } from '../createTaskWidget/createTaskWidgetController';
-import { CreateTaskWidgetView } from '../createTaskWidget/createTaskWidgetView';
-import { EditTaskView } from '../editTaskWidget/taskView';
+import { ChecklistController } from '../checklistWidget/controller/checklistController';
+import { ChecklistUpdateView } from '../checklistWidget/views/update/checklistUpdateView';
+import { ChecklistCreateView } from '../checklistWidget/views/create/createNewChecklistView';
+import { TaskController } from '../taskWidget/controller/taskController';
+import { CreateTaskWidgetView } from '../taskWidget/views/create/createTaskWidgetView';
+import { UpdateTaskView } from '../taskWidget/views/update/updateTaskView';
 import { ProjectView } from './projectView';
 
 export class ProjectViewController {
@@ -35,6 +35,10 @@ export class ProjectViewController {
       checklistEvents.checklistAddedToStorage,
       this.addChecklist,
     );
+
+    /** Catch project removed event and close the view if the project received
+     * is the same as the one being displayed. */
+    this.eventBus.subscribe(projectEvents.projectRemovedFromStorage, this.hide);
 
     /** The following binds view event listeners to controller handlers */
     this.view.displayTaskCreateWidget = this.view.displayTaskCreateWidget.bind(
@@ -71,26 +75,27 @@ export class ProjectViewController {
 
   displayTaskCreateWidget = () => {
     return new TaskController(
-      new CreateTaskWidgetView(PrioritiesModel),
+      new CreateTaskWidgetView(prioritiesModel),
       new TaskModel(),
       this.eventBus,
     ).render();
   };
 
+  /**
+   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   */
   displayTaskUpdateWidget = (taskProps) => {
     return new TaskController(
-      new EditTaskView(taskProps),
+      new UpdateTaskView(taskProps),
       new TaskModel(taskProps),
       this.eventBus,
     ).render();
   };
 
   displayChecklistCreateWidget = () => {
-    return new ChecklistController(
-      new ChecklistModel(),
-      new ChecklistCreateView(),
-      this.eventBus,
-    ).render();
+    return new ChecklistController(new ChecklistModel(), this.eventBus)
+      .setCreateView(new ChecklistCreateView())
+      .render();
   };
 
   /**
@@ -99,9 +104,10 @@ export class ProjectViewController {
   displayChecklistUpdateWidget = (checklistProps) => {
     return new ChecklistController(
       new ChecklistModel(checklistProps),
-      new ChecklistUpdateView(checklistProps),
       this.eventBus,
-    ).render();
+    )
+      .setUpdateView(new ChecklistUpdateView(checklistProps))
+      .render();
   };
 
   addChecklist = (checklistProps) => {
@@ -119,4 +125,14 @@ export class ProjectViewController {
   render() {
     return this.view.render();
   }
+
+  /**
+   * @param {import('../../../../models/project/model').ProjectProps} props
+   */
+  hide = (props) => {
+    console.log(`Project to hide: ${JSON.stringify(props)}`);
+    if (props.title === this.model.toJSON().title) {
+      this.view.hide();
+    }
+  };
 }

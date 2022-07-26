@@ -1,12 +1,12 @@
 import style from './style.css';
 import { ProjectProps } from '../../../../models/project/model';
-import { isThisSecond } from 'date-fns';
 
 export class ProjectView {
   /**
    * @param {ProjectProps} projectProps
    */
 
+  rootDiv = document.createElement('div');
   checklists = document.createElement('ul');
   tasks = document.createElement('ul');
 
@@ -46,60 +46,6 @@ export class ProjectView {
     );
   }
 
-  /** Display project information with its title, tasks and checklists. */
-  render() {
-    const rootDiv = document.createElement('div');
-    const spanTitle = document.createElement('span');
-    spanTitle.textContent = this.props.title;
-    rootDiv.appendChild(spanTitle);
-
-    const checklistsSection = document.createElement('section');
-    const spanChecklists = document.createElement('span');
-    spanChecklists.textContent = 'Checklists';
-
-    const divNewChecklistForm = document.createElement('div');
-
-    const addCheckListButton = document.createElement('button');
-    addCheckListButton.textContent = '+';
-    addCheckListButton.addEventListener('click', () => {
-      divNewChecklistForm.appendChild(this.displayChecklistCreateWidget());
-    });
-
-    checklistsSection.append(
-      ...[
-        spanChecklists,
-        this.checklists,
-        divNewChecklistForm,
-        addCheckListButton,
-      ],
-    );
-    rootDiv.appendChild(checklistsSection);
-
-    const tasksSection = document.createElement('section');
-    const taskSectionHeader = document.createElement('span');
-    taskSectionHeader.textContent = 'Tasks';
-
-    const divNewTaskForm = document.createElement('div');
-
-    const addTaskButton = document.createElement('button');
-    addTaskButton.textContent = '+';
-    addTaskButton.addEventListener('click', () => {
-      divNewTaskForm.appendChild(this.displayTaskCreateWidget());
-    });
-
-    tasksSection.append(
-      ...[taskSectionHeader, this.tasks, divNewTaskForm, addTaskButton],
-    );
-    rootDiv.appendChild(tasksSection);
-
-    // These are temporary borders
-    rootDiv.classList.add('border');
-    tasksSection.classList.add('border');
-    checklistsSection.classList.add('border');
-
-    return rootDiv;
-  }
-
   displayChecklistCreateWidget = (handler) => {
     return handler();
   };
@@ -123,4 +69,62 @@ export class ProjectView {
   displayTaskUpdateWidget = (displayTaskWidgetHandler, taskProps) => {
     return displayTaskWidgetHandler(taskProps);
   };
+
+  /** Closes the project view. */
+  hide() {
+    this.rootDiv.replaceChildren();
+  }
+
+  /** Display project information with its title, tasks and checklists. */
+  render() {
+    const spanTitle = document.createElement('span');
+    spanTitle.textContent = this.props.title;
+    this.rootDiv.appendChild(spanTitle);
+
+    const checklistsSection = document.createElement('section');
+    const spanChecklists = document.createElement('span');
+    spanChecklists.textContent = 'Checklists';
+
+    const divNewChecklistForm = document.createElement('div');
+
+    const addCheckListButton = document.createElement('button');
+    addCheckListButton.textContent = '+';
+    addCheckListButton.addEventListener('click', () => {
+      divNewChecklistForm.appendChild(this.displayChecklistCreateWidget());
+    });
+
+    checklistsSection.append(
+      ...[
+        spanChecklists,
+        this.checklists,
+        divNewChecklistForm,
+        addCheckListButton,
+      ],
+    );
+    this.rootDiv.appendChild(checklistsSection);
+
+    const tasksSection = document.createElement('section');
+    const taskSectionHeader = document.createElement('span');
+    taskSectionHeader.textContent = 'Tasks';
+
+    const divNewTaskForm = document.createElement('div');
+
+    const addTaskButton = document.createElement('button');
+    addTaskButton.textContent = '+';
+    addTaskButton.addEventListener('click', () => {
+      divNewTaskForm.appendChild(this.displayTaskCreateWidget());
+    });
+
+    tasksSection.append(
+      ...[taskSectionHeader, this.tasks, divNewTaskForm, addTaskButton],
+    );
+    this.rootDiv.appendChild(tasksSection);
+
+    // These are temporary borders
+    this.rootDiv.classList.add('border');
+    tasksSection.classList.add('border');
+    checklistsSection.classList.add('border');
+
+    return this.rootDiv;
+  }
 }

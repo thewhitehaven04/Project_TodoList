@@ -26,6 +26,10 @@ export class PublisherModel {
     );
   }
 
+  /**
+   * @param {String} eventName
+   * @param {Object} data event props
+   */
   publish(eventName, data) {
     this.#pubSubs.forEach((pubSub) => pubSub.pub(eventName, data));
   }

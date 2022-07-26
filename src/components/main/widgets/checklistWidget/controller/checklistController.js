@@ -7,37 +7,46 @@ import { checklistEvents } from '../../../../../models/checklist/checklistEvents
 export class ChecklistController {
   /**
    * @param {ChecklistModel} model
-   * @param {(ChecklistCreateView | ChecklistUpdateView)} view
    * @param {PubSub} eventBus
    */
-  constructor(model, view, eventBus) {
-    this.view = view;
+  constructor(model, eventBus) {
     this.model = model;
     this.eventBus = eventBus;
 
     this.model.add(this.eventBus);
+  }
 
-    /** need to refactor the code below, currently have no idea how to
-     * dynamically bind methods of different views to controller handlers
-     */
-    if (this.view.createChecklist !== undefined) {
-      this.view.createChecklist = this.view.createChecklist.bind(
-        this,
-        this.initChecklist,
-      );
-    }
-    if (this.view.toggleComplete !== undefined) {
-      this.view.toggleComplete = this.view.toggleComplete.bind(
-        this,
-        this.toggleComplete,
-      );
-    }
-    if (this.view.deleteChecklist !== undefined) {
-      this.view.deleteChecklist = this.view.deleteChecklist.bind(
-        this,
-        this.deleteChecklist,
-      );
-    }
+  /**
+   * @param {ChecklistCreateView} view
+   * @returns {ChecklistController} this instance
+   */
+  setCreateView(view) {
+    this.view = view;
+
+    this.view.createChecklist = this.view.createChecklist.bind(
+      this,
+      this.initChecklist,
+    );
+    return this;
+  }
+
+  /**
+   * @param {ChecklistUpdateView} view
+   * @returns {ChecklistController} this instance
+   */
+  setUpdateView(view) {
+    this.view = view;
+
+    this.view.toggleComplete = this.view.toggleComplete.bind(
+      this,
+      this.toggleComplete,
+    );
+    this.view.deleteChecklist = this.view.deleteChecklist.bind(
+      this,
+      this.deleteChecklist,
+    );
+
+    return this;
   }
 
   /**
@@ -59,6 +68,10 @@ export class ChecklistController {
   };
 
   render() {
-    return this.view.render();
+    if (this.view !== undefined) {
+      return this.view.render();
+    } else {
+      throw new ReferenceError("The view hasn't been set yet");
+    }
   }
 }

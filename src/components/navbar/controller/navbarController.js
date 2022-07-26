@@ -1,39 +1,39 @@
-import { PubSub } from '../../generic/pubSub';
-import { NavBarView } from './view/view';
-import { NavBarModel } from '../../models/navBar/navBar';
-import { projectEvents } from '../../models/project/projectEvents';
-import { appEvents } from '../../models/main/appEvents';
+import { PubSub } from '../../../generic/pubSub';
+import { NavBarView } from '../view/view';
+import { NavBarModel } from '../../../models/navBar/navBar';
+import { projectEvents } from '../../../models/project/projectEvents';
+import { appEvents } from '../../../models/main/appEvents';
 
 export class NavBarController {
   /**
    * @param {NavBarView} view handles rendering of the navbar
    * @param {NavBarModel} model handles business logic of the navbar
-   * @param {PubSub} localPs pubSub instance that handles events coming from the model into the view
    * @param {PubSub} globalPs pubSub instance that handles events being published by the controller
    * for other application objects (e.g. main pane)
    */
-  constructor(view, model, localPs, globalPs) {
+  constructor(model, view, globalPs) {
+    this.model = model;
+    this.localPs = new PubSub();
+    this.model.add(this.localPs);
+
+    this.globalPs = globalPs;
     this.view = view;
     this.view._bindHandleOpenProjectForm(this, this.openNewProjectForm);
     this.view._bindHandleProjectRemoval(this, this.removeProject);
     this.view._bindOpenExistingProjectHandler(this, this.openProjectWidget);
 
-    this.model = model;
-    this.globalPs = globalPs;
-
     // the model is subscribed to the events from the project storage so that the projects
     // are not removed from the view before they are actually removed from the storage.
     this.globalPs.subscribe(
-      projectEvents.projectAddedToStorage.getName(),
+      projectEvents.projectAddedToStorage,
       this.model.addProject,
     );
     this.globalPs.subscribe(
-      projectEvents.projectRemovedFromStorage.getName(),
+      projectEvents.projectRemovedFromStorage,
       this.model.removeProject,
     );
 
     // projects are removed from the view after the model has received confirmation
-    this.localPs = localPs;
     this.localPs.subscribe(
       projectEvents.projectRemoved,
       this.view.removeProject,
@@ -46,15 +46,15 @@ export class NavBarController {
     this.globalPs.pub(appEvents.openNewProjectForm);
   };
 
-  removeProject = (projectTitle) => {
-    this.globalPs.pub(projectEvents.projectRemoved, { title: projectTitle });
+  /**
+   * @param {import('../../../models/project/model').ProjectProps} props
+   */
+  removeProject = (props) => {
+    this.globalPs.pub(projectEvents.projectRemoved, props);
   };
 
-  openProjectWidget = (projectTitle) => {
-    this.globalPs.pub(
-      appEvents.openProjectViewWidget.getName(),
-      appEvents.openProjectViewWidget.setArgs(projectTitle),
-    );
+  openProjectWidget = (projectProps) => {
+    this.globalPs.pub(appEvents.openProjectViewWidget, projectProps);
   };
 
   render() {

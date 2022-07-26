@@ -1,8 +1,8 @@
-import { TaskModel, TaskProps } from '../../../../models/task/model';
-import { taskEvents } from '../../../../models/task/taskEvents';
-import { CreateTaskWidgetView } from './createTaskWidgetView';
-import { PubSub } from './../../../../generic/pubSub';
-import { EditTaskView } from '../editTaskWidget/taskView';
+import { TaskModel, TaskProps } from '../../../../../models/task/model';
+import { taskEvents } from '../../../../../models/task/taskEvents';
+import { CreateTaskWidgetView } from './../views/create/createTaskWidgetView';
+import { UpdateTaskView } from '../../taskWidget/views/update/updateTaskView';
+import { PubSub } from '../../../../../generic/pubSub';
 export class TaskController {
   /**
    * @param {(CreateTaskWidgetView | EditTaskView)} view

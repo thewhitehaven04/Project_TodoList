@@ -30,10 +30,10 @@ export class CreateNewProjectWidgetView {
   }
 
   /**
-   * @param {import('../../../../models/project/model').ProjectProps} projectProps
+   * @param {String} title
    */
-  createNewProject(handler, projectProps) {
-    handler(projectProps);
+  createNewProject(handler, title) {
+    handler(title);
   }
 
   close() {

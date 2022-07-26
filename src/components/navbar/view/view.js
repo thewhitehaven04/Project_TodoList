@@ -1,47 +1,53 @@
 import style from './style.css';
+import { ProjectProps } from '../../../models/project/model';
 
 export class NavBarView {
   navRoot = document.createElement('nav');
   projectsRoot = document.createElement('ul');
 
   constructor() {
+    /** ProjectProps are stored in an array
+     * @type {ProjectProps[]}
+     */
     this.projects = [];
   }
 
   /**
-   * @param {String} projectTitle
+   * @param {ProjectProps} props
    */
-  addProject = (projectTitle) => {
-    this.projects.push(projectTitle);
+  addProject = (props) => {
+    this.projects.push(props);
     this.renderProjects();
   };
 
   /**
-   * @param {String} projectTitle
+   * @param {ProjectProps} props
    */
-  removeProject = (projectTitle) => {
-    this.projects = this.projects.filter((existingProject) => existingProject != projectTitle);
+  removeProject = (props) => {
+    this.projects = this.projects.filter(
+      (existingProject) => existingProject.title != props.title,
+    );
     this.renderProjects();
   };
 
   /** Render an ordered list of projects. */
   renderProjects() {
     this.projectsRoot.replaceChildren();
-    this.projects.forEach((projectTitle) => {
+    this.projects.forEach((projectProps) => {
       const liProjectContainer = document.createElement('li');
       liProjectContainer.classList.add('navbar-list-item');
-      liProjectContainer.addEventListener('click', () => {
-        this.openExistingProject(projectTitle);
-      });
 
       const span = document.createElement('span');
-      span.textContent = projectTitle;
-      span.dataset.projectTitle = projectTitle;
+      span.textContent = projectProps.title;
+      span.dataset.projectTitle = projectProps.title;
+      span.addEventListener('click', () => {
+        this.openExistingProject(projectProps);
+      });
 
       const buttonRemoveProject = document.createElement('button');
       buttonRemoveProject.textContent = '✕';
       buttonRemoveProject.addEventListener('click', () => {
-        this.removeProject(projectTitle);
+        this.callRemoveProjectHandler(projectProps);
       });
 
       liProjectContainer.appendChild(span);
@@ -60,11 +66,17 @@ export class NavBarView {
   }
 
   _bindHandleProjectRemoval(obj, handler) {
-    this.callRemoveProjectHandler = this.callRemoveProjectHandler.bind(obj, handler);
+    this.callRemoveProjectHandler = this.callRemoveProjectHandler.bind(
+      obj,
+      handler,
+    );
   }
 
-  callRemoveProjectHandler(removeProjectHandler) {
-    removeProjectHandler();
+  /**
+   * @param {ProjectProps} projectProps
+   */
+  callRemoveProjectHandler(removeProjectHandler, projectProps) {
+    removeProjectHandler(projectProps);
   }
 
   _bindOpenExistingProjectHandler(obj, handler) {
@@ -88,7 +100,9 @@ export class NavBarView {
 
     const buttonAddProjects = document.createElement('button');
     buttonAddProjects.textContent = 'Add project';
-    buttonAddProjects.addEventListener('click', () => this.openNewProjectForm());
+    buttonAddProjects.addEventListener('click', () =>
+      this.openNewProjectForm(),
+    );
     projectsSectionHeader.appendChild(buttonAddProjects);
 
     sectionProjects.appendChild(projectsSectionHeader);

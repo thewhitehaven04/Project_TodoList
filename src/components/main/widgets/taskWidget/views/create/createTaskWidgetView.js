@@ -3,15 +3,15 @@ import {
   createRadioWithLabel,
   createRequiredInputOfType,
   createFutureDataPicker,
-} from '../../../../domUtils/input/input';
-import { createNamedTextarea } from '../../../../domUtils/textarea/textarea';
-import { PrioritiesModel } from '../../../../models/priority/model';
-import { progressModel } from '../../../../models/progress/model';
+} from '../../../../../../domUtils/input/input';
+import { createNamedTextarea } from '../../../../../../domUtils/textarea/textarea';
+import { prioritiesModel } from '../../../../../../models/priority/model';
+import { progressModel } from '../../../../../../models/progress/model';
 import style from './style.css';
 
 export class CreateTaskWidgetView {
   /**
-   * @param {PrioritiesModel} priorityStates
+   * @param {prioritiesModel} priorityStates
    */
 
   rootDiv = document.createElement('div');
@@ -26,7 +26,7 @@ export class CreateTaskWidgetView {
 
   /**
    * @param {Function} handler
-   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   * @param {import('../../../../../../models/task/model').TaskProps} taskProps
    */
   createTask(handler, taskProps) {
     handler(taskProps);

@@ -1,23 +1,21 @@
-import { ProjectModel } from '../project/model';
-import { PubSub } from '../../generic/pubSub';
 import { projectEvents } from '../project/projectEvents';
+import { PublisherModel } from '../../generic/modelPublisher';
 
-export class NavBarModel {
+export class NavBarModel extends PublisherModel {
   /**
-   * @param {String[]} projects
-   * @param {PubSub} publisher
+   * @param {import('../project/model').ProjectProps[]} projects
    */
-  constructor(projects, publisher) {
+  constructor(projects) {
+    super();
     this.projects = projects ?? [];
-    this.publisher = publisher;
   }
 
   /**
    * @param {import('../project/model').ProjectProps} projectProps
    */
   addProject = (projectProps) => {
-    this.projects.push(projectProps.title);
-    this.publisher.pub(projectEvents.projectAdded, projectProps.title);
+    this.projects.push(projectProps);
+    this.publish(projectEvents.projectAdded, projectProps);
   };
 
   /**
@@ -25,8 +23,8 @@ export class NavBarModel {
    */
   removeProject = (projectProps) => {
     this.projects = this.projects.filter(
-      (project) => project != projectProps.title,
+      (project) => project.title != projectProps.title,
     );
-    this.publisher.pub(projectEvents.projectAdded, projectProps.title);
+    this.publish(projectEvents.projectRemoved, projectProps);
   };
 }

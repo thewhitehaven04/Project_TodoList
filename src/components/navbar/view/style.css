@@ -2,11 +2,15 @@
   display: flex;
   flex-flow: column wrap;
 
-  width: 15%; 
-  min-width: min-content; 
-
-  padding: 15px;
+  padding: 10px;
   align-items: flex-start;
+
+  height: 100vh;
+  background-color: var(--maximum-yellow-red);
+}
+
+.navbar ul {
+  padding-left: 10px;
 }
 
 .navbar-section {
@@ -16,6 +20,16 @@
 .section-header {
   display: flex;
   flex-flow: column nowrap;
+  gap: 10px;
+
+  justify-content: center;
+  margin-bottom: 20px;
+
+  font-size: 1.5rem;
+}
+
+.section-header > span {
+  align-self: flex-end;
 }
 
 .navbar-list-item {

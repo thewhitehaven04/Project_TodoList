@@ -1,11 +1,11 @@
 import { MainView } from './view/main';
 import { PubSub } from '../../generic/pubSub';
 import { appEvents } from '../../models/main/appEvents';
-import { CreateNewProjectWidgetController } from './widgets/createNewProjectWidget/createNewProjectWidgetController';
+import { CreateNewProjectWidgetController } from './widgets/createNewProjectWidget/createNewProjectController';
 import { CreateNewProjectWidgetView } from './widgets/createNewProjectWidget/createNewProjectView';
-import { ProjectViewController } from './widgets/projectViewWidget/projectController';
-import { ProjectView } from './widgets/projectViewWidget/projectView';
-import { getProject } from '../..';
+import { ProjectViewController } from './widgets/projectWidget/projectController';
+import { ProjectView } from './widgets/projectWidget/projectView';
+import { ProjectModel } from '../../models/project/model';
 
 export class MainController {
   /**
@@ -22,7 +22,7 @@ export class MainController {
       this.openNewProjectWidget,
     );
     this.appEventBus.subscribe(
-      appEvents.openProjectViewWidget.getName(),
+      appEvents.openProjectViewWidget,
       this.openProjectViewWidget,
     );
   }
@@ -31,6 +31,7 @@ export class MainController {
   openNewProjectWidget = () => {
     this.view.setWidget(
       new CreateNewProjectWidgetController(
+        new ProjectModel(),
         new CreateNewProjectWidgetView(),
         this.appEventBus,
       ),
@@ -42,13 +43,10 @@ export class MainController {
    * @param {import('../../models/project/model').ProjectProps} projectProps
    */
   openProjectViewWidget = (projectProps) => {
-    const model = getProject(projectProps);
-    const enrichedProps = model.toJSON();
-
     this.view.setWidget(
       new ProjectViewController(
-        model,
-        new ProjectView(enrichedProps),
+        new ProjectModel(projectProps),
+        new ProjectView(projectProps),
         this.appEventBus,
       ),
     );

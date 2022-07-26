@@ -1,18 +1,18 @@
-import { createRequiredInputOfType } from '../../../../domUtils/input/input';
-import { createSelectWithOptions } from '../../../../domUtils/select/select';
-import { progressModel } from '../../../../models/progress/model';
-import { PrioritiesModel } from '../../../../models/priority/model';
+import { createRequiredInputOfType } from '../../../../../../domUtils/input/input';
+import { createSelectWithOptions } from '../../../../../../domUtils/select/select';
+import { progressModel } from '../../../../../../models/progress/model';
+import { prioritiesModel } from '../../../../../../models/priority/model';
 import { zipObject } from 'lodash';
 import style from './style.css';
 
-export class EditTaskView {
+export class UpdateTaskView {
   taskViewRoot = document.createElement('article');
 
   /**
-   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   * @param {import('../../../../../../models/task/model').TaskProps} taskProps
    */
-  constructor(taskProps = {}) {
-    this.taskProps = taskProps;
+  constructor(taskProps) {
+    this.taskProps = taskProps ?? {};
   }
 
   _bindUpdateTask(handler) {
@@ -21,7 +21,7 @@ export class EditTaskView {
 
   /**
    * @param {Function} handler
-   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   * @param {import('../../../../../../models/task/model').TaskProps} taskProps
    */
   updateTask(handler, taskProps) {
     handler(taskProps);
@@ -40,8 +40,8 @@ export class EditTaskView {
     description.textContent = this.taskProps.description;
     description.classList.add('task-description');
 
-    const names = Object.entries(PrioritiesModel).map((entry) => entry[1].name);
-    const values = Object.entries(PrioritiesModel).map(
+    const names = Object.entries(prioritiesModel).map((entry) => entry[1].name);
+    const values = Object.entries(prioritiesModel).map(
       (entry) => entry[1].displayName,
     );
 

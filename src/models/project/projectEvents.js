@@ -1,24 +1,15 @@
 export const projectEvents = {
   projectAdded: 'projectAddedEvent',
   projectRemoved: 'projectRemovedEvent',
-  projectAddedToStorage: {
-    getName: () => 'projectInStorageEvent',
-    setArgs: (projectTitle) => {
-      title: projectTitle;
-    },
-  },
-  projectRemovedFromStorage: {
-    getName: () => 'projectRemovedFromStorageEvent',
-    setArgs: (projectTitle) => {
-      title: projectTitle;
-    },
-  },
+  projectAddedToStorage: 'projectAddedToStorageEvent',
+  projectRemovedFromStorage: 'projectRemovedFromStorageEvent',
   taskAddedToProject: {
     getName: () => 'taskAddedToProjectEvent',
     setArgs: (uuid) => {
       taskId: uuid;
     },
   },
+  taskRemovedFromProject: 'taskRemovedFromProject',
   checklistAddedToProject: 'checklistAddedToProjectEvent',
   chekclistRemovedFromProject: 'checklistRemovedFromProjectEvent',
 };
