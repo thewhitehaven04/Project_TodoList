@@ -5,11 +5,11 @@ import { NavBarController } from './components/navbar/controller/navbarControlle
 import { NavBarView } from './components/navbar/view/view';
 import { PubSub } from './generic/pubSub';
 import { NavBarModel } from './models/navBar/navBar';
-import { ProjectStoragePublisher } from './models/projectStorage/projectStoragePublisher';
+import { ProjectStoragePubSub } from './models/projectStorage/projectStoragePublisher';
 
 const appEventBus = new PubSub();
 
-const projectStorage = new ProjectStoragePublisher([], appEventBus);
+const projectStorage = new ProjectStoragePubSub([], appEventBus);
 
 const appRoot = document.querySelector('#todo-list-app');
 
@@ -28,7 +28,3 @@ const runApp = function (appRoot, eventBus) {
 };
 
 runApp(appRoot, appEventBus);
-
-const getProject = projectStorage.getProject;
-
-export { getProject };

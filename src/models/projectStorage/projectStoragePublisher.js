@@ -3,13 +3,17 @@ import { projectEvents } from '../project/projectEvents';
 import { ProjectStorage } from './projectStorage';
 import { ProjectProps } from '../project/model';
 
-export class ProjectStoragePublisher {
+export class ProjectStoragePubSub {
   /**
    * @param {ProjectProps[]} projectPropsArr
    * @param {PubSub} eventBus
+   * @param {LocalStorageAdapter} localStorageAdapter 
    */
-  constructor(projectPropsArr, eventBus) {
+  constructor(projectPropsArr, eventBus, localStorageAdapter) {
     this.projectStorage = new ProjectStorage();
+    this.lsa = localStorageAdapter;
+
+
     this.eventBus = eventBus;
     this.eventBus.subscribe(projectEvents.projectAdded, this.addProject);
     this.eventBus.subscribe(projectEvents.projectRemoved, this.deleteProject);
@@ -33,6 +37,10 @@ export class ProjectStoragePublisher {
     this.eventBus.pub(projectEvents.projectRemovedFromStorage, projectProps);
   };
 
+
+  updateProject = (projectProps) => {
+    this.projectStorage.(projectProps);
+  }
   /**
    * @param {ProjectProps} projectProps
    */
@@ -44,6 +52,6 @@ export class ProjectStoragePublisher {
    * @returns {ProjectProps[]} projectProps
    */
   getAllProjects = () => {
-    return this.projectStorage.projects.map((project) => project.toJSON());
+    return this.projectStorage.projects.map((project) => project);
   };
 }

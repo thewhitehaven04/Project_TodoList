@@ -1,14 +1,9 @@
-export class Storage {
-  constructor(data, namespace) {
-    this.data = new Map(Object.entries(data));
-    this.localStorageNamespace = namespace;
+export class LocalStorageAdapter {
+  updateLocalStorage(key, data) {
+    localStorage.setItem(key, data);
   }
 
-  toLocalStorage(data) {
-    localStorage.setItem()
+  getFromLocalStorage(key) {
+    localStorage.getItem(key);
   }
-
-  getFromLocalStorage() {}
-
-  removeFromLocalStorage() {}
 }
