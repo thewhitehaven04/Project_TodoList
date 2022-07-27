@@ -13,9 +13,9 @@ class ProjectStorage {
     const localStorageData = this.#getFromLocalStorage();
 
     if (localStorageData !== null) {
-      this.projects = new Map(Object.entries(localStorageData));
+      this.projects = localStorageData;
     } else {
-      this.projects = new Map(
+      this.projects = Object.fromEntries(
         projects.map((project) => [project.title, project]),
       );
     }
@@ -24,20 +24,23 @@ class ProjectStorage {
    * @param {import('../project/model').ProjectProps} projectProps
    */
   addProject(projectProps) {
-    this.projects.set(projectProps.title, projectProps);
+    this.projects[projectProps.title] = projectProps;
+    this.#storeToLocalStorage();
   }
   /**
    * @param {import('../project/model').ProjectProps} projectProps
    */
   deleteProject(projectProps) {
-    this.projects.delete(projectProps.title);
+    delete this.projects[projectProps.title];
+    this.#storeToLocalStorage();
   }
 
   /**
    * @param {import('../project/model').ProjectProps} projectProps
    */
   updateProject(projectProps) {
-    this.projects.set(projectProps.title, projectProps);
+    this.projects[projectProps.title] = projectProps;
+    this.#storeToLocalStorage();
   }
 
   /**
@@ -58,9 +61,7 @@ class ProjectStorage {
   }
 
   toJSON() {
-    return {
-      projects: Object.freeze(Object.entries(this.projects)),
-    };
+    return this.projects;
   }
 }
 

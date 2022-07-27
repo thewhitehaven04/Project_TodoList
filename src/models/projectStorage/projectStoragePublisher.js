@@ -52,6 +52,6 @@ export class ProjectStoragePubSub {
    * @returns {ProjectProps[]} projectProps
    */
   getAllProjects = () => {
-    return Array.from(this.projectStorage.projects.values());
+    return Object.values(this.projectStorage.projects);
   };
 }
