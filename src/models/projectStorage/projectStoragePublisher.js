@@ -5,20 +5,16 @@ import { ProjectProps } from '../project/model';
 
 export class ProjectStoragePubSub {
   /**
-   * @param {ProjectProps[]} projectPropsArr
+   * @param {Object<String,ProjectProps[]>} projectPropsMap
    * @param {PubSub} eventBus
-   * @param {LocalStorageAdapter} localStorageAdapter 
    */
-  constructor(projectPropsArr, eventBus, localStorageAdapter) {
-    this.projectStorage = new ProjectStorage();
-    this.lsa = localStorageAdapter;
-
+  constructor(projectPropsMap, eventBus) {
+    this.projectStorage = new ProjectStorage(projectPropsMap);
 
     this.eventBus = eventBus;
     this.eventBus.subscribe(projectEvents.projectAdded, this.addProject);
     this.eventBus.subscribe(projectEvents.projectRemoved, this.deleteProject);
-
-    projectPropsArr.forEach((projectProps) => this.addProject(projectProps));
+    this.eventBus.subscribe(projectEvents.projectUpdated, this.updateProject);
   }
 
   /**
@@ -26,6 +22,7 @@ export class ProjectStoragePubSub {
    */
   addProject = (projectProps) => {
     this.projectStorage.addProject(projectProps);
+
     this.eventBus.pub(projectEvents.projectAddedToStorage, projectProps);
   };
 
@@ -37,10 +34,13 @@ export class ProjectStoragePubSub {
     this.eventBus.pub(projectEvents.projectRemovedFromStorage, projectProps);
   };
 
-
+  /**
+   * @param {ProjectProps} projectProps
+   */
   updateProject = (projectProps) => {
-    this.projectStorage.(projectProps);
-  }
+    this.projectStorage.updateProject(projectProps);
+  };
+
   /**
    * @param {ProjectProps} projectProps
    */
@@ -52,6 +52,6 @@ export class ProjectStoragePubSub {
    * @returns {ProjectProps[]} projectProps
    */
   getAllProjects = () => {
-    return this.projectStorage.projects.map((project) => project);
+    return Array.from(this.projectStorage.projects.values());
   };
 }

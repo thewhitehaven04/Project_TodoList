@@ -109,14 +109,17 @@ export class ProjectViewController {
 
   addChecklist = (checklistProps) => {
     this.model.addChecklist(checklistProps);
+    this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
   };
 
   removeChecklist = (checklistProps) => {
     this.model.removeChecklist(checklistProps);
+    this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
   };
 
   addTask = (taskProps) => {
     this.model.addTask(taskProps);
+    this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
   };
 
   render() {

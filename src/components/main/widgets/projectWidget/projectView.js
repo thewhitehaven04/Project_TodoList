@@ -30,7 +30,7 @@ export class ProjectView {
 
   #renderChecklists() {
     this.checklists.classList.add('flex-list');
-    this.checklists.replaceWith(
+    this.checklists.replaceChildren(
       ...this.props.checklists.map((checklist) => {
         return this.displayChecklistUpdateWidget(checklist);
       }),
@@ -39,7 +39,7 @@ export class ProjectView {
 
   #renderTasks() {
     this.tasks.classList.add('flex-list');
-    this.tasks.replaceWith(
+    this.tasks.replaceChildren(
       ...this.props.tasks.map((task) => {
         return this.displayTaskUpdateWidget(task);
       }),
@@ -93,6 +93,7 @@ export class ProjectView {
       divNewChecklistForm.appendChild(this.displayChecklistCreateWidget());
     });
 
+    this.#renderChecklists();
     checklistsSection.append(
       ...[
         spanChecklists,
@@ -115,6 +116,7 @@ export class ProjectView {
       divNewTaskForm.appendChild(this.displayTaskCreateWidget());
     });
 
+    this.#renderTasks();
     tasksSection.append(
       ...[taskSectionHeader, this.tasks, divNewTaskForm, addTaskButton],
     );

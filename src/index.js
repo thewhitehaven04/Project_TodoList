@@ -9,7 +9,17 @@ import { ProjectStoragePubSub } from './models/projectStorage/projectStoragePubl
 
 const appEventBus = new PubSub();
 
-const projectStorage = new ProjectStoragePubSub([], appEventBus);
+const defaultProjectProps = [
+  {
+    title: 'Default',
+    checklists: [],
+    tasks: [],
+  },
+];
+const projectStorage = new ProjectStoragePubSub(
+  defaultProjectProps,
+  appEventBus,
+);
 
 const appRoot = document.querySelector('#todo-list-app');
 
@@ -23,7 +33,11 @@ const runApp = function (appRoot, eventBus) {
   new AppView(
     appRoot,
     new MainController(new MainView(), eventBus),
-    new NavBarController(new NavBarModel(projects), new NavBarView(), eventBus),
+    new NavBarController(
+      new NavBarModel(projects),
+      new NavBarView(projects),
+      eventBus,
+    ),
   ).render();
 };
 

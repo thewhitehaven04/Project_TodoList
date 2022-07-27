@@ -5,11 +5,15 @@ export class NavBarView {
   navRoot = document.createElement('nav');
   projectsRoot = document.createElement('ul');
 
-  constructor() {
+  /**
+   *
+   * @param {ProjectProps[]} projectPropsArray
+   */
+  constructor(projectPropsArray = []) {
     /** ProjectProps are stored in an array
      * @type {ProjectProps[]}
      */
-    this.projects = [];
+    this.projects = projectPropsArray;
   }
 
   /**

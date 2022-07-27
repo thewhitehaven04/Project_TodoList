@@ -1,5 +1,6 @@
 export const projectEvents = {
   projectAdded: 'projectAddedEvent',
+  projectUpdated: 'projectUpdatedEvent',
   projectRemoved: 'projectRemovedEvent',
   projectAddedToStorage: 'projectAddedToStorageEvent',
   projectRemovedFromStorage: 'projectRemovedFromStorageEvent',
