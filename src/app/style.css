@@ -1,5 +1,19 @@
+@font-face {
+  font-family: Nuinito Sans Regular;
+  src: url(./../assets/fonts/nuinito/Nunito_Sans/NunitoSans-Regular.ttf);
+}
+
 :root {
   box-sizing: border-box;
+  font-family: Nuinito Sans Regular;
+  font-size: 12pt;
+
+  /* CSS HEX */
+  --queen-blue: #41658aff;
+  --light-gray: #cdd6ddff;
+  --maximum-yellow-red: #ffc857ff;
+  --burnt-sienna: #e9724cff;
+  --light-coral: #ff8484ff;
 }
 
 *,
@@ -8,14 +22,16 @@
   box-sizing: inherit;
 }
 
-html {
-  height: 100vh;
-}
 
 body {
-  display: grid;
-  grid-template-columns:  [navbar-start] minmax(min-content, 300px) [navbar-end] 
-                          [main-section-start] 1fr [main-section-end];
+  height: 100vh;
+  background-color: var(--light-gray);
 
-  grid-template-areas: "navbar main";
+  margin: 0px;
+}
+
+#todo-list-app {
+  display: grid;
+  grid-template-columns: [navbar-start] minmax(min-content, 300px) [navbar-end main-start] 1fr [main-end];
+  grid-template-areas: 'navbar main';
 }

@@ -1,0 +1,12 @@
+.grid-new-task {
+  display: grid;
+
+  grid-template-columns: 16em 200px;
+  grid-template-areas:
+    'name         priority   '
+    'dueDate      priority   '
+    'tag          priority   '
+    'description  description'
+    'description  description'
+    '. button';
+}

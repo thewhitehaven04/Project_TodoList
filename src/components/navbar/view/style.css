@@ -1,3 +1,39 @@
 .navbar {
-  background-color: aquamarine;
+  display: flex;
+  flex-flow: column wrap;
+
+  padding: 10px;
+  align-items: flex-start;
+
+  height: 100vh;
+  background-color: var(--maximum-yellow-red);
+}
+
+.navbar ul {
+  padding-left: 10px;
+}
+
+.navbar-section {
+  display: flex;
+}
+
+.section-header {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+
+  justify-content: center;
+  margin-bottom: 20px;
+
+  font-size: 1.5rem;
+}
+
+.section-header > span {
+  align-self: flex-end;
+}
+
+.navbar-list-item {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
 }
