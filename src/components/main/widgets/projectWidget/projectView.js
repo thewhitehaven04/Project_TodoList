@@ -149,11 +149,6 @@ export class ProjectView {
     );
     this.rootDiv.appendChild(tasksSection);
 
-    // These are temporary borders
-    this.rootDiv.classList.add('border');
-    tasksSection.classList.add('border');
-    checklistsSection.classList.add('border');
-
     return this.rootDiv;
   }
 }

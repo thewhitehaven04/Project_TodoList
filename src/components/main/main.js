@@ -27,7 +27,6 @@ export class MainController {
     );
   }
 
-  /** Calls the view to display the new project creation widget */
   openNewProjectWidget = () => {
     this.view.setWidget(
       new CreateNewProjectWidgetController(

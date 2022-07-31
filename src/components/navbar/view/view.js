@@ -13,7 +13,7 @@ export class NavBarView {
     /** ProjectProps are stored in an array
      * @type {ProjectProps[]}
      */
-    this.projects = projectPropsArray;
+    this.projects = Array.from(projectPropsArray);
   }
 
   /**

@@ -1,5 +1,5 @@
 /**
- * @typedef Widget 
+ * @typedef Widget
  * @property {Function} render
  */
 export class MainView {
@@ -17,13 +17,12 @@ export class MainView {
    * @param {Widget} widget widget to display
    */
   setWidget(widget) {
-    this.currentlyDisplayedWidget = widget; 
+    this.currentlyDisplayedWidget = widget;
   }
 
   render() {
     if (this.currentlyDisplayedWidget != null) {
-      this.main.replaceChildren();
-      this.main.appendChild(this.currentlyDisplayedWidget.render());
+      this.main.replaceChildren(this.currentlyDisplayedWidget.render());
     }
     return this.main;
   }

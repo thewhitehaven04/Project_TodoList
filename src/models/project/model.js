@@ -44,11 +44,25 @@ export class ProjectModel extends PublisherModel {
     this.publish(projectEvents.taskAddedToProject, taskProps);
   };
 
+  /**
+   * @param {import('../checklist/model').ChecklistProps} checklistProps
+   */
   removeChecklist = (checklistProps) => {
     this.checklists = this.checklists.filter(
-      (existingChecklist) => existingChecklist !== checklistProps,
+      (existingChecklist) => existingChecklist.id !== checklistProps.id,
     );
-    this.publish(projectEvents.checklistAddedToProject, checklistProps);
+    this.publish(projectEvents.checklistRemovedFromProject, checklistProps);
+  };
+
+  /**
+   * Remove a task from the model
+   * @param {import('../task/model').TaskProps} taskProps
+   */
+  removeTask = (taskProps) => {
+    this.tasks = this.tasks.filter(
+      (existingTask) => existingTask.name !== taskProps.name,
+    );
+    this.publish(projectEvents.taskRemovedFromProject, taskProps);
   };
 
   /**

@@ -10,7 +10,7 @@ import { ChecklistController } from '../checklistWidget/controller/checklistCont
 import { ChecklistUpdateView } from '../checklistWidget/views/update/checklistUpdateView';
 import { ChecklistCreateView } from '../checklistWidget/views/create/createNewChecklistView';
 import { TaskController } from '../taskWidget/controller/taskController';
-import { CreateTaskWidgetView } from '../taskWidget/views/create/createTaskWidgetView';
+import { CreateTaskView } from '../taskWidget/views/create/createTaskWidgetView';
 import { UpdateTaskView } from '../taskWidget/views/update/updateTaskView';
 import { ProjectView } from './projectView';
 
@@ -82,22 +82,18 @@ export class ProjectViewController {
   }
 
   displayTaskCreateWidget = () => {
-    return new TaskController(
-      new CreateTaskWidgetView(prioritiesModel),
-      new TaskModel(),
-      this.eventBus,
-    ).render();
+    return new TaskController(new TaskModel(), this.eventBus)
+      .setCreateView(new CreateTaskView(prioritiesModel))
+      .render();
   };
 
   /**
    * @param {import('../../../../models/task/model').TaskProps} taskProps
    */
   displayTaskUpdateWidget = (taskProps) => {
-    return new TaskController(
-      new UpdateTaskView(taskProps),
-      new TaskModel(taskProps),
-      this.eventBus,
-    ).render();
+    return new TaskController(new TaskModel(taskProps), this.eventBus)
+      .setUpdateView(new UpdateTaskView(taskProps))
+      .render();
   };
 
   displayChecklistCreateWidget = () => {

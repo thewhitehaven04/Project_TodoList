@@ -16,7 +16,7 @@ export class UpdateTaskView {
   }
 
   _bindUpdateTask(handler) {
-    this.createTask = this.updateTask.bind(this, handler);
+    this.updateTask = this.updateTask.bind(this, handler);
   }
 
   /**
@@ -51,12 +51,33 @@ export class UpdateTaskView {
       zipObject(names, values),
     );
 
+    priorityInput.addEventListener('change', () => {
+      // @ts-ignore
+      this.updateTask({
+        name: this.taskProps.name,
+        description: this.taskProps.description,
+        dueDate: this.taskProps.dueDate,
+        priority: priorityInput.value,
+        tag: this.taskProps.tag,
+      });
+    });
+
     priorityInput.classList.add('task-priority');
 
     const progress = createRequiredInputOfType('checkbox', 'Progress').render();
     if (this.taskProps.progress === progressModel.COMPLETE.name) {
       progress.checked = true;
     }
+    progress.addEventListener('change', () =>
+      // @ts-ignore
+      this.updateTask({
+        name: this.taskProps.name,
+        description: this.taskProps.description,
+        dueDate: this.taskProps.dueDate,
+        priority: priorityInput.value,
+        tag: this.taskProps.tag,
+      }),
+    );
     progress.classList.add('task-progress');
 
     const tagContainer = document.createElement('div');

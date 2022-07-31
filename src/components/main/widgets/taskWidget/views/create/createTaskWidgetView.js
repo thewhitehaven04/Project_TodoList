@@ -9,7 +9,7 @@ import { prioritiesModel } from '../../../../../../models/priority/model';
 import { progressModel } from '../../../../../../models/progress/model';
 import style from './style.css';
 
-export class CreateTaskWidgetView {
+export class CreateTaskView {
   /**
    * @param {prioritiesModel} priorityStates
    */
