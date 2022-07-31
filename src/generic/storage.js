@@ -9,7 +9,7 @@ export class LocalStorageAdapter {
   updateLocalStorage(data) {
     localStorage.setItem(this.key, JSON.stringify(data));
     console.log(`Storing to local storage:`);
-    console.dir(localStorage);
+    console.dir(data);
   }
 
   /**

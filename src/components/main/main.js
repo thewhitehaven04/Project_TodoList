@@ -43,10 +43,12 @@ export class MainController {
    * @param {import('../../models/project/model').ProjectProps} projectProps
    */
   openProjectViewWidget = (projectProps) => {
+    const projectModel = new ProjectModel(projectProps);
+
     this.view.setWidget(
       new ProjectViewController(
-        new ProjectModel(projectProps),
-        new ProjectView(projectProps),
+        projectModel,
+        new ProjectView(projectModel.toJSON()),
         this.appEventBus,
       ),
     );

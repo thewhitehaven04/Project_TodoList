@@ -18,13 +18,40 @@ export class ProjectView {
     };
   }
 
+  /**
+   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   */
   addTask = (taskProps) => {
     this.props.tasks.push(taskProps);
     this.#renderTasks();
   };
 
+  /**
+   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   */
+  removeTask = (taskProps) => {
+    this.props.tasks = this.props.tasks.filter(
+      (existingTaskProps) => existingTaskProps.name !== taskProps.name,
+    );
+    this.#renderTasks();
+  };
+
+  /**
+   * @param {import('../../../../models/checklist/model').ChecklistProps} checklistProps
+   */
   addChecklist = (checklistProps) => {
     this.props.checklists.push(checklistProps);
+    this.#renderChecklists();
+  };
+
+  /**
+   * @param {import('../../../../models/checklist/model').ChecklistProps} checklistProps
+   */
+  removeChecklist = (checklistProps) => {
+    this.props.checklists = this.props.checklists.filter(
+      (existingChecklistProps) =>
+        existingChecklistProps.title !== checklistProps.title,
+    );
     this.#renderChecklists();
   };
 

@@ -7,5 +7,5 @@ export const projectEvents = {
   taskAddedToProject: 'taskAddedToProjectEvent',
   taskRemovedFromProject: 'taskRemovedFromProject',
   checklistAddedToProject: 'checklistAddedToProjectEvent',
-  chekclistRemovedFromProject: 'checklistRemovedFromProjectEvent',
+  checklistRemovedFromProject: 'checklistRemovedFromProjectEvent',
 };

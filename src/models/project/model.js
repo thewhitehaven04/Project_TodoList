@@ -20,11 +20,11 @@ export class ProjectModel extends PublisherModel {
   /**
    * @param {ProjectProps} projectProps
    */
-  update(projectProps) {
+  update = (projectProps) => {
     this.title = projectProps.title;
     this.checklists = projectProps.checklists;
     this.tasks = projectProps.tasks;
-  }
+  };
 
   /**
    * Add a checklist to the model.
