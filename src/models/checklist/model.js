@@ -30,7 +30,7 @@ export class ChecklistModel extends PublisherModel {
     },
   ) {
     super();
-    this.id = uuidv4();
+    this.id = checklistProps.id ?? uuidv4();
     this.title = checklistProps.title;
     this.items = new Map(Object.entries(checklistProps.items));
     this.#progress = checklistProps.progress;

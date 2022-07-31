@@ -48,7 +48,7 @@ class ProjectStorage {
    * @returns {(import('../project/model').ProjectProps | undefined)} props
    */
   getProject(projectProps) {
-    return this.projects.get(projectProps.title);
+    return this.projects[projectProps.title];
   }
 
   /** Stores project to the client's local storage */

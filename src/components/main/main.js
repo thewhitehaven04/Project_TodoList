@@ -6,6 +6,7 @@ import { CreateNewProjectWidgetView } from './widgets/createNewProjectWidget/cre
 import { ProjectViewController } from './widgets/projectWidget/projectController';
 import { ProjectView } from './widgets/projectWidget/projectView';
 import { ProjectModel } from '../../models/project/model';
+import { getProject } from '../..';
 
 export class MainController {
   /**
@@ -42,7 +43,7 @@ export class MainController {
    * @param {import('../../models/project/model').ProjectProps} projectProps
    */
   openProjectViewWidget = (projectProps) => {
-    const projectModel = new ProjectModel(projectProps);
+    const projectModel = new ProjectModel(getProject(projectProps));
 
     this.view.setWidget(
       new ProjectViewController(
