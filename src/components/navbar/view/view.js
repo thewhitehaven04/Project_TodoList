@@ -50,6 +50,7 @@ export class NavBarView {
 
       const buttonRemoveProject = document.createElement('button');
       buttonRemoveProject.textContent = '✕';
+      buttonRemoveProject.classList.add('button-generic', 'navbar-list-button');
       buttonRemoveProject.addEventListener('click', () => {
         this.callRemoveProjectHandler(projectProps);
       });
@@ -93,13 +94,17 @@ export class NavBarView {
 
   render() {
     this.navRoot.classList.add('navbar');
+    this.projectsRoot.classList.add('navbar-list');
 
     const sectionProjects = document.createElement('section');
+    sectionProjects.classList.add('navbar-section');
+
     const projectsSectionHeader = document.createElement('div');
     projectsSectionHeader.classList.add('section-header');
 
     const spanProjects = document.createElement('span');
     spanProjects.textContent = 'Projects';
+    spanProjects.classList.add('section-title');
     projectsSectionHeader.appendChild(spanProjects);
 
     const buttonAddProjects = document.createElement('button');
@@ -107,6 +112,8 @@ export class NavBarView {
     buttonAddProjects.addEventListener('click', () =>
       this.openNewProjectForm(),
     );
+    buttonAddProjects.classList.add('button-generic');
+
     projectsSectionHeader.appendChild(buttonAddProjects);
 
     sectionProjects.appendChild(projectsSectionHeader);

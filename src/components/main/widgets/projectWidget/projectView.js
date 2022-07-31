@@ -106,9 +106,13 @@ export class ProjectView {
   render() {
     const spanTitle = document.createElement('span');
     spanTitle.textContent = this.props.title;
+    spanTitle.classList.add('project-view-title');
     this.rootDiv.appendChild(spanTitle);
+    this.rootDiv.classList.add(...['project-view-grid', 'project-view']);
 
     const checklistsSection = document.createElement('section');
+    checklistsSection.classList.add('project-view-checklists');
+
     const spanChecklists = document.createElement('span');
     spanChecklists.textContent = 'Checklists';
 
@@ -132,6 +136,8 @@ export class ProjectView {
     this.rootDiv.appendChild(checklistsSection);
 
     const tasksSection = document.createElement('section');
+    tasksSection.classList.add('project-view-tasks');
+
     const taskSectionHeader = document.createElement('span');
     taskSectionHeader.textContent = 'Tasks';
 

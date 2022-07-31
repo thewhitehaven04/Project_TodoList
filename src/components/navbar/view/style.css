@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: column wrap;
 
-  padding: 10px;
+  padding: 20px;
   align-items: flex-start;
 
   height: 100vh;
@@ -13,8 +13,17 @@
   padding-left: 10px;
 }
 
+.navbar-list {
+  display: flex;
+  flex-flow: column nowrap;
+
+  row-gap: 10px;
+}
+
 .navbar-section {
   display: flex;
+  width: 100%;
+  flex-flow: column;
 }
 
 .section-header {
@@ -35,5 +44,23 @@
 .navbar-list-item {
   display: flex;
   flex-flow: row wrap;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-list-button {
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0);
+
+  font-size: 1.5rem;
+  font-weight: medium;
+  padding: 2px;
+}
+
+.navbar-list-button:hover {
+  color: white;
+}
+
+.navbar-list-button:active {
+  transform: translateY(1px);
 }

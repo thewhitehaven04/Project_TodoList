@@ -10,7 +10,7 @@
 
   /* CSS HEX */
   --queen-blue: #41658aff;
-  --light-gray: #cdd6ddff;
+  --light-gray: rgb(224, 229, 233);
   --maximum-yellow-red: #ffc857ff;
   --burnt-sienna: #e9724cff;
   --light-coral: #ff8484ff;
@@ -21,7 +21,6 @@
 *::before {
   box-sizing: inherit;
 }
-
 
 body {
   height: 100vh;
@@ -34,4 +33,17 @@ body {
   display: grid;
   grid-template-columns: [navbar-start] minmax(min-content, 300px) [navbar-end main-start] 1fr [main-end];
   grid-template-areas: 'navbar main';
+}
+
+.button-generic {
+  appearance: none;
+
+  padding: 8px;
+
+  border: 1px solid rgb(150, 155, 159);
+  border-radius: 10px;
+}
+
+.button-generic:active {
+  transform: translateY(1px);
 }
