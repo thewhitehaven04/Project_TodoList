@@ -1,0 +1,42 @@
+.checklist-item-textarea {
+  min-width: 100px;
+  width: 70%;
+
+  padding: 5px;
+
+  border-radius: 8px;
+  resize: vertical;
+
+  animation: appear 0.16s 0s normal;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes appear {
+  from {
+    transform: scale(0.1) translateY(-90px);
+  }
+
+  80% {
+    transform: scale(1.05) translateY(6px);
+  }
+
+  to {
+    transform: scale(1) translateY(0px);
+  }
+}
+
+.checklist-item-textarea:focus {
+  box-shadow: 0px 1px 6px 1px var(--light-gray-shadow);
+}
+
+.checklist-items-ul {
+  list-style: none;
+
+  margin-inline: 0px;
+  padding-left: 0px;
+
+  display: flex;
+  flex-flow: column wrap;
+
+  gap: 10px;
+}

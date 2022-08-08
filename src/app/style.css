@@ -11,6 +11,8 @@
   /* CSS HEX */
   --queen-blue: #41658aff;
   --light-gray: rgb(224, 229, 233);
+  --light-gray-shadow: rgb(182, 189, 195);
+  --border-gray: rgb(190, 196, 202);
   --maximum-yellow-red: #ffc857ff;
   --burnt-sienna: #e9724cff;
   --light-coral: #ff8484ff;
@@ -35,15 +37,31 @@ body {
   grid-template-areas: 'navbar main';
 }
 
-.button-generic {
+button {
   appearance: none;
+  padding-inline: 8px;
+  padding-block: 4px;
 
-  padding: 8px;
-
-  border: 1px solid rgb(150, 155, 159);
   border-radius: 10px;
 }
 
-.button-generic:active {
+button:active {
   transform: translateY(1px);
+}
+
+textarea,
+button,
+input {
+  border: 1.5px solid var(--border-gray);
+}
+
+textarea:focus,
+button:focus,
+input:focus {
+  outline: none;
+}
+
+input:invalid,
+textarea:invalid {
+  border: 1.5px solid var(--burnt-sienna);
 }

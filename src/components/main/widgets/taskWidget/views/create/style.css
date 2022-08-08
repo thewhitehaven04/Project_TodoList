@@ -12,3 +12,20 @@
 
   gap: 15px;
 }
+
+.priorities-legend {
+  background-color: var(--queen-blue);
+  color: var(--light-gray);
+}
+
+.priorities-fieldset {
+  border: none;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  gap: 5px;
+
+  border: 1.5px solid var(--border-gray);
+  border-radius: 8px;
+}

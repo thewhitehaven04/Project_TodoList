@@ -11,8 +11,14 @@
 
   border-radius: 8px;
 
-  border: 1px solid rgb(158, 158, 158);
+  border: 1.5px solid var(--border-gray);
 
   padding-left: 5px;
   padding-block: 2px;
+
+  outline: none;
+}
+
+.named-textarea > textarea:hover {
+  box-shadow: 0px 1px 6px 1px var(--light-gray-shadow);
 }

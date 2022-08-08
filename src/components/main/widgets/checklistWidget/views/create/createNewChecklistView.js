@@ -1,4 +1,5 @@
 import { createRequiredInputOfType } from '../../../../../../domUtils/input/input';
+import style from './style.css';
 
 export class ChecklistCreateView {
   checklistTitle = createRequiredInputOfType('text', 'Name');
@@ -18,14 +19,14 @@ export class ChecklistCreateView {
   #renderItem() {
     const li = document.createElement('li');
     const checklistItem = document.createElement('textarea');
-    checklistItem.classList.add('checklist-item');
+    checklistItem.classList.add('checklist-item-textarea');
     li.appendChild(checklistItem);
     return li;
   }
 
   #getTextareaValues() {
     return Array.from(
-      this.checklistItemsRoot.querySelectorAll('.checklist-item'),
+      this.checklistItemsRoot.querySelectorAll('.checklist-item-textarea'),
     ).map((textarea) => textarea.value);
   }
 
@@ -45,20 +46,16 @@ export class ChecklistCreateView {
   render() {
     const checklistTitleElement = this.checklistTitle.render();
 
+    this.checklistItemsRoot.classList.add('checklist-items-ul');
+
     this.addChecklistItemButton.type = 'button';
     this.addChecklistItemButton.textContent = 'Add item';
-    this.checklistItemsRoot.appendChild(this.addChecklistItemButton);
+    this.widgetRoot.appendChild(this.addChecklistItemButton);
 
-    this.checklistItemsRoot.insertBefore(
-      this.#renderItem(),
-      this.addChecklistItemButton,
-    );
+    this.checklistItemsRoot.appendChild(this.#renderItem());
 
     this.addChecklistItemButton.addEventListener('click', () =>
-      this.checklistItemsRoot.insertBefore(
-        this.#renderItem(),
-        this.addChecklistItemButton,
-      ),
+      this.checklistItemsRoot.appendChild(this.#renderItem()),
     );
 
     this.createChecklistButton.type = 'button';

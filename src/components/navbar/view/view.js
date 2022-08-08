@@ -50,7 +50,7 @@ export class NavBarView {
 
       const buttonRemoveProject = document.createElement('button');
       buttonRemoveProject.textContent = '✕';
-      buttonRemoveProject.classList.add('button-generic', 'navbar-list-button');
+      buttonRemoveProject.classList.add('navbar-list-button');
       buttonRemoveProject.addEventListener('click', () => {
         this.callRemoveProjectHandler(projectProps);
       });
@@ -112,7 +112,6 @@ export class NavBarView {
     buttonAddProjects.addEventListener('click', () =>
       this.openNewProjectForm(),
     );
-    buttonAddProjects.classList.add('button-generic');
 
     projectsSectionHeader.appendChild(buttonAddProjects);
 

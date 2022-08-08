@@ -43,7 +43,7 @@ export class CreateTaskView {
     const description = descriptionTextarea.render();
     description.style.gridArea = 'description';
 
-    const dueDateInput = createFutureDataPicker('Due date');
+    const dueDateInput = createFutureDataPicker('Due date:');
     const dueDate = dueDateInput.render();
     dueDate.style.gridArea = 'dueDate';
 
@@ -53,11 +53,12 @@ export class CreateTaskView {
 
     const prioritiesFieldset = document.createElement('fieldset');
     prioritiesFieldset.style.gridArea = 'priority';
+    prioritiesFieldset.classList.add('priorities-fieldset');
 
     const prioritiesLegend = document.createElement('legend');
     prioritiesLegend.textContent = 'Priority';
     prioritiesFieldset.appendChild(prioritiesLegend);
-    prioritiesLegend.classList.add('flex-fieldset');
+    prioritiesLegend.classList.add(...['flex-fieldset', 'priorities-legend']);
 
     const radios = [];
 
@@ -75,6 +76,7 @@ export class CreateTaskView {
     buttonCreate.type = 'button';
     buttonCreate.textContent = 'Create new task';
     buttonCreate.style.gridArea = 'button';
+
     buttonCreate.addEventListener('click', () => {
       // @ts-ignore
       this.createTask({

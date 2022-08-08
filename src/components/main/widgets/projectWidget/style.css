@@ -26,17 +26,29 @@
   grid-row: 2;
 }
 
+.flex-list {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 15px;
+}
+
+.project-view-header-block {
+  display: flex;
+  flex-flow: row wrap;
+
+  justify-content: space-between;
+}
+
 .project-view-checklists {
   grid-column: 2;
   grid-row: 2;
 }
 
-.border {
-  border: 1px solid black;
+.project-view-tasks > ul,
+.project-view-checklists > ul {
+  margin: 0px;
 }
 
-.flex-list {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 10px;
+.border {
+  border: 1px solid black;
 }

@@ -111,48 +111,53 @@ export class ProjectView {
     this.rootDiv.classList.add(...['project-view-grid', 'project-view']);
 
     const checklistsSection = document.createElement('section');
-    checklistsSection.classList.add('project-view-checklists');
+    checklistsSection.classList.add(
+      ...['project-view-checklists', 'flex-list'],
+    );
 
+    const divChecklistsHeader = document.createElement('div');
     const spanChecklists = document.createElement('span');
     spanChecklists.textContent = 'Checklists';
 
     const divNewChecklistForm = document.createElement('div');
+    divNewChecklistForm.classList.add('flex-list');
 
     const addCheckListButton = document.createElement('button');
-    addCheckListButton.textContent = '+';
+    addCheckListButton.textContent = 'New';
     addCheckListButton.addEventListener('click', () => {
       divNewChecklistForm.appendChild(this.displayChecklistCreateWidget());
     });
 
+    divChecklistsHeader.append(...[spanChecklists, addCheckListButton]);
+    divChecklistsHeader.classList.add('project-view-header-block');
+
     this.#renderChecklists();
     checklistsSection.append(
-      ...[
-        spanChecklists,
-        this.checklists,
-        divNewChecklistForm,
-        addCheckListButton,
-      ],
+      ...[divChecklistsHeader, this.checklists, divNewChecklistForm],
     );
     this.rootDiv.appendChild(checklistsSection);
 
     const tasksSection = document.createElement('section');
-    tasksSection.classList.add('project-view-tasks');
+    const divTasksHeader = document.createElement('div');
+    tasksSection.classList.add(...['project-view-tasks', 'flex-list']);
 
     const taskSectionHeader = document.createElement('span');
     taskSectionHeader.textContent = 'Tasks';
 
     const divNewTaskForm = document.createElement('div');
+    divNewTaskForm.classList.add('flex-list');
 
     const addTaskButton = document.createElement('button');
-    addTaskButton.textContent = '+';
+    addTaskButton.textContent = 'New';
     addTaskButton.addEventListener('click', () => {
       divNewTaskForm.appendChild(this.displayTaskCreateWidget());
     });
 
+    divTasksHeader.append(...[taskSectionHeader, addTaskButton]);
+    divTasksHeader.classList.add('project-view-header-block');
+
     this.#renderTasks();
-    tasksSection.append(
-      ...[taskSectionHeader, this.tasks, divNewTaskForm, addTaskButton],
-    );
+    tasksSection.append(...[divTasksHeader, this.tasks, divNewTaskForm]);
     this.rootDiv.appendChild(tasksSection);
 
     return this.rootDiv;
