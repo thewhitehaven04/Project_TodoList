@@ -58,7 +58,7 @@ export class ChecklistCreateView {
       this.checklistItemsRoot.appendChild(this.#renderItem()),
     );
 
-    this.createChecklistButton.type = 'button';
+    this.createChecklistButton.type = 'submit';
     this.createChecklistButton.textContent = 'Create';
 
     this.createChecklistButton.addEventListener('click', () => {

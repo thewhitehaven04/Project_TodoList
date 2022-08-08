@@ -1,6 +1,6 @@
 .project-view-grid {
   display: grid;
-  grid-template-columns: [tasks-start] 3fr [tasks-end checklists-start] 2fr [checklists-end];
+  grid-template-columns: [tasks-start] 4fr [tasks-end checklists-start] 3fr [checklists-end];
   grid-auto-flow: row;
   gap: 30px;
 }
@@ -14,7 +14,6 @@
 }
 
 .project-view-title {
-  grid-column: 1 / 3;
   grid-row: 1;
 
   font-size: 1.5rem;

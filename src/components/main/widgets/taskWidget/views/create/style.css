@@ -1,7 +1,7 @@
 .grid-new-task {
   display: grid;
 
-  grid-template-columns: 16em 200px;
+  grid-template-columns: max(20em, 1fr) min-content;
   grid-template-areas:
     'name         priority   '
     'dueDate      priority   '
@@ -24,8 +24,14 @@
   display: flex;
   flex-flow: column nowrap;
 
+  justify-content: center;
   gap: 5px;
 
+  width: min-content;
   border: 1.5px solid var(--border-gray);
   border-radius: 8px;
+}
+
+.grid-new-task button {
+  width: max-content;
 }
