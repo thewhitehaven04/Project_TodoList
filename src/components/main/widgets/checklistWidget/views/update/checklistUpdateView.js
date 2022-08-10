@@ -16,6 +16,7 @@ export class ChecklistUpdateView {
   /**
    * Render a checklist item depending on its completion state.
    * @param {String} itemText
+   * @param {Boolean} isComplete
    */
   #renderChecklistItem(itemText, isComplete) {
     const liChecklistItem = document.createElement('li');
@@ -32,6 +33,9 @@ export class ChecklistUpdateView {
     return liChecklistItem;
   }
 
+  /**
+   * @param {import('../../../../../../models/checklist/model').ChecklistProps} props
+   */
   updateProps = (props) => {
     this.props = props;
   };
@@ -44,6 +48,7 @@ export class ChecklistUpdateView {
   };
 
   /**
+   * @param {Function} handler
    * @param {String} itemId
    */
   toggleComplete = (handler, itemId) => {

@@ -13,11 +13,13 @@ import { TaskController } from '../taskWidget/controller/taskController';
 import { CreateTaskView } from '../taskWidget/views/create/createTaskWidgetView';
 import { UpdateTaskView } from '../taskWidget/views/update/updateTaskView';
 import { ProjectView } from './projectView';
+import { isThisSecond } from 'date-fns';
 
 export class ProjectViewController {
   /**
    * @param {ProjectView} view
    * @param {ProjectModel} model
+   * @param {PubSub} eventBus
    */
   constructor(model, view, eventBus) {
     this.model = model;
@@ -130,11 +132,27 @@ export class ProjectViewController {
     this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
   };
 
+  updateChecklist = (checklistProps) => {
+    this.model.updateChecklist(checklistProps);
+    this.eventBus.pub(
+      projectEvents.checklistAddedToProject,
+      this.model.toJSON(),
+    );
+  };
+
   /**
    * @param {import('../../../../models/task/model').TaskProps} taskProps
    */
   addTask = (taskProps) => {
     this.model.addTask(taskProps);
+    this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
+  };
+
+  /**
+   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   */
+  updateTask = (taskProps) => {
+    this.model.updateTask(taskProps);
     this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
   };
 
@@ -146,7 +164,6 @@ export class ProjectViewController {
    * @param {import('../../../../models/project/model').ProjectProps} props
    */
   hide = (props) => {
-    console.log(`Project to hide: ${JSON.stringify(props)}`);
     if (props.title === this.model.toJSON().title) {
       this.view.hide();
     }

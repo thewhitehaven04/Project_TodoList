@@ -66,6 +66,24 @@ export class ProjectModel extends PublisherModel {
   };
 
   /**
+   * @param {import('../checklist/model').ChecklistProps} checklistProps
+   */
+  updateChecklist = (checklistProps) => {
+    this.checklists = this.checklists.filter(
+      (checklist) => checklist.id === checklistProps.id,
+    );
+    this.publish(projectEvents.projectUpdated, this.toJSON());
+  };
+
+  /**
+   * @param {import('../task/model').TaskProps} taskProps
+   */
+  updateTask = (taskProps) => {
+    this.tasks = this.tasks.filter();
+    this.publish(projectEvents.projectUpdated, this.toJSON());
+  };
+
+  /**
    * @returns {ProjectProps} projectProps
    */
   toJSON() {

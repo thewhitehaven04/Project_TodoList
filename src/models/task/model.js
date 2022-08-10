@@ -8,12 +8,9 @@
  * @property {String} progress an instance of progressModel
  * @property {String} tag task tag
  */
-
-import { PublisherModel } from '../../generic/modelPublisher';
 import { progressModel } from '../progress/model';
-import { taskEvents } from './taskEvents';
 
-export class TaskModel extends PublisherModel {
+export class TaskModel {
   #progress;
 
   /**
@@ -29,7 +26,6 @@ export class TaskModel extends PublisherModel {
       tag: '',
     },
   ) {
-    super();
     this.name = props.name;
     this.description = props.description;
     this.dueDate = props.dueDate;
@@ -46,13 +42,11 @@ export class TaskModel extends PublisherModel {
    * @param {TaskProps} props task item properties
    */
   update(props) {
-    this.name = this.name || props.name;
-    this.description = this.description || props.description;
-    this.priority = this.priority || props.priority;
-    this.tag = this.tag || props.tag;
-    this.dueDate = this.dueDate || props.dueDate;
-
-    this.publish(taskEvents.taskUpdateEvent, this.toJSON());
+    this.name = props.name;
+    this.description = props.description;
+    this.priority = props.priority;
+    this.tag = props.tag;
+    this.dueDate = props.dueDate;
   }
 
   /**

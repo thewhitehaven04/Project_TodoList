@@ -1,15 +1,29 @@
 .task-container {
   display: grid;
 
-  grid-template-columns: repeat(2, 300px) 200px;
+  grid-template-columns: repeat(2, min-content) 200px;
   grid-template-areas:
-    'title title priority'
+    'title title .'
+    'priority tag tag'
     'description description description'
-    'progress tag .';
+    'progress . .';
 }
 
 .task-progress {
   grid-area: progress;
+
+  color: var(--light-gray);
+  background-color: var(--queen-blue);
+
+  height: 50px;
+
+  text-align: center;
+  text-justify: center;
+}
+
+.task-complete {
+  color: var(--queen-blue);
+  background-color: var(--light-gray);
 }
 
 .task-title {
@@ -23,15 +37,30 @@
 
 .task-priority {
   grid-area: priority;
+
+  justify-self: center;
+}
+
+.task-tags {
+  padding: 10px 7px;
+  grid-area: tag;
+}
+
+.task-tag-flex {
+  display: flex;
+  flex-flow: row wrap;
+
+  gap: 5px;
+
+  align-items: baseline;
 }
 
 .task-tag {
-  padding: 15px 10px;
+  width: 1em;
+  padding: 3px 5px;
+  background-color: var(--light-gray-shadow);
+  color: var(--queen-blue);
 
-  border: 1px solid black;
   border-radius: 8px;
-
-  background-color: rgba(210, 200, 200, 0.603);
-
-  grid-area: tag;
+  border: 1.5px solid var(--border-gray);
 }

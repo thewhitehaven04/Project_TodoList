@@ -1,9 +1,6 @@
 import { TaskModel, TaskProps } from '../../../../../models/task/model';
 import { taskEvents } from '../../../../../models/task/taskEvents';
-import {
-  CreateTaskView,
-  CreateTaskWidgetView,
-} from './../views/create/createTaskWidgetView';
+import { CreateTaskView } from './../views/create/createTaskWidgetView';
 import { PubSub } from '../../../../../generic/pubSub';
 import { UpdateTaskView } from '../views/update/updateTaskView';
 export class TaskController {
@@ -31,6 +28,7 @@ export class TaskController {
   setUpdateView(view) {
     this.view = view;
     this.view._bindUpdateTask(this.updateTask);
+    this.view._bindComplete(this.complete);
     return this;
   }
 
@@ -46,7 +44,18 @@ export class TaskController {
    */
   updateTask = (taskProps) => {
     this.model.update(taskProps);
-    this.eventBus.pub(taskEvents.taskUpdateEvent, taskProps);
+
+    const modelProps = this.model.toJSON();
+    this.view.updateView(modelProps);
+    this.eventBus.pub(taskEvents.taskUpdateEvent, modelProps);
+  };
+
+  complete = () => {
+    this.model.complete();
+
+    const modelProps = this.model.toJSON();
+    this.view.updateView(modelProps);
+    this.eventBus.pub(taskEvents.taskUpdateEvent, modelProps);
   };
 
   render() {

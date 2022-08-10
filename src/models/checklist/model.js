@@ -71,7 +71,6 @@ export class ChecklistModel extends PublisherModel {
     } else {
       throw new Error(`The entity with id ${itemId} does not exist.`);
     }
-    this.publish(checklistEvents.checklistUpdated, this.toJSON());
   }
 
   /**

@@ -1,4 +1,3 @@
-import { createRequiredInputOfType } from '../../../../../../domUtils/input/input';
 import { createSelectWithOptions } from '../../../../../../domUtils/select/select';
 import { progressModel } from '../../../../../../models/progress/model';
 import { prioritiesModel } from '../../../../../../models/priority/model';
@@ -7,6 +6,7 @@ import style from './style.css';
 
 export class UpdateTaskView {
   taskViewRoot = document.createElement('article');
+  buttonComplete = document.createElement('button');
 
   /**
    * @param {import('../../../../../../models/task/model').TaskProps} taskProps
@@ -19,12 +19,31 @@ export class UpdateTaskView {
     this.updateTask = this.updateTask.bind(this, handler);
   }
 
+  _bindComplete(handler) {
+    this.complete = this.complete.bind(this, handler);
+  }
+
   /**
    * @param {Function} handler
    * @param {import('../../../../../../models/task/model').TaskProps} taskProps
    */
   updateTask(handler, taskProps) {
     handler(taskProps);
+  }
+
+  /**
+   * @param {Function} handler
+   */
+  complete(handler) {
+    handler();
+  }
+
+  /**
+   * @param {import('../../../../../../models/task/model').TaskProps} props
+   */
+  updateView(props) {
+    this.taskProps = props;
+    this.buttonUpdate();
   }
 
   render() {
@@ -64,33 +83,40 @@ export class UpdateTaskView {
 
     priorityInput.classList.add('task-priority');
 
-    const progress = createRequiredInputOfType('checkbox', 'Progress').render();
-    if (this.taskProps.progress === progressModel.COMPLETE.name) {
-      progress.checked = true;
-    }
-    progress.addEventListener('change', () =>
-      // @ts-ignore
-      this.updateTask({
-        name: this.taskProps.name,
-        description: this.taskProps.description,
-        dueDate: this.taskProps.dueDate,
-        priority: priorityInput.value,
-        tag: this.taskProps.tag,
-      }),
-    );
-    progress.classList.add('task-progress');
+    this.buttonComplete.classList.add('task-progress');
+    this.buttonUpdate();
+    this.buttonComplete.addEventListener('click', () => this.complete());
 
     const tagContainer = document.createElement('div');
+    tagContainer.classList.add(...['task-tags', 'task-tags-flex']);
+
     const tag = document.createElement('span');
     tag.textContent = this.taskProps.tag;
+    tag.classList.add('task-tag');
+
     tagContainer.appendChild(tag);
-    tagContainer.classList.add('task-tag');
 
     this.taskViewRoot.append(
-      ...[titleDiv, description, priorityInput, progress, tagContainer],
+      ...[
+        titleDiv,
+        description,
+        priorityInput,
+        this.buttonComplete,
+        tagContainer,
+      ],
     );
 
     return this.taskViewRoot;
+  }
+
+  buttonUpdate() {
+    if (this.taskProps.progress === progressModel.COMPLETE.name) {
+      this.buttonComplete.classList.add('task-complete');
+      this.buttonComplete.textContent = 'Completed';
+    } else {
+      this.buttonComplete.classList.remove('task-complete');
+      this.buttonComplete.textContent = 'Mark complete';
+    }
   }
 
   hide() {
