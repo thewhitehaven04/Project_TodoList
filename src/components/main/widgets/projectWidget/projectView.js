@@ -2,14 +2,14 @@ import style from './style.css';
 import { ProjectProps } from '../../../../models/project/model';
 
 export class ProjectView {
-  /**
-   * @param {ProjectProps} projectProps
-   */
 
   rootDiv = document.createElement('div');
   checklists = document.createElement('ul');
   tasks = document.createElement('ul');
 
+  /**
+   * @param {ProjectProps} projectProps
+   */
   constructor(projectProps) {
     this.props = {
       title: projectProps.title,
@@ -56,7 +56,7 @@ export class ProjectView {
   };
 
   #renderChecklists() {
-    this.checklists.classList.add('flex-list');
+    this.checklists.classList.add(...['article-list', 'flex-list', 'flex-middle', 'flex-scrollable-list']);
     this.checklists.replaceChildren(
       ...this.props.checklists.map((checklist) => {
         return this.displayChecklistUpdateWidget(checklist);
@@ -65,7 +65,7 @@ export class ProjectView {
   }
 
   #renderTasks() {
-    this.tasks.classList.add('flex-list');
+    this.tasks.classList.add(...['article-list', 'flex-list', 'flex-middle', 'flex-scrollable-list']);
     this.tasks.replaceChildren(
       ...this.props.tasks.map((task) => {
         return this.displayTaskUpdateWidget(task);
@@ -112,20 +112,20 @@ export class ProjectView {
 
     const checklistsSection = document.createElement('section');
     checklistsSection.classList.add(
-      ...['project-view-checklists', 'flex-list'],
+      ...['project-view-checklists', 'flex-list', 'flex-middle'],
     );
 
     const divChecklistsHeader = document.createElement('div');
     const spanChecklists = document.createElement('span');
     spanChecklists.textContent = 'Checklists';
 
-    const divNewChecklistForm = document.createElement('div');
-    divNewChecklistForm.classList.add('flex-list');
+    const ulNewChecklists = document.createElement('ul');
+    ulNewChecklists.classList.add(...['flex-list', 'flex-middle']);
 
     const addCheckListButton = document.createElement('button');
     addCheckListButton.textContent = 'New';
     addCheckListButton.addEventListener('click', () => {
-      divNewChecklistForm.appendChild(this.displayChecklistCreateWidget());
+      ulNewChecklists.appendChild(this.displayChecklistCreateWidget());
     });
 
     divChecklistsHeader.append(...[spanChecklists, addCheckListButton]);
@@ -133,31 +133,31 @@ export class ProjectView {
 
     this.#renderChecklists();
     checklistsSection.append(
-      ...[divChecklistsHeader, this.checklists, divNewChecklistForm],
+      ...[divChecklistsHeader, this.checklists, ulNewChecklists],
     );
     this.rootDiv.appendChild(checklistsSection);
 
     const tasksSection = document.createElement('section');
     const divTasksHeader = document.createElement('div');
-    tasksSection.classList.add(...['project-view-tasks', 'flex-list']);
+    tasksSection.classList.add(...['project-view-tasks', 'flex-list', 'flex-middle']);
 
     const taskSectionHeader = document.createElement('span');
     taskSectionHeader.textContent = 'Tasks';
 
-    const divNewTaskForm = document.createElement('div');
-    divNewTaskForm.classList.add('flex-list');
+    const ulNewTasks = document.createElement('ul');
+    ulNewTasks.classList.add(...['flex-list', 'flex-middle']);
 
     const addTaskButton = document.createElement('button');
     addTaskButton.textContent = 'New';
     addTaskButton.addEventListener('click', () => {
-      divNewTaskForm.appendChild(this.displayTaskCreateWidget());
+      ulNewTasks.appendChild(this.displayTaskCreateWidget());
     });
 
     divTasksHeader.append(...[taskSectionHeader, addTaskButton]);
     divTasksHeader.classList.add('project-view-header-block');
 
     this.#renderTasks();
-    tasksSection.append(...[divTasksHeader, this.tasks, divNewTaskForm]);
+    tasksSection.append(...[divTasksHeader, this.tasks, ulNewTasks]);
     this.rootDiv.appendChild(tasksSection);
 
     return this.rootDiv;

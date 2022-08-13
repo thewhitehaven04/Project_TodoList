@@ -17,6 +17,8 @@
   padding-block: 2px;
 
   outline: none;
+
+  min-height: 50px;
 }
 
 .named-textarea > textarea:hover {

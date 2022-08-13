@@ -1,13 +1,23 @@
+:root {
+  --red-overdue: #c71212;
+  --green-in-time: #3ca445;
+}
+
 .task-container {
   display: grid;
 
-  grid-template-columns: repeat(2, min-content) 200px;
+  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: 3em;
   grid-template-areas:
-    'title title .'
-    'priority tag tag'
-    'description description description'
-    'progress . .';
+    'title        title       progress'
+    'title        title       progress'
+    'due-date     due-date    priority'
+    'description  description description'
+    'tag          tag         tag';
+
+  margin: 20px;
 }
+
 
 .task-progress {
   grid-area: progress;
@@ -16,14 +26,26 @@
   background-color: var(--queen-blue);
 
   height: 50px;
-
   text-align: center;
-  text-justify: center;
+  font-size: 1rem;
 }
 
 .task-complete {
   color: var(--queen-blue);
-  background-color: var(--light-gray);
+  background-color: var(--light-);
+}
+
+.task-due {
+  grid-area: due-date;
+
+  display: flex;
+  flex-flow: row nowrap;
+  column-gap: 10px;
+}
+
+.task-due-text {
+  color: var(--green-in-time);
+  font-weight: bold;
 }
 
 .task-title {
@@ -33,34 +55,38 @@
 
 .task-description {
   grid-area: description;
+  text-align: justify;
 }
 
 .task-priority {
   grid-area: priority;
-
-  justify-self: center;
+  align-self: center;
+  justify-self: flex-end;
 }
 
 .task-tags {
-  padding: 10px 7px;
+  margin: 1rem 0px;
   grid-area: tag;
 }
 
 .task-tag-flex {
   display: flex;
   flex-flow: row wrap;
-
-  gap: 5px;
-
+  gap: 10px;
   align-items: baseline;
 }
 
 .task-tag {
-  width: 1em;
-  padding: 3px 5px;
-  background-color: var(--light-gray-shadow);
-  color: var(--queen-blue);
+  padding: 5px;
+  background-color: var(--queen-blue);
+  color: var(--light-gray);
 
   border-radius: 8px;
   border: 1.5px solid var(--border-gray);
+
+  font-size: 1.2rem;
+}
+
+.task-overdue {
+  color: var(--red-overdue);
 }

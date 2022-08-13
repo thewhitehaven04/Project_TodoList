@@ -36,7 +36,8 @@ export class TaskController {
    * @param {TaskProps} taskProps
    */
   createTask = (taskProps) => {
-    this.eventBus.pub(taskEvents.taskCreationEvent, taskProps);
+    this.model.update(taskProps);
+    this.eventBus.pub(taskEvents.taskCreationEvent, this.model.toJSON());
   };
 
   /**

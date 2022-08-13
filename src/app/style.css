@@ -6,7 +6,7 @@
 :root {
   box-sizing: border-box;
   font-family: Nuinito Sans Regular;
-  font-size: 12pt;
+  font-size: 14pt;
 
   /* CSS HEX */
   --queen-blue: #41658aff;
@@ -39,8 +39,8 @@ body {
 
 button {
   appearance: none;
-  padding-inline: 8px;
-  padding-block: 4px;
+  padding-inline: 6px;
+  padding-block: 3px;
 
   border-radius: 10px;
 }
@@ -52,7 +52,7 @@ button:active {
 textarea,
 button,
 input {
-  border: 1.5px solid var(--border-gray);
+  border: 2px solid var(--border-gray);
 }
 
 textarea:focus,
@@ -63,5 +63,5 @@ input:focus {
 
 input:invalid,
 textarea:invalid {
-  border: 1.5px solid var(--burnt-sienna);
+  border: 2px solid var(--burnt-sienna);
 }

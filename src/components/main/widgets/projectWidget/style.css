@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: [tasks-start] 4fr [tasks-end checklists-start] 3fr [checklists-end];
   grid-auto-flow: row;
-  gap: 30px;
+  gap: 15px;
 }
 
 .project-view {
@@ -13,11 +13,26 @@
   border-bottom: 1px solid black;
 }
 
+.project-view-header-block {
+  display: flex;
+  flex-flow: row wrap;
+
+  justify-content: space-between;
+
+  align-items: baseline;
+  width: 90%;
+}
+
+.project-view-header-block > button,
+.project-view-header-block > span {
+  font-size: 1.2rem;
+}
+
 .project-view-title {
   grid-row: 1;
 
   font-size: 1.5rem;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .project-view-tasks {
@@ -25,17 +40,8 @@
   grid-row: 2;
 }
 
-.flex-list {
-  display: flex;
-  flex-flow: column wrap;
-  gap: 15px;
-}
-
-.project-view-header-block {
-  display: flex;
-  flex-flow: row wrap;
-
-  justify-content: space-between;
+.project-view-tasks > :not(:last-child) {
+  margin-bottom: 30px;
 }
 
 .project-view-checklists {
@@ -46,6 +52,25 @@
 .project-view-tasks > ul,
 .project-view-checklists > ul {
   margin: 0px;
+}
+
+.article-list {
+  width: min-content;
+}
+
+.flex-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 15px;
+}
+
+.flex-middle {
+  align-items: center;
+}
+
+.flex-scrollable-list {
+  overflow-y: auto;
+  max-height: 60vh;
 }
 
 .border {

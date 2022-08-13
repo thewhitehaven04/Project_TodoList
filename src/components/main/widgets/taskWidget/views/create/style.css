@@ -1,7 +1,7 @@
 .grid-new-task {
   display: grid;
 
-  grid-template-columns: max(20em, 1fr) min-content;
+  grid-template-columns: minmax(20em, 1fr) min-content;
   grid-template-areas:
     'name         priority   '
     'dueDate      priority   '
@@ -11,6 +11,9 @@
     '. button';
 
   gap: 15px;
+
+  width: 600px;
+
 }
 
 .priorities-legend {

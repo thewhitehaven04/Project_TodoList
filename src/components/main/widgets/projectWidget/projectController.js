@@ -13,8 +13,6 @@ import { TaskController } from '../taskWidget/controller/taskController';
 import { CreateTaskView } from '../taskWidget/views/create/createTaskWidgetView';
 import { UpdateTaskView } from '../taskWidget/views/update/updateTaskView';
 import { ProjectView } from './projectView';
-import { isThisSecond } from 'date-fns';
-
 export class ProjectViewController {
   /**
    * @param {ProjectView} view
@@ -29,6 +27,8 @@ export class ProjectViewController {
 
     /** Display added tasks and checklists after they are succesfully added to storage */
     this.eventBus.subscribe(taskEvents.taskCreationEvent, this.addTask);
+    this.eventBus.subscribe(taskEvents.taskUpdateEvent, this.updateTask);
+
     this.eventBus.subscribe(
       checklistEvents.checklistCreated,
       this.addChecklist,
@@ -36,6 +36,10 @@ export class ProjectViewController {
     this.eventBus.subscribe(
       checklistEvents.checklistRemoved,
       this.removeChecklist,
+    );
+    this.eventBus.subscribe(
+      checklistEvents.checklistUpdated,
+      this.updateChecklist,
     );
 
     /** Catch project removed event and close the view if the project received
@@ -132,6 +136,11 @@ export class ProjectViewController {
     this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
   };
 
+  // #TODO: this needs to be redone, project model should only know about task and checklist ids
+  /**
+   *
+   * @param {import('../../../../models/checklist/model').ChecklistProps} checklistProps
+   */
   updateChecklist = (checklistProps) => {
     this.model.updateChecklist(checklistProps);
     this.eventBus.pub(

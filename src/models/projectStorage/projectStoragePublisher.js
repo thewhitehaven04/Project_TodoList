@@ -5,7 +5,7 @@ import { ProjectProps } from '../project/model';
 
 export class ProjectStoragePubSub {
   /**
-   * @param {Object<String,ProjectProps[]>} projectPropsMap
+   * @param {Object<String, ProjectProps[]>} projectPropsMap
    * @param {PubSub} eventBus
    */
   constructor(projectPropsMap, eventBus) {

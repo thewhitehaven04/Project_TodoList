@@ -49,7 +49,7 @@ export class NavBarView {
       });
 
       const buttonRemoveProject = document.createElement('button');
-      buttonRemoveProject.textContent = '✕';
+      buttonRemoveProject.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
       buttonRemoveProject.classList.add('navbar-list-button');
       buttonRemoveProject.addEventListener('click', () => {
         this.callRemoveProjectHandler(projectProps);
@@ -67,7 +67,7 @@ export class NavBarView {
   }
 
   openNewProjectForm(newProjectFormHandler) {
-    newProjectFormHandler();
+    return newProjectFormHandler();
   }
 
   _bindHandleProjectRemoval(obj, handler) {
@@ -109,8 +109,9 @@ export class NavBarView {
 
     const buttonAddProjects = document.createElement('button');
     buttonAddProjects.textContent = 'Add project';
+    buttonAddProjects.classList.add('navbar-button');
     buttonAddProjects.addEventListener('click', () =>
-      this.openNewProjectForm(),
+      this.navRoot.appendChild(this.openNewProjectForm()),
     );
 
     projectsSectionHeader.appendChild(buttonAddProjects);

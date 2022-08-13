@@ -3,6 +3,9 @@ import { NavBarView } from '../view/view';
 import { NavBarModel } from '../../../models/navBar/navBar';
 import { projectEvents } from '../../../models/project/projectEvents';
 import { appEvents } from '../../../models/main/appEvents';
+import { CreateNewProjectWidgetController } from '../../main/widgets/createNewProjectWidget/createNewProjectController';
+import { ProjectModel } from '../../../models/project/model';
+import { CreateNewProjectWidgetView } from '../../main/widgets/createNewProjectWidget/createNewProjectView';
 
 export class NavBarController {
   /**
@@ -43,7 +46,11 @@ export class NavBarController {
 
   /** Publish an event to trigger opening of the new form creation widget. */
   openNewProjectForm = () => {
-    this.globalPs.pub(appEvents.openNewProjectForm);
+    return new CreateNewProjectWidgetController(
+      new ProjectModel(),
+      new CreateNewProjectWidgetView(),
+      this.globalPs,
+    ).render();
   };
 
   /**

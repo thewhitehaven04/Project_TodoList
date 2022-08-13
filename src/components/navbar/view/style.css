@@ -5,8 +5,10 @@
   padding: 20px;
   align-items: flex-start;
 
-  height: 100vh;
   background-color: var(--maximum-yellow-red);
+  position: fixed;
+  height: 100vh;
+  width: clamp(13%, 200px, 25%);
 }
 
 .navbar ul {
@@ -18,12 +20,25 @@
   flex-flow: column nowrap;
 
   row-gap: 10px;
+  font-size: 16pt;
+  margin: 0px;
 }
 
 .navbar-section {
   display: flex;
   width: 100%;
   flex-flow: column;
+
+  padding-bottom: 20px;
+  
+  border-bottom: 2px solid black;
+}
+
+.navbar-button {
+  background-color: var(--border-gray);
+
+  border: 2px solid black;
+  font-size: 1rem;
 }
 
 .section-header {
@@ -46,12 +61,13 @@
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
+
+  cursor: pointer;
 }
 
 .navbar-list-button {
   background-color: rgba(0, 0, 0, 0);
   border: 1px solid rgba(0, 0, 0, 0);
-
   font-size: 1.5rem;
   font-weight: medium;
   padding: 2px;

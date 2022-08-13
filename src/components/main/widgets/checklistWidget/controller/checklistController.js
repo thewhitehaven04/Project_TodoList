@@ -61,6 +61,7 @@ export class ChecklistController {
   toggleComplete = (itemId) => {
     this.model.toggleComplete(itemId);
     this.view.updateProps(this.model.toJSON());
+    this.eventBus.pub(checklistEvents.checklistUpdated, this.model.toJSON());
   };
 
   deleteChecklist = () => {

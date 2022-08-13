@@ -85,7 +85,7 @@ export class CreateTaskView {
         dueDate: dueDateInput.getValue(),
         priority: getActiveRadioOfArray(radios).value,
         progress: progressModel.NOT_STARTED.name,
-        tag: tagInput.getValue(),
+        tags: tagInput.getValue().split(' '),
       });
 
       this.hide();

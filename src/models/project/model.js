@@ -69,18 +69,24 @@ export class ProjectModel extends PublisherModel {
    * @param {import('../checklist/model').ChecklistProps} checklistProps
    */
   updateChecklist = (checklistProps) => {
-    this.checklists = this.checklists.filter(
-      (checklist) => checklist.id === checklistProps.id,
+    this.checklists.splice(
+      this.checklists.findIndex(
+        (checklist) => checklist.id === checklistProps.id,
+      ),
+      1,
+      checklistProps,
     );
-    this.publish(projectEvents.projectUpdated, this.toJSON());
   };
 
   /**
    * @param {import('../task/model').TaskProps} taskProps
    */
   updateTask = (taskProps) => {
-    this.tasks = this.tasks.filter();
-    this.publish(projectEvents.projectUpdated, this.toJSON());
+    this.tasks.splice(
+      this.tasks.findIndex((task) => task.name === taskProps.name),
+      1,
+      taskProps,
+    );
   };
 
   /**

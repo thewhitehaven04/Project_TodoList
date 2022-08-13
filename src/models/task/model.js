@@ -4,10 +4,13 @@
  * @property {String} name task name
  * @property {String} description task description
  * @property {String} dueDate projected task completion date
+ * @property {Boolean} [isOverdue] whether the task is overdue
  * @property {String} priority task priority
  * @property {String} progress an instance of progressModel
- * @property {String} tag task tag
+ * @property {String[]} tags task tag
  */
+import formatISO from 'date-fns/formatISO';
+import isPast from 'date-fns/isPast';
 import { progressModel } from '../progress/model';
 
 export class TaskModel {
@@ -23,15 +26,18 @@ export class TaskModel {
       dueDate: '',
       priority: '',
       progress: progressModel.NOT_STARTED.name,
-      tag: '',
+      tags: [],
     },
   ) {
     this.name = props.name;
     this.description = props.description;
-    this.dueDate = props.dueDate;
+
+    this.dueDate = new Date(props.dueDate);
+    this.isOverdue = isPast(this.dueDate);
+
     this.priority = props.priority;
     this.#progress = progressModel.NOT_STARTED.name;
-    this.tag = props.tag;
+    this.tags = props.tags.map(tag => tag.toLowerCase());
   }
 
   complete() {
@@ -44,9 +50,12 @@ export class TaskModel {
   update(props) {
     this.name = props.name;
     this.description = props.description;
+
+    this.dueDate = new Date(props.dueDate);
+    this.isOverdue = isPast(this.dueDate);
+
     this.priority = props.priority;
-    this.tag = props.tag;
-    this.dueDate = props.dueDate;
+    this.tags = props.tags.map(tag => tag.toLowerCase());
   }
 
   /**
@@ -58,8 +67,12 @@ export class TaskModel {
       description: this.description,
       priority: this.priority,
       progress: this.#progress,
-      tag: this.tag,
-      dueDate: this.dueDate,
+      tags: Array.from(this.tags),
+      dueDate: formatISO(
+        this.dueDate,
+        { representation: 'date' }
+      ),
+      isOverdue: this.isOverdue
     };
   }
 }
