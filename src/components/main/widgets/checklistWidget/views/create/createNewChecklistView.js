@@ -44,13 +44,22 @@ export class ChecklistCreateView {
   }
 
   render() {
-    const checklistTitleElement = this.checklistTitle.render();
+    this.widgetRoot.classList.add('checklist-grid');
+    this.checklistItemsRoot.classList.add('grid-items');
 
+    const checklistTitleElement = this.checklistTitle.render();
+    checklistTitleElement.classList.add('grid-name');
+
+    const itemSectionSpan = document.createElement('span');
+    itemSectionSpan.textContent = 'Checklist items';
     this.checklistItemsRoot.classList.add('checklist-items-ul');
+
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.classList.add(...['grid-buttons', 'buttons-container']);
 
     this.addChecklistItemButton.type = 'button';
     this.addChecklistItemButton.textContent = 'Add item';
-    this.widgetRoot.appendChild(this.addChecklistItemButton);
+    buttonsContainer.appendChild(this.addChecklistItemButton);
 
     this.checklistItemsRoot.appendChild(this.#renderItem());
 
@@ -69,13 +78,10 @@ export class ChecklistCreateView {
       );
       this.hide();
     });
+    buttonsContainer.appendChild(this.createChecklistButton);
 
     this.widgetRoot.append(
-      ...[
-        checklistTitleElement,
-        this.checklistItemsRoot,
-        this.createChecklistButton,
-      ],
+      ...[checklistTitleElement, this.checklistItemsRoot, buttonsContainer],
     );
     return this.widgetRoot;
   }
