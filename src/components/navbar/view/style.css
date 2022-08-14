@@ -2,17 +2,15 @@
   display: flex;
   flex-flow: column wrap;
 
-  padding: 20px;
+  padding: 20px 10px;
   align-items: flex-start;
 
   background-color: var(--maximum-yellow-red);
-  position: fixed;
-  height: 100vh;
-  width: clamp(13%, 200px, 25%);
+  width: 100%;
 }
 
 .navbar ul {
-  padding-left: 10px;
+  padding-left: 15px;
 }
 
 .navbar-list {
@@ -20,7 +18,7 @@
   flex-flow: column nowrap;
 
   row-gap: 10px;
-  font-size: 16pt;
+  font-size: 1rem; 
   margin: 0px;
 }
 

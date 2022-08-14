@@ -12,8 +12,7 @@
 
   gap: 15px;
 
-  width: 600px;
-
+  width: 100%;
 }
 
 .priorities-legend {
@@ -37,4 +36,12 @@
 
 .grid-new-task button {
   width: max-content;
+}
+
+.button-create {
+  background-color: var(--queen-blue);
+  color: var(--light-gray);
+  border: 2px solid var(--light-gray-shadow);
+  font-size: 1rem;
+  padding: 5px;
 }

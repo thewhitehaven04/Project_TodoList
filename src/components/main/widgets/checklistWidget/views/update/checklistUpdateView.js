@@ -22,7 +22,8 @@ export class ChecklistUpdateView {
     const liChecklistItem = document.createElement('li');
     liChecklistItem.classList.add('checklist-item');
 
-    const spanChecklistText = document.createElement('span');
+    const spanChecklistText = document.createElement('p');
+    spanChecklistText.classList.add('checklist-item-text');
     spanChecklistText.textContent = itemText;
 
     const checkboxChecklist = document.createElement('input');
@@ -42,9 +43,13 @@ export class ChecklistUpdateView {
 
   /** Updates how many items is left to complete. */
   updateProgress = () => {
-    this.progress.textContent = `${
-      Object.keys(this.props.items).length - this.props.progress
-    } items left`;
+    const count = Object.keys(this.props.items).length - this.props.progress
+    if (count > 0) {
+      this.progress.textContent = `${count} tasks left to complete`
+    }
+    else {
+      this.progress.textContent = `You have completed all tasks!`;
+    }
   };
 
   /**
@@ -61,15 +66,27 @@ export class ChecklistUpdateView {
   };
 
   render() {
-    this.widgetRoot.classList.add('grid-checklist');
+    this.widgetRoot.classList.add('checklist-flex');
     this.checklistItemList.classList.add('checklist-items');
 
+    const checklistHeaderFlex = document.createElement('div');
+    checklistHeaderFlex.classList.add('checklist-header-flex');
+    // checklist title
     const title = document.createElement('span');
     title.textContent = this.props.title;
-    title.classList.add('grid-checklist-title');
+    title.classList.add('checklist-header');
+    
+    // deletes checklist
+    const removeButton = document.createElement('button');
+    removeButton.innerHTML = '<i class="fa-solid fa-trash"></i>'
+    removeButton.addEventListener('click', () => {
+      this.deleteChecklist();
+      this.hide();
+    });
+    removeButton.classList.add('checklist-remove-button');
 
-    this.progress.classList.add('grid-checklist-progress');
-    this.updateProgress();
+    // add title and remove button to checklist view header
+    checklistHeaderFlex.append(...[title, removeButton]);
 
     for (let item in this.props.items) {
       const liItem = this.#renderChecklistItem(
@@ -89,17 +106,9 @@ export class ChecklistUpdateView {
       }
     });
 
-    // deletes checklist
-    const removeButton = document.createElement('button');
-    removeButton.textContent = '✕';
-    removeButton.addEventListener('click', () => {
-      this.deleteChecklist();
-      this.hide();
-    });
-    removeButton.classList.add('grid-close');
 
     this.widgetRoot.append(
-      ...[title, removeButton, this.checklistItemList, this.progress],
+      ...[checklistHeaderFlex, this.checklistItemList, this.progress],
     );
     return this.widgetRoot;
   }

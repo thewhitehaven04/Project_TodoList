@@ -1,12 +1,17 @@
 .project-view-grid {
   display: grid;
-  grid-template-columns: [tasks-start] 4fr [tasks-end checklists-start] 3fr [checklists-end];
+  grid-template-columns: minmax(300px, 3fr) minmax(400px, 4fr); 
+  justify-items: start;
+  justify-content: flex-start;
+
   grid-auto-flow: row;
-  gap: 15px;
+  gap: 20px;
 }
 
 .project-view {
   margin: 20px;
+  width: 100%;
+  max-width: max-content;
 }
 
 .project-view:not(:last-child) {
@@ -20,12 +25,12 @@
   justify-content: space-between;
 
   align-items: baseline;
-  width: 90%;
+  width: 100%;
 }
 
 .project-view-header-block > button,
 .project-view-header-block > span {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .project-view-title {
@@ -33,39 +38,69 @@
 
   font-size: 1.5rem;
   margin-bottom: 5px;
+
+  justify-self: flex-start;
 }
 
 .project-view-tasks {
   grid-column: 1;
   grid-row: 2;
-}
-
-.project-view-tasks > :not(:last-child) {
-  margin-bottom: 30px;
+  max-width: 800px;
 }
 
 .project-view-checklists {
   grid-column: 2;
   grid-row: 2;
+  max-width: 800px;
 }
+
+.project-view-tasks > :not(:last-child),
+.project-view-checklists > :not(:last-child) {
+  margin-bottom: 30px;
+}
+
 
 .project-view-tasks > ul,
 .project-view-checklists > ul {
   margin: 0px;
 }
 
-.article-list {
-  width: min-content;
+.article-list, .article-list-two-columns {
+  padding-left: 0px;
+  width: 100%;
 }
 
-.flex-list {
+.article-list {
   display: flex;
   flex-flow: column nowrap;
   gap: 15px;
 }
 
+.article-list-checklists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  grid-auto-rows: min-content;
+  grid-auto-flow: row;
+  justify-content: center;
+  align-items: flex-start;
+  justify-items: center;
+  row-gap: 15px;
+  column-gap: 25px;
+
+  padding: 0px 10px;
+}
+
+@media screen and (max-width: 1080px) {
+  .article-list-checklists {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 15px;
+  }
+}
+
 .flex-middle {
   align-items: center;
+  padding-left: 0px;
 }
 
 .flex-scrollable-list {

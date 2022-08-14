@@ -49,7 +49,7 @@ export class NavBarView {
       });
 
       const buttonRemoveProject = document.createElement('button');
-      buttonRemoveProject.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+      buttonRemoveProject.innerHTML = '<i class="fa-solid fa-trash"></i>';
       buttonRemoveProject.classList.add('navbar-list-button');
       buttonRemoveProject.addEventListener('click', () => {
         this.callRemoveProjectHandler(projectProps);

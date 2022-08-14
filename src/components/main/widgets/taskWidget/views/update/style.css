@@ -6,7 +6,7 @@
 .task-container {
   display: grid;
 
-  grid-template-columns: repeat(3, 200px);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 3em;
   grid-template-areas:
     'title        title       progress'
@@ -14,8 +14,7 @@
     'due-date     due-date    priority'
     'description  description description'
     'tag          tag         tag';
-
-  margin: 20px;
+    margin: 0px 10px;
 }
 
 
@@ -49,13 +48,16 @@
 }
 
 .task-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: bold;
   grid-area: title;
 }
 
 .task-description {
   grid-area: description;
   text-align: justify;
+
+  line-height: 1.5em;
 }
 
 .task-priority {

@@ -74,6 +74,7 @@ export class CreateTaskView {
 
     const buttonCreate = document.createElement('button');
     buttonCreate.type = 'button';
+    buttonCreate.classList.add("button-create");
     buttonCreate.textContent = 'Create new task';
     buttonCreate.style.gridArea = 'button';
 

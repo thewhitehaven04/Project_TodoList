@@ -14,7 +14,7 @@
 
 @keyframes appear {
   from {
-    transform: scale(0.1) translateY(-90px);
+    transform: scale(0.2) translateY(-90px);
   }
 
   80% {
@@ -29,11 +29,14 @@
 .checklist-grid {
   display: grid;
 
+  grid-template-columns: 1fr 100px;
   grid-template-areas: 'name buttons';
   grid-auto-flow: rows;
 
   gap: 10px;
   font-size: 1rem;
+
+  align-items: center;
 }
 
 .grid-buttons {
@@ -53,10 +56,26 @@
 
 .grid-name {
   grid-area: name;
+  height: 100%;
+}
+
+.name-input-flex {
+  display: flex;
+  flex-flow: column nowrap; 
+
+  justify-content: space-between;
 }
 
 .checklist-item-textarea:focus {
   box-shadow: 0px 1px 6px 1px var(--light-gray-shadow);
+}
+
+.checklist-controls-button {
+  background-color: var(--queen-blue);
+  color: var(--light-gray);
+  border: 2px solid var(--light-gray-shadow);
+  font-size: 1rem;
+  padding: 5px;
 }
 
 .checklist-items-ul {

@@ -6,7 +6,8 @@
 :root {
   box-sizing: border-box;
   font-family: Nuinito Sans Regular;
-  font-size: 14pt;
+  /** 1770 = 2160px (maximal supported screen with) - 390px (minimal supported screen width) */ 
+  font-size: calc(12px + 4 * ((100vw - 390px) / 1770)); 
 
   /* CSS HEX */
   --queen-blue: #41658aff;
@@ -25,7 +26,6 @@
 }
 
 body {
-  height: 100vh;
   background-color: var(--light-gray);
 
   margin: 0px;
@@ -33,8 +33,10 @@ body {
 
 #todo-list-app {
   display: grid;
-  grid-template-columns: [navbar-start] minmax(min-content, 300px) [navbar-end main-start] 1fr [main-end];
+  grid-template-columns: [navbar-start] 300px [navbar-end main-start] 1fr [main-end];
   grid-template-areas: 'navbar main';
+  min-height: 100vh;
+  height: 100%;
 }
 
 button {

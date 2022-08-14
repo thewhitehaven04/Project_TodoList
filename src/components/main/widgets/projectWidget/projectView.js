@@ -56,7 +56,7 @@ export class ProjectView {
   };
 
   #renderChecklists() {
-    this.checklists.classList.add(...['article-list', 'flex-list', 'flex-middle', 'flex-scrollable-list']);
+    this.checklists.classList.add('article-list-checklists');
     this.checklists.replaceChildren(
       ...this.props.checklists.map((checklist) => {
         return this.displayChecklistUpdateWidget(checklist);
@@ -65,7 +65,7 @@ export class ProjectView {
   }
 
   #renderTasks() {
-    this.tasks.classList.add(...['article-list', 'flex-list', 'flex-middle', 'flex-scrollable-list']);
+    this.tasks.classList.add(...['article-list', 'flex-middle']);
     this.tasks.replaceChildren(
       ...this.props.tasks.map((task) => {
         return this.displayTaskUpdateWidget(task);
@@ -111,16 +111,14 @@ export class ProjectView {
     this.rootDiv.classList.add(...['project-view-grid', 'project-view']);
 
     const checklistsSection = document.createElement('section');
-    checklistsSection.classList.add(
-      ...['project-view-checklists', 'flex-list', 'flex-middle'],
-    );
+    checklistsSection.classList.add('project-view-checklists');
 
     const divChecklistsHeader = document.createElement('div');
     const spanChecklists = document.createElement('span');
     spanChecklists.textContent = 'Checklists';
 
     const ulNewChecklists = document.createElement('ul');
-    ulNewChecklists.classList.add(...['flex-list', 'flex-middle']);
+    ulNewChecklists.classList.add('flex-middle');
 
     const addCheckListButton = document.createElement('button');
     addCheckListButton.textContent = 'New';
@@ -139,13 +137,13 @@ export class ProjectView {
 
     const tasksSection = document.createElement('section');
     const divTasksHeader = document.createElement('div');
-    tasksSection.classList.add(...['project-view-tasks', 'flex-list', 'flex-middle']);
+    tasksSection.classList.add('project-view-tasks');
 
     const taskSectionHeader = document.createElement('span');
     taskSectionHeader.textContent = 'Tasks';
 
     const ulNewTasks = document.createElement('ul');
-    ulNewTasks.classList.add(...['flex-list', 'flex-middle']);
+    ulNewTasks.classList.add('flex-middle');
 
     const addTaskButton = document.createElement('button');
     addTaskButton.textContent = 'New';

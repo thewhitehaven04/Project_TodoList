@@ -48,17 +48,22 @@ export class ChecklistCreateView {
     this.checklistItemsRoot.classList.add('grid-items');
 
     const checklistTitleElement = this.checklistTitle.render();
-    checklistTitleElement.classList.add('grid-name');
+    checklistTitleElement.classList.add(...['grid-name', 'name-input-flex']);
 
+    const divItemList = document.createElement('div');
     const itemSectionSpan = document.createElement('span');
     itemSectionSpan.textContent = 'Checklist items';
     this.checklistItemsRoot.classList.add('checklist-items-ul');
+
+    divItemList.append(...[itemSectionSpan, this.checklistItemsRoot]);
+    divItemList.classList.add('flex-list');
 
     const buttonsContainer = document.createElement('div');
     buttonsContainer.classList.add(...['grid-buttons', 'buttons-container']);
 
     this.addChecklistItemButton.type = 'button';
     this.addChecklistItemButton.textContent = 'Add item';
+    this.addChecklistItemButton.classList.add('checklist-controls-button');
     buttonsContainer.appendChild(this.addChecklistItemButton);
 
     this.checklistItemsRoot.appendChild(this.#renderItem());
@@ -69,6 +74,7 @@ export class ChecklistCreateView {
 
     this.createChecklistButton.type = 'submit';
     this.createChecklistButton.textContent = 'Create';
+    this.createChecklistButton.classList.add('checklist-controls-button');
 
     this.createChecklistButton.addEventListener('click', () => {
       // @ts-ignore
@@ -81,7 +87,7 @@ export class ChecklistCreateView {
     buttonsContainer.appendChild(this.createChecklistButton);
 
     this.widgetRoot.append(
-      ...[checklistTitleElement, this.checklistItemsRoot, buttonsContainer],
+      ...[checklistTitleElement, divItemList, buttonsContainer],
     );
     return this.widgetRoot;
   }
