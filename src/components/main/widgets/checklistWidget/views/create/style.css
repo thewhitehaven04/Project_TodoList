@@ -1,0 +1,107 @@
+.checklist-item-textarea {
+  min-width: 100px;
+  width: 100%;
+  height: 50px;
+  padding: 5px;
+
+  border-radius: 8px;
+  resize: none;
+  border: 1.5px solid var(--light-gray-shadow);
+
+  animation: appear 0.16s 0s normal;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes appear {
+  from {
+    transform: scale(0.2) translateY(-90px);
+  }
+
+  80% {
+    transform: scale(1.05) translateY(6px);
+  }
+
+  to {
+    transform: scale(1) translateY(0px);
+  }
+}
+
+.checklist-grid {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  grid-template-areas: 'name buttons';
+  grid-auto-flow: row;
+  column-gap: 15px;
+  row-gap: 5px;
+  align-items: center;
+  
+  padding: 15px;
+  font-size: 1rem;
+}
+
+.checklist-grid:not(:last-of-type) {
+  border-bottom: 2px solid var(--border-gray);
+}
+
+.grid-buttons {
+  grid-area: buttons;
+}
+
+.buttons-container {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+
+.buttons-container > button {
+  font-size: 1rem;
+}
+
+.grid-name {
+  grid-area: name;
+  height: 100%;
+}
+
+.name-input-flex {
+  display: flex;
+  flex-flow: column nowrap; 
+  justify-content: space-between;
+}
+
+.checklist-item-textarea:focus {
+  box-shadow: 0px 1px 6px 1px var(--light-gray-shadow);
+}
+
+.checklist-create-button {
+  background-color: var(--queen-blue);
+  color: var(--light-gray);
+  border: 2px solid var(--light-gray-shadow);
+  font-size: 1rem;
+  padding: 5px;
+  height: 100%;
+}
+
+.checklist-add-item-button {
+  background-color: rgba(0,0,0,0);
+  color: var(--queen-blue);
+  border: none;
+  font-size: 1.5rem;
+}
+
+.checklist-items-ul {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 5x;
+  
+  list-style: none;
+  
+  margin: 10px 0px;
+  margin-inline: 0px;
+  padding-left: 0px;
+}
+
+.checklist-list-header-flex {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}

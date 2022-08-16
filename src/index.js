@@ -24,7 +24,7 @@ const projectStorage = new ProjectStoragePubSub(
 const appRoot = document.querySelector('#todo-list-app');
 
 /**
- * Runs app.
+ * Runs the app.
  * @param {Node} appRoot
  * @param {PubSub} eventBus
  */
@@ -42,3 +42,6 @@ const runApp = function (appRoot, eventBus) {
 };
 
 runApp(appRoot, appEventBus);
+
+const getProject = projectStorage.getProject;
+export { getProject };

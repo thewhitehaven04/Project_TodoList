@@ -9,7 +9,7 @@ import { prioritiesModel } from '../../../../../../models/priority/model';
 import { progressModel } from '../../../../../../models/progress/model';
 import style from './style.css';
 
-export class CreateTaskWidgetView {
+export class CreateTaskView {
   /**
    * @param {prioritiesModel} priorityStates
    */
@@ -43,7 +43,7 @@ export class CreateTaskWidgetView {
     const description = descriptionTextarea.render();
     description.style.gridArea = 'description';
 
-    const dueDateInput = createFutureDataPicker('Due date');
+    const dueDateInput = createFutureDataPicker('Due date:');
     const dueDate = dueDateInput.render();
     dueDate.style.gridArea = 'dueDate';
 
@@ -53,11 +53,12 @@ export class CreateTaskWidgetView {
 
     const prioritiesFieldset = document.createElement('fieldset');
     prioritiesFieldset.style.gridArea = 'priority';
+    prioritiesFieldset.classList.add('priorities-fieldset');
 
     const prioritiesLegend = document.createElement('legend');
     prioritiesLegend.textContent = 'Priority';
     prioritiesFieldset.appendChild(prioritiesLegend);
-    prioritiesLegend.classList.add('flex-fieldset');
+    prioritiesLegend.classList.add(...['flex-fieldset', 'priorities-legend']);
 
     const radios = [];
 
@@ -73,8 +74,10 @@ export class CreateTaskWidgetView {
 
     const buttonCreate = document.createElement('button');
     buttonCreate.type = 'button';
+    buttonCreate.classList.add("button-create");
     buttonCreate.textContent = 'Create new task';
     buttonCreate.style.gridArea = 'button';
+
     buttonCreate.addEventListener('click', () => {
       // @ts-ignore
       this.createTask({
@@ -83,7 +86,7 @@ export class CreateTaskWidgetView {
         dueDate: dueDateInput.getValue(),
         priority: getActiveRadioOfArray(radios).value,
         progress: progressModel.NOT_STARTED.name,
-        tag: tagInput.getValue(),
+        tags: tagInput.getValue().split(' '),
       });
 
       this.hide();

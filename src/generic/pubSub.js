@@ -34,8 +34,6 @@ export class PubSub {
 
   /** Publishes an event to all subscribers */
   pub(eventName, data) {
-    console.log(`Event published.\nEvent name: ${eventName}\nData:`);
-    console.dir(data);
     this.eventMap.get(eventName).forEach((observer) => observer(data));
   }
 }

@@ -20,11 +20,11 @@ export class ProjectModel extends PublisherModel {
   /**
    * @param {ProjectProps} projectProps
    */
-  update(projectProps) {
+  update = (projectProps) => {
     this.title = projectProps.title;
     this.checklists = projectProps.checklists;
     this.tasks = projectProps.tasks;
-  }
+  };
 
   /**
    * Add a checklist to the model.
@@ -44,11 +44,49 @@ export class ProjectModel extends PublisherModel {
     this.publish(projectEvents.taskAddedToProject, taskProps);
   };
 
+  /**
+   * @param {import('../checklist/model').ChecklistProps} checklistProps
+   */
   removeChecklist = (checklistProps) => {
     this.checklists = this.checklists.filter(
-      (existingChecklist) => existingChecklist !== checklistProps,
+      (existingChecklist) => existingChecklist.id !== checklistProps.id,
     );
-    this.publish(projectEvents.checklistAddedToProject, checklistProps);
+    this.publish(projectEvents.checklistRemovedFromProject, checklistProps);
+  };
+
+  /**
+   * Remove a task from the model
+   * @param {import('../task/model').TaskProps} taskProps
+   */
+  removeTask = (taskProps) => {
+    this.tasks = this.tasks.filter(
+      (existingTask) => existingTask.name !== taskProps.name,
+    );
+    this.publish(projectEvents.taskRemovedFromProject, taskProps);
+  };
+
+  /**
+   * @param {import('../checklist/model').ChecklistProps} checklistProps
+   */
+  updateChecklist = (checklistProps) => {
+    this.checklists.splice(
+      this.checklists.findIndex(
+        (checklist) => checklist.id === checklistProps.id,
+      ),
+      1,
+      checklistProps,
+    );
+  };
+
+  /**
+   * @param {import('../task/model').TaskProps} taskProps
+   */
+  updateTask = (taskProps) => {
+    this.tasks.splice(
+      this.tasks.findIndex((task) => task.name === taskProps.name),
+      1,
+      taskProps,
+    );
   };
 
   /**

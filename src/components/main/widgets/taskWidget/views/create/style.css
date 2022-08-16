@@ -1,7 +1,7 @@
 .grid-new-task {
   display: grid;
 
-  grid-template-columns: 16em 200px;
+  grid-template-columns: minmax(20em, 1fr) min-content;
   grid-template-areas:
     'name         priority   '
     'dueDate      priority   '
@@ -9,4 +9,39 @@
     'description  description'
     'description  description'
     '. button';
+
+  gap: 15px;
+
+  width: 100%;
+}
+
+.priorities-legend {
+  background-color: var(--queen-blue);
+  color: var(--light-gray);
+}
+
+.priorities-fieldset {
+  border: none;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  justify-content: center;
+  gap: 5px;
+
+  width: min-content;
+  border: 1.5px solid var(--border-gray);
+  border-radius: 8px;
+}
+
+.grid-new-task button {
+  width: max-content;
+}
+
+.button-create {
+  background-color: var(--queen-blue);
+  color: var(--light-gray);
+  border: 2px solid var(--light-gray-shadow);
+  font-size: 1rem;
+  padding: 5px;
 }

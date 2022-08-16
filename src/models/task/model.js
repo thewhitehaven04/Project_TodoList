@@ -4,16 +4,16 @@
  * @property {String} name task name
  * @property {String} description task description
  * @property {String} dueDate projected task completion date
+ * @property {Boolean} [isOverdue] whether the task is overdue
  * @property {String} priority task priority
  * @property {String} progress an instance of progressModel
- * @property {String} tag task tag
+ * @property {String[]} tags task tag
  */
-
-import { PublisherModel } from '../../generic/modelPublisher';
+import formatISO from 'date-fns/formatISO';
+import isPast from 'date-fns/isPast';
 import { progressModel } from '../progress/model';
-import { taskEvents } from './taskEvents';
 
-export class TaskModel extends PublisherModel {
+export class TaskModel {
   #progress;
 
   /**
@@ -26,16 +26,18 @@ export class TaskModel extends PublisherModel {
       dueDate: '',
       priority: '',
       progress: progressModel.NOT_STARTED.name,
-      tag: '',
+      tags: [],
     },
   ) {
-    super();
     this.name = props.name;
     this.description = props.description;
-    this.dueDate = props.dueDate;
+
+    this.dueDate = new Date(props.dueDate);
+    this.isOverdue = isPast(this.dueDate);
+
     this.priority = props.priority;
     this.#progress = progressModel.NOT_STARTED.name;
-    this.tag = props.tag;
+    this.tags = props.tags.map(tag => tag.toLowerCase());
   }
 
   complete() {
@@ -46,13 +48,14 @@ export class TaskModel extends PublisherModel {
    * @param {TaskProps} props task item properties
    */
   update(props) {
-    this.name = this.name || props.name;
-    this.description = this.description || props.description;
-    this.priority = this.priority || props.priority;
-    this.tag = this.tag || props.tag;
-    this.dueDate = this.dueDate || props.dueDate;
+    this.name = props.name;
+    this.description = props.description;
 
-    this.publish(taskEvents.taskUpdateEvent, this.toJSON());
+    this.dueDate = new Date(props.dueDate);
+    this.isOverdue = isPast(this.dueDate);
+
+    this.priority = props.priority;
+    this.tags = props.tags.map(tag => tag.toLowerCase());
   }
 
   /**
@@ -64,8 +67,12 @@ export class TaskModel extends PublisherModel {
       description: this.description,
       priority: this.priority,
       progress: this.#progress,
-      tag: this.tag,
-      dueDate: this.dueDate,
+      tags: Array.from(this.tags),
+      dueDate: formatISO(
+        this.dueDate,
+        { representation: 'date' }
+      ),
+      isOverdue: this.isOverdue
     };
   }
 }

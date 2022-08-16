@@ -12,7 +12,7 @@
  * @property {String} displayName
  */
 /**
- * @type {ProgressModel} 
+ * @type {ProgressModel}
  */
 export const progressModel = Object.freeze({
   NOT_STARTED: {
@@ -22,5 +22,9 @@ export const progressModel = Object.freeze({
   COMPLETE: {
     name: 'complete',
     displayName: 'Complete',
+  },
+  OVERDUE: {
+    name: 'overdue',
+    displayName: 'Overdue',
   },
 });

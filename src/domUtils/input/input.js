@@ -98,7 +98,7 @@ function createFutureDataPicker(labelText) {
     div.classList.add('named-input');
 
     inputDate.type = 'date';
-    inputDate.min = format(endOfToday(), 'yyyy-MM-dd');
+    // inputDate.min = format(endOfToday(), 'yyyy-MM-dd');
     span.textContent = labelText;
 
     div.append(...[span, inputDate]);

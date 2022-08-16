@@ -13,7 +13,7 @@ export class NavBarView {
     /** ProjectProps are stored in an array
      * @type {ProjectProps[]}
      */
-    this.projects = projectPropsArray;
+    this.projects = Array.from(projectPropsArray);
   }
 
   /**
@@ -49,7 +49,8 @@ export class NavBarView {
       });
 
       const buttonRemoveProject = document.createElement('button');
-      buttonRemoveProject.textContent = '✕';
+      buttonRemoveProject.innerHTML = '<i class="fa-solid fa-trash"></i>';
+      buttonRemoveProject.classList.add('navbar-list-button');
       buttonRemoveProject.addEventListener('click', () => {
         this.callRemoveProjectHandler(projectProps);
       });
@@ -66,7 +67,7 @@ export class NavBarView {
   }
 
   openNewProjectForm(newProjectFormHandler) {
-    newProjectFormHandler();
+    return newProjectFormHandler();
   }
 
   _bindHandleProjectRemoval(obj, handler) {
@@ -93,20 +94,26 @@ export class NavBarView {
 
   render() {
     this.navRoot.classList.add('navbar');
+    this.projectsRoot.classList.add('navbar-list');
 
     const sectionProjects = document.createElement('section');
+    sectionProjects.classList.add('navbar-section');
+
     const projectsSectionHeader = document.createElement('div');
     projectsSectionHeader.classList.add('section-header');
 
     const spanProjects = document.createElement('span');
     spanProjects.textContent = 'Projects';
+    spanProjects.classList.add('section-title');
     projectsSectionHeader.appendChild(spanProjects);
 
     const buttonAddProjects = document.createElement('button');
     buttonAddProjects.textContent = 'Add project';
+    buttonAddProjects.classList.add('navbar-button');
     buttonAddProjects.addEventListener('click', () =>
-      this.openNewProjectForm(),
+      this.navRoot.appendChild(this.openNewProjectForm()),
     );
+
     projectsSectionHeader.appendChild(buttonAddProjects);
 
     sectionProjects.appendChild(projectsSectionHeader);

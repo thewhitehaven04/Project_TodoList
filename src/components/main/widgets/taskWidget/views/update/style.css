@@ -1,37 +1,106 @@
+:root {
+  --red-overdue: #c71212;
+  --green-in-time: #3ca445;
+}
+
 .task-container {
   display: grid;
 
-  grid-template-columns: repeat(2, 300px) 200px;
+  grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
-    'title title priority'
-    'description description description'
-    'progress tag .';
+    'title        title       progress'
+    'title        title       progress'
+    'due-date     due-date    priority'
+    'description  description description'
+    'tag          tag         tag';
+  width: 100%;
+  padding: 15px;
+  row-gap: 8px;
+}
+
+.task-container:not(:last-of-type) {
+  border-bottom: 2px solid var(--border-gray);
 }
 
 .task-progress {
   grid-area: progress;
+
+  appearance: none;
+  border: 1.5px solid var(--border-gray);
+  background-color: var(--queen-blue);
+  color: var(--light-gray);
+  text-align: end;
+  font-size: 1.5rem;
+  height: 50px;
+  justify-self: right;
+  align-self: center;
+  height: min-content;
+  padding: 5px;
+}
+
+
+.task-complete {
+  color: var(--queen-blue);
+  background-color: var(--light-);
+  border: none;
+}
+
+.task-due {
+  grid-area: due-date;
+
+  display: flex;
+  flex-flow: row nowrap;
+  column-gap: 10px;
+}
+
+.task-due-text {
+  color: var(--green-in-time);
+  font-weight: bold;
 }
 
 .task-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: bold;
   grid-area: title;
 }
 
 .task-description {
   grid-area: description;
+  text-align: justify;
+
+  line-height: 1.5em;
+  margin: 0px;
 }
 
 .task-priority {
   grid-area: priority;
+  align-self: center;
+  justify-self: flex-end;
+}
+
+.task-tags {
+  margin: 1rem 0px;
+  grid-area: tag;
+}
+
+.task-tag-flex {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+  align-items: baseline;
 }
 
 .task-tag {
-  padding: 15px 10px;
+  padding: 5px;
+  background-color: var(--queen-blue);
+  color: var(--light-gray);
 
-  border: 1px solid black;
   border-radius: 8px;
+  border: 1.5px solid var(--border-gray);
 
-  background-color: rgba(210, 200, 200, 0.603);
+  font-size: 1.2rem;
+}
 
-  grid-area: tag;
+.task-overdue {
+  color: var(--red-overdue);
 }

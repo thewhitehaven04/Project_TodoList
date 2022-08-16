@@ -7,14 +7,14 @@ export class NavBarModel extends PublisherModel {
    */
   constructor(projects) {
     super();
-    this.projects = projects ?? [];
+    this.projects = projects.map((project) => project.title) ?? [];
   }
 
   /**
    * @param {import('../project/model').ProjectProps} projectProps
    */
   addProject = (projectProps) => {
-    this.projects.push(projectProps);
+    this.projects.push(projectProps.title);
     this.publish(projectEvents.projectAdded, projectProps);
   };
 
@@ -23,7 +23,7 @@ export class NavBarModel extends PublisherModel {
    */
   removeProject = (projectProps) => {
     this.projects = this.projects.filter(
-      (project) => project.title != projectProps.title,
+      (project) => project != projectProps.title,
     );
     this.publish(projectEvents.projectRemoved, projectProps);
   };

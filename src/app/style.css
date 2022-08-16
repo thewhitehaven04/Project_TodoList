@@ -6,11 +6,14 @@
 :root {
   box-sizing: border-box;
   font-family: Nuinito Sans Regular;
-  font-size: 12pt;
+  /** 1770 = 2160px (maximal supported screen with) - 390px (minimal supported screen width) */
+  font-size: calc(12px + 4 * ((100vw - 390px) / 1770));
 
   /* CSS HEX */
   --queen-blue: #41658aff;
-  --light-gray: #cdd6ddff;
+  --light-gray: rgb(224, 229, 233);
+  --light-gray-shadow: rgb(182, 189, 195);
+  --border-gray: rgb(190, 196, 202);
   --maximum-yellow-red: #ffc857ff;
   --burnt-sienna: #e9724cff;
   --light-coral: #ff8484ff;
@@ -22,9 +25,7 @@
   box-sizing: inherit;
 }
 
-
 body {
-  height: 100vh;
   background-color: var(--light-gray);
 
   margin: 0px;
@@ -32,6 +33,38 @@ body {
 
 #todo-list-app {
   display: grid;
-  grid-template-columns: [navbar-start] minmax(min-content, 300px) [navbar-end main-start] 1fr [main-end];
+  grid-template-columns: [navbar-start] 300px [navbar-end main-start] 1fr [main-end];
   grid-template-areas: 'navbar main';
+  min-height: 100vh;
+  height: 100%;
+}
+
+button {
+  appearance: none;
+  border-radius: 10px;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+textarea,
+button,
+input {
+  border: 2px solid var(--border-gray);
+}
+
+textarea:focus,
+button:focus,
+input:focus {
+  outline: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+input:invalid,
+textarea:invalid {
+  border: 2px solid var(--burnt-sienna);
 }

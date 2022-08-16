@@ -1,15 +1,24 @@
 .checklist-item {
-  display: grid;
-  grid-template-columns: max(300px, max-content), 10px;
-  column-gap: 25px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  justify-content: space-between;
 
-  grid-auto-rows: 30px;
-  grid-auto-flow: row;
+  width: 100%;
+  min-width: 150px;
+}
+
+.checklist-item-text {
+  margin: 0px;
+  padding-left: 0px;
+  padding-right: 10px;
+  text-align: justify;
+  line-height: 1.5em;
 }
 
 .checklist-item > span {
-
   font-size: 1rem;
+  text-overflow: ellipsis;
   grid-column: 1;
 }
 
@@ -18,36 +27,46 @@
   justify-self: flex-end;
 }
 
-.grid-checklist {
-  border: 1px solid black;
-  padding: 10px;
-
-  display: grid;
-  grid-template-columns: 1fr 150px 40px;
-  grid-template-areas:
-    'title title close'
-    '. progress progress';
+.checklist-items {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 5px;
+  padding: 0px;
 }
 
-.grid-checklist-title {
+.checklist-flex {
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.checklist-header-flex {
+  display: flex;
+  flex-flow: row wrap;
+
+  justify-content: space-between;
+  align-items: baseline;
+
+  margin-bottom: 15px;
+}
+
+.checklist-header {
   font-size: 1.5rem;
-  grid-area: title;
 }
 
-.grid-checklist-progress {
-  grid-area: progress;
-}
-
-.grid-close {
+.checklist-remove-button {
   appearance: none;
+  border: none; 
+  color: var(--queen-blue); 
+  background-color: var(--light-gray);
+  font-size: 1rem;
+  padding: 5px;
+}
 
-  background-color: cornflowerblue;
+.checklist-remove-button:hover {
+  cursor: pointer;
+}
+
+.checklist-remove-button:focus {
   color: white;
-
-  border: 1px solid cornflowerblue;
-  border-radius: 10px;
-  box-shadow: 0px 1px 4px 1px black;
-
-  font-size: 1.5rem;
-  grid-area: close;
 }

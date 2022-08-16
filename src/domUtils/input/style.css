@@ -1,8 +1,9 @@
 .named-input {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
 
-  align-items: center;
+  align-items: flex-start;
+  gap: 4px;
 }
 
 .named-input > span {
@@ -12,4 +13,21 @@
 .flex-radios {
   display: flex;
   flex-flow: row nowrap;
+}
+
+.named-input > input {
+  appearance: none;
+
+  border: 1.5px solid var(--border-gray);
+
+  border-radius: 8px;
+  padding-left: 5px;
+  padding-block: 2px;
+  width: 100%;
+
+  outline: none;
+}
+
+.named-input > input:focus {
+  box-shadow: 0px 1px 6px 1px var(--light-gray-shadow);
 }

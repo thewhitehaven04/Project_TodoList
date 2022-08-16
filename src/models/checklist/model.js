@@ -30,7 +30,7 @@ export class ChecklistModel extends PublisherModel {
     },
   ) {
     super();
-    this.id = uuidv4();
+    this.id = checklistProps.id ?? uuidv4();
     this.title = checklistProps.title;
     this.items = new Map(Object.entries(checklistProps.items));
     this.#progress = checklistProps.progress;
@@ -71,7 +71,6 @@ export class ChecklistModel extends PublisherModel {
     } else {
       throw new Error(`The entity with id ${itemId} does not exist.`);
     }
-    this.publish(checklistEvents.checklistUpdated, this.toJSON());
   }
 
   /**

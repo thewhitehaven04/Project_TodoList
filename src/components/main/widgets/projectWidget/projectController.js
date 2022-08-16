@@ -1,4 +1,3 @@
-import { getTask } from '../../../..';
 import { PubSub } from '../../../../generic/pubSub';
 import { checklistEvents } from '../../../../models/checklist/checklistEvents';
 import { ChecklistModel } from '../../../../models/checklist/model';
@@ -11,14 +10,14 @@ import { ChecklistController } from '../checklistWidget/controller/checklistCont
 import { ChecklistUpdateView } from '../checklistWidget/views/update/checklistUpdateView';
 import { ChecklistCreateView } from '../checklistWidget/views/create/createNewChecklistView';
 import { TaskController } from '../taskWidget/controller/taskController';
-import { CreateTaskWidgetView } from '../taskWidget/views/create/createTaskWidgetView';
+import { CreateTaskView } from '../taskWidget/views/create/createTaskWidgetView';
 import { UpdateTaskView } from '../taskWidget/views/update/updateTaskView';
 import { ProjectView } from './projectView';
-
 export class ProjectViewController {
   /**
    * @param {ProjectView} view
    * @param {ProjectModel} model
+   * @param {PubSub} eventBus
    */
   constructor(model, view, eventBus) {
     this.model = model;
@@ -28,9 +27,19 @@ export class ProjectViewController {
 
     /** Display added tasks and checklists after they are succesfully added to storage */
     this.eventBus.subscribe(taskEvents.taskCreationEvent, this.addTask);
+    this.eventBus.subscribe(taskEvents.taskUpdateEvent, this.updateTask);
+
     this.eventBus.subscribe(
       checklistEvents.checklistCreated,
       this.addChecklist,
+    );
+    this.eventBus.subscribe(
+      checklistEvents.checklistRemoved,
+      this.removeChecklist,
+    );
+    this.eventBus.subscribe(
+      checklistEvents.checklistUpdated,
+      this.updateChecklist,
     );
 
     /** Catch project removed event and close the view if the project received
@@ -68,25 +77,29 @@ export class ProjectViewController {
       projectEvents.checklistAddedToProject,
       this.view.addChecklist,
     );
+    this.localEventBus.subscribe(
+      projectEvents.checklistRemovedFromProject,
+      this.view.removeChecklist,
+    );
+    this.localEventBus.subscribe(
+      projectEvents.taskRemovedFromProject,
+      this.view.removeTask,
+    );
   }
 
   displayTaskCreateWidget = () => {
-    return new TaskController(
-      new CreateTaskWidgetView(prioritiesModel),
-      new TaskModel(),
-      this.eventBus,
-    ).render();
+    return new TaskController(new TaskModel(), this.eventBus)
+      .setCreateView(new CreateTaskView(prioritiesModel))
+      .render();
   };
 
   /**
    * @param {import('../../../../models/task/model').TaskProps} taskProps
    */
   displayTaskUpdateWidget = (taskProps) => {
-    return new TaskController(
-      new UpdateTaskView(taskProps),
-      new TaskModel(taskProps),
-      this.eventBus,
-    ).render();
+    return new TaskController(new TaskModel(taskProps), this.eventBus)
+      .setUpdateView(new UpdateTaskView(taskProps))
+      .render();
   };
 
   displayChecklistCreateWidget = () => {
@@ -107,18 +120,48 @@ export class ProjectViewController {
       .render();
   };
 
+  /**
+   * @param {import('../../../../models/checklist/model').ChecklistProps} checklistProps
+   */
   addChecklist = (checklistProps) => {
     this.model.addChecklist(checklistProps);
     this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
   };
 
+  /**
+   * @param {import('../../../../models/checklist/model').ChecklistProps} checklistProps
+   */
   removeChecklist = (checklistProps) => {
     this.model.removeChecklist(checklistProps);
     this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
   };
 
+  // #TODO: this needs to be redone, project model should only know about task and checklist ids
+  /**
+   *
+   * @param {import('../../../../models/checklist/model').ChecklistProps} checklistProps
+   */
+  updateChecklist = (checklistProps) => {
+    this.model.updateChecklist(checklistProps);
+    this.eventBus.pub(
+      projectEvents.checklistAddedToProject,
+      this.model.toJSON(),
+    );
+  };
+
+  /**
+   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   */
   addTask = (taskProps) => {
     this.model.addTask(taskProps);
+    this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
+  };
+
+  /**
+   * @param {import('../../../../models/task/model').TaskProps} taskProps
+   */
+  updateTask = (taskProps) => {
+    this.model.updateTask(taskProps);
     this.eventBus.pub(projectEvents.projectUpdated, this.model.toJSON());
   };
 
@@ -130,7 +173,6 @@ export class ProjectViewController {
    * @param {import('../../../../models/project/model').ProjectProps} props
    */
   hide = (props) => {
-    console.log(`Project to hide: ${JSON.stringify(props)}`);
     if (props.title === this.model.toJSON().title) {
       this.view.hide();
     }

@@ -6,6 +6,7 @@ import { CreateNewProjectWidgetView } from './widgets/createNewProjectWidget/cre
 import { ProjectViewController } from './widgets/projectWidget/projectController';
 import { ProjectView } from './widgets/projectWidget/projectView';
 import { ProjectModel } from '../../models/project/model';
+import { getProject } from '../..';
 
 export class MainController {
   /**
@@ -27,7 +28,6 @@ export class MainController {
     );
   }
 
-  /** Calls the view to display the new project creation widget */
   openNewProjectWidget = () => {
     this.view.setWidget(
       new CreateNewProjectWidgetController(
@@ -43,10 +43,12 @@ export class MainController {
    * @param {import('../../models/project/model').ProjectProps} projectProps
    */
   openProjectViewWidget = (projectProps) => {
+    const projectModel = new ProjectModel(getProject(projectProps));
+
     this.view.setWidget(
       new ProjectViewController(
-        new ProjectModel(projectProps),
-        new ProjectView(projectProps),
+        projectModel,
+        new ProjectView(projectModel.toJSON()),
         this.appEventBus,
       ),
     );

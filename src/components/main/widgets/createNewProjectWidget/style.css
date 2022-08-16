@@ -1,7 +1,47 @@
 .create-new-project-form {
   display: flex;
-  flex-flow: column nowrap;
-  gap: 30px;
+  flex-flow: row wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-left: 10px;
+  margin-top: 15px;
 
-  padding: 30px;
+  width: 100%;
+}
+
+.project-title {
+  width: 80%;
+  height: 1.5em;
+  font-size: 1rem;
+
+  border: 1.5px solid black;
+  border-radius: 8px;
+  padding-left: 5px;
+}
+
+.project-title:invalid {
+  border: 1.5px solid black;
+}
+
+#create-project-button {
+  appearance: none;
+  color: black;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  fill-opacity: 0;
+  width: min-content;
+
+  font-size: 1.2rem;
+  height: 1.5em;
+  padding: 2px;
+  width: 30px;
+}
+
+#create-project-button:hover,
+#create-project-button:focus {
+  color: white;
+}
+
+.create-new-project-form > button {
+  padding: 2px;
 }
