@@ -51,21 +51,24 @@ export class ChecklistCreateView {
     checklistTitleElement.classList.add(...['grid-name', 'name-input-flex']);
 
     const divItemList = document.createElement('div');
+    
+    const divItemListHeader = document.createElement('div');
+    divItemListHeader.classList.add('checklist-list-header-flex');
     const itemSectionSpan = document.createElement('span');
     itemSectionSpan.textContent = 'Checklist items';
-    this.checklistItemsRoot.classList.add('checklist-items-ul');
 
-    divItemList.append(...[itemSectionSpan, this.checklistItemsRoot]);
-    divItemList.classList.add('flex-list');
+    this.checklistItemsRoot.classList.add('checklist-items-ul');
 
     const buttonsContainer = document.createElement('div');
     buttonsContainer.classList.add(...['grid-buttons', 'buttons-container']);
-
     this.addChecklistItemButton.type = 'button';
-    this.addChecklistItemButton.textContent = 'Add item';
-    this.addChecklistItemButton.classList.add('checklist-controls-button');
-    buttonsContainer.appendChild(this.addChecklistItemButton);
+    this.addChecklistItemButton.innerHTML = '<i class="fa-solid fa-plus"></i>'
+    this.addChecklistItemButton.classList.add('checklist-add-item-button');
 
+    divItemListHeader.append(...[itemSectionSpan, this.addChecklistItemButton]);
+    
+    divItemList.append(...[divItemListHeader, this.checklistItemsRoot]);
+    
     this.checklistItemsRoot.appendChild(this.#renderItem());
 
     this.addChecklistItemButton.addEventListener('click', () =>
@@ -74,7 +77,7 @@ export class ChecklistCreateView {
 
     this.createChecklistButton.type = 'submit';
     this.createChecklistButton.textContent = 'Create';
-    this.createChecklistButton.classList.add('checklist-controls-button');
+    this.createChecklistButton.classList.add('checklist-create-button');
 
     this.createChecklistButton.addEventListener('click', () => {
       // @ts-ignore

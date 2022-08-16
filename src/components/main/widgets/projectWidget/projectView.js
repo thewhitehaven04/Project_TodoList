@@ -121,10 +121,11 @@ export class ProjectView {
     ulNewChecklists.classList.add('flex-middle');
 
     const addCheckListButton = document.createElement('button');
-    addCheckListButton.textContent = 'New';
+    addCheckListButton.innerHTML = '<i class="fa-solid fa-plus"></i>';
     addCheckListButton.addEventListener('click', () => {
       ulNewChecklists.appendChild(this.displayChecklistCreateWidget());
     });
+    addCheckListButton.classList.add('button-project');
 
     divChecklistsHeader.append(...[spanChecklists, addCheckListButton]);
     divChecklistsHeader.classList.add('project-view-header-block');
@@ -146,10 +147,11 @@ export class ProjectView {
     ulNewTasks.classList.add('flex-middle');
 
     const addTaskButton = document.createElement('button');
-    addTaskButton.textContent = 'New';
+    addTaskButton.innerHTML = '<i class="fa-solid fa-plus"></i>';
     addTaskButton.addEventListener('click', () => {
       ulNewTasks.appendChild(this.displayTaskCreateWidget());
     });
+    addTaskButton.classList.add('button-project');
 
     divTasksHeader.append(...[taskSectionHeader, addTaskButton]);
     divTasksHeader.classList.add('project-view-header-block');

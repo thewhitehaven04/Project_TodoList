@@ -30,10 +30,8 @@
 .checklist-items {
   display: flex;
   flex-flow: column nowrap;
-  row-gap: 10px;
-
-  padding-left: 20px;
-  padding-right: 10px;
+  row-gap: 5px;
+  padding: 0px;
 }
 
 .checklist-flex {
@@ -58,11 +56,9 @@
 
 .checklist-remove-button {
   appearance: none;
-  
-  border: 2px solid var(--border-gray);
-  
-  background-color: var(--queen-blue); 
-  color: var(--light-gray);
+  border: none; 
+  color: var(--queen-blue); 
+  background-color: var(--light-gray);
   font-size: 1rem;
   padding: 5px;
 }

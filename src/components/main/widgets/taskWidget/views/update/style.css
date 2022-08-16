@@ -7,31 +7,42 @@
   display: grid;
 
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 3em;
   grid-template-areas:
     'title        title       progress'
     'title        title       progress'
     'due-date     due-date    priority'
     'description  description description'
     'tag          tag         tag';
-    margin: 0px 10px;
+  width: 100%;
+  padding: 15px;
+  row-gap: 8px;
 }
 
+.task-container:not(:last-of-type) {
+  border-bottom: 2px solid var(--border-gray);
+}
 
 .task-progress {
   grid-area: progress;
 
-  color: var(--light-gray);
+  appearance: none;
+  border: 1.5px solid var(--border-gray);
   background-color: var(--queen-blue);
-
+  color: var(--light-gray);
+  text-align: end;
+  font-size: 1.5rem;
   height: 50px;
-  text-align: center;
-  font-size: 1rem;
+  justify-self: right;
+  align-self: center;
+  height: min-content;
+  padding: 5px;
 }
+
 
 .task-complete {
   color: var(--queen-blue);
   background-color: var(--light-);
+  border: none;
 }
 
 .task-due {
@@ -58,6 +69,7 @@
   text-align: justify;
 
   line-height: 1.5em;
+  margin: 0px;
 }
 
 .task-priority {

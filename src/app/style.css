@@ -6,8 +6,8 @@
 :root {
   box-sizing: border-box;
   font-family: Nuinito Sans Regular;
-  /** 1770 = 2160px (maximal supported screen with) - 390px (minimal supported screen width) */ 
-  font-size: calc(12px + 4 * ((100vw - 390px) / 1770)); 
+  /** 1770 = 2160px (maximal supported screen with) - 390px (minimal supported screen width) */
+  font-size: calc(12px + 4 * ((100vw - 390px) / 1770));
 
   /* CSS HEX */
   --queen-blue: #41658aff;
@@ -41,9 +41,6 @@ body {
 
 button {
   appearance: none;
-  padding-inline: 6px;
-  padding-block: 3px;
-
   border-radius: 10px;
 }
 
@@ -61,6 +58,10 @@ textarea:focus,
 button:focus,
 input:focus {
   outline: none;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 input:invalid,

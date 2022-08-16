@@ -58,10 +58,10 @@ export class UpdateTaskView {
   buttonUpdate() {
     if (this.taskProps.progress === progressModel.COMPLETE.name) {
       this.buttonComplete.classList.add('task-complete');
-      this.buttonComplete.textContent = 'Completed';
+      this.buttonComplete.innerHTML = '<i class="fa-regular fa-circle-check"></i>';
     } else {
       this.buttonComplete.classList.remove('task-complete');
-      this.buttonComplete.textContent = 'Mark complete';
+      this.buttonComplete.innerHTML = '<i class="fa-solid fa-check"></i> Complete';
     }
   }
 
@@ -131,6 +131,7 @@ export class UpdateTaskView {
 
     this.buttonComplete.classList.add('task-progress');
     this.buttonUpdate();
+    
     /** toggles task completion state */
     this.buttonComplete.addEventListener('click', () => this.complete());
 
